@@ -192,3 +192,12 @@ void arr_replaceArr(long long int ** a, long long int * b, long long int i1, lon
     arr_erase(*a,i1,i2);
     arr_insArr(a,b,i1);
 }
+
+void arr_reverse(long long int *a)
+{
+    for(long long int i=0;i<a[-1]/2;i++){
+        a[i]+=a[a[-1]-1-i];
+        a[a[-1]-1-i]-=a[i];
+        a[i]-=a[a[-1]-1-i];
+    }
+}

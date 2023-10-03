@@ -21,6 +21,7 @@ void arr_ins(long long int ** a, long long int n, long long int i);
 void arr_insArr(long long int ** a, long long int * b, long long int i);
 void arr_replace(long long int ** a, long long int n, long long int i1, long long int i2);
 void arr_replaceArr(long long int ** a, long long int * b, long long int i1, long long int i2);
+void arr_reverse(long long int *a);
 
 #include "array.struct.c"
 #endif
