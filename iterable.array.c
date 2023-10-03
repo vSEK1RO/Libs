@@ -14,15 +14,13 @@ long long int * arr_init(long long int len)
 void arr_print(long long int * a)
 {
     for(long long int i=0;i<a[-1];i++){
-        printf(i==a[-1]-1?"%d":"%d ",a[i]);
+        printf(i==a[-1]-1?"%lld":"%lld ",a[i]);
     }
 }
 
 void arr_del(long long int * a)
 {
-    for(long long int i=-1;i<a[-1];i++){
-        free(a+i);
-    }
+    free((void *)(a-1));
 }
 
 long long int arr_isEqual(long long int * a, long long int * b)
@@ -58,17 +56,19 @@ void arr_rearr(long long int * a, long long int i1, long long int i2)
     a[i2]=buff;
 }
 
-void arr_erase(long long int * a, long long int i1, long long int i2)
+void arr_erase(long long int ** a, long long int i1, long long int i2)
 {
-    i1%=a[-1]+1;
-    i2%=a[-1]+1;
-    for(long long int i=0;i<a[-1]-i2;i++){
-        a[i+i1]=a[i+i2];
+    i1%=(*a)[-1]+1;
+    i2%=(*a)[-1]+1;
+    long long int * b=arr_init((*a)[-1]-i2+i1);
+    for(long long int i=0;i<i1;i++){
+        b[i]=(*a)[i];
     }
-    for(long long int i=a[-1]-i2+i1;i<a[-1];i++){
-        free(a+i);
+    for(long long int i=i2;i<(*a)[-1];i++){
+        b[i+i1-i2]=(*a)[i];
     }
-    a[-1]-=i2-i1;
+    arr_del(*a);
+    *a=b;
 }
 
 long long int * arr_substr(long long int * a, long long int i1, long long int i2)
@@ -117,10 +117,16 @@ long long int arr_countArr(long long int * a, long long int * b)
     return c;
 }
 
-void arr_pob(long long int * a)
+void arr_pob(long long int ** a)
 {
-    free(a+a[-1]-1);
-    a[-1]--;
+    if((*a)[-1]!=0){
+        long long int * b=arr_init((*a)[-1]-1);
+        for(long long int i=0;i<(*a)[-1]-1;i++){
+            b[i]=(*a)[i];
+        }
+        arr_del(*a);
+        *a=b;
+    }
 }
 
 void arr_pub(long long int ** a, long long int n)
@@ -133,13 +139,16 @@ void arr_pub(long long int ** a, long long int n)
     *a=b;
 }
 
-void arr_pof(long long int * a)
+void arr_pof(long long int ** a)
 {
-    for(long long int i=0;i<a[-1]-1;i++){
-        a[i]=a[i+1];
+    if((*a)[-1]!=0){
+        long long int * b=arr_init((*a)[-1]-1);
+        for(long long int i=0;i<(*a)[-1]-1;i++){
+            b[i]=(*a)[i+1];
+        }
+        arr_del(*a);
+        *a=b;
     }
-    free(a+a[-1]-1);
-    a[-1]--;
 }
 
 void arr_puf(long long int ** a, long long int n)
@@ -181,7 +190,7 @@ void arr_replace(long long int ** a, long long int n, long long int i1, long lon
 {
     i1%=(*a)[-1]+1;
     i2%=(*a)[-1]+1;
-    arr_erase(*a,i1,i2);
+    arr_erase(a,i1,i2);
     arr_ins(a,n,i1);
 }
 
@@ -189,7 +198,7 @@ void arr_replaceArr(long long int ** a, long long int * b, long long int i1, lon
 {
     i1%=(*a)[-1]+1;
     i2%=(*a)[-1]+1;
-    arr_erase(*a,i1,i2);
+    arr_erase(a,i1,i2);
     arr_insArr(a,b,i1);
 }
 
