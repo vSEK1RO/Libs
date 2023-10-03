@@ -1,9 +1,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-long long int * arr_init(long long int len)
+auto * arr_init(long long int len)
 {
-    long long int * a=(long long int *)calloc(sizeof(long long int),len+1)+1;
+    auto * a=(auto *)calloc(sizeof(auto),len+1)+1;
     a[-1]=len;
     for(long long int i=0;i<a[-1];i++){
         a[i]=0;
@@ -11,21 +11,21 @@ long long int * arr_init(long long int len)
     return a;
 }
 
-void arr_print(long long int * a)
+void arr_print(auto * a)
 {
     for(long long int i=0;i<a[-1];i++){
         printf(i==a[-1]-1?"%d":"%d ",a[i]);
     }
 }
 
-void arr_del(long long int * a)
+void arr_del(auto * a)
 {
     for(long long int i=-1;i<a[-1];i++){
         free(a);
     }
 }
 
-long long int arr_isEqual(long long int * a, long long int * b)
+auto arr_isEqual(auto * a, auto * b)
 {
     if(a[-1]!=b[-1]){
         return 0;
@@ -38,7 +38,7 @@ long long int arr_isEqual(long long int * a, long long int * b)
     return 1;
 }
 
-void arr_swap(long long int * a, long long int i1, long long int i2)
+void arr_swap(auto * a, long long int i1, long long int i2)
 {
     i1%=a[-1];
     i2%=a[-1];
@@ -47,18 +47,18 @@ void arr_swap(long long int * a, long long int i1, long long int i2)
     a[i1]-=a[i2];
 }
 
-void arr_rearr(long long int * a, long long int i1, long long int i2)
+void arr_rearr(auto * a, long long int i1, long long int i2)
 {
     i1%=a[-1];
     i2%=a[-1];
-    long long int buff=a[i1];
+    auto buff=a[i1];
     for(long long int i=i1;i>i2;i--){
         a[i]=a[i-1];
     }
     a[i2]=buff;
 }
 
-void arr_erase(long long int * a, long long int i1, long long int i2)
+void arr_erase(auto * a, long long int i1, long long int i2)
 {
     i1%=a[-1]+1;
     i2%=a[-1]+1;
@@ -71,18 +71,18 @@ void arr_erase(long long int * a, long long int i1, long long int i2)
     a[-1]-=i2-i1;
 }
 
-long long int * arr_substr(long long int * a, long long int i1, long long int i2)
+auto * arr_substr(auto * a, long long int i1, long long int i2)
 {
     i1%=a[-1]+1;
     i2%=a[-1]+1;
-    long long int * b=arr_init(i2-i1);
+    auto * b=arr_init(i2-i1);
     for(long long int i=0;i<i2-i1;i++){
         b[i]=a[i+i1];
     }
     return b;
 }
 
-long long int arr_find(long long int * a, long long int key, long long int entry)
+auto arr_find(auto * a, auto key, auto entry)
 {
     entry%=a[-1]+1;
     long long int i=-1;
@@ -95,9 +95,9 @@ long long int arr_find(long long int * a, long long int key, long long int entry
     return (entry!=0?-1:i);
 }
 
-long long int arr_count(long long int * a, long long int n)
+auto arr_count(auto * a, auto n)
 {
-    long long int c=0;
+    auto c=0;
     for(long long int i=0;i<a[-1];i++){
         if(a[i]==n){
             c++;
@@ -106,9 +106,9 @@ long long int arr_count(long long int * a, long long int n)
     return c;
 }
 
-long long int arr_countArr(long long int * a, long long int * b)
+auto arr_countArr(auto * a, auto * b)
 {
-    long long int c=0;
+    auto c=0;
     for(long long int i=0;i<a[-1]-b[-1];i++){
         if(arr_isEqual(arr_substr(a,i,i+b[-1]),b)){
             c++;
@@ -117,15 +117,15 @@ long long int arr_countArr(long long int * a, long long int * b)
     return c;
 }
 
-void arr_pob(long long int * a)
+void arr_pob(auto * a)
 {
     free(a+a[-1]-1);
     a[-1]--;
 }
 
-void arr_pub(long long int ** a, long long int n)
+void arr_pub(auto ** a, auto n)
 {
-    long long int * b=arr_init((*a)[-1]+1);
+    auto * b=arr_init((*a)[-1]+1);
     for(long long int i=0;i<(*a)[-1];i++){
         b[i]=(*a)[i];
     }
@@ -133,7 +133,7 @@ void arr_pub(long long int ** a, long long int n)
     *a=b;
 }
 
-void arr_pof(long long int * a)
+void arr_pof(auto * a)
 {
     for(long long int i=0;i<a[-1]-1;i++){
         a[i]=a[i+1];
@@ -142,9 +142,9 @@ void arr_pof(long long int * a)
     a[-1]--;
 }
 
-void arr_puf(long long int ** a, long long int n)
+void arr_puf(auto ** a, auto n)
 {
-    long long int * b=arr_init((*a)[-1]+1);
+    auto * b=arr_init((*a)[-1]+1);
     for(long long int i=0;i<(*a)[-1];i++){
         b[i+1]=(*a)[i];
     }
@@ -152,9 +152,9 @@ void arr_puf(long long int ** a, long long int n)
     *a=b;
 }
 
-long long int * arr_concat(long long int * a, long long int * b)
+auto * arr_concat(auto * a, auto * b)
 {
-    long long int * c=arr_init(a[-1]+b[-1]);
+    auto * c=arr_init(a[-1]+b[-1]);
     for(long long int i=0;i<a[-1];i++){
         c[i]=a[i];
     }
@@ -164,20 +164,20 @@ long long int * arr_concat(long long int * a, long long int * b)
     return c;
 }
 
-void arr_ins(long long int ** a, long long int n, long long int i)
+void arr_ins(auto ** a, auto n, long long int i)
 {
     i%=(*a)[-1]+1;
     arr_pub(a,n);
     arr_rearr(*a,(*a)[-1]-1,i);
 }
 
-void arr_insArr(long long int ** a, long long int * b, long long int i)
+void arr_insArr(auto ** a, auto * b, long long int i)
 {
     i%=(*a)[-1]+1;
     *a=arr_concat(arr_concat(arr_substr(*a,0,i),b),arr_substr(*a,i,(*a)[-1]));
 }
 
-void arr_replace(long long int ** a, long long int n, long long int i1, long long int i2)
+void arr_replace(auto ** a, auto n, long long int i1, long long int i2)
 {
     i1%=(*a)[-1]+1;
     i2%=(*a)[-1]+1;
@@ -185,7 +185,7 @@ void arr_replace(long long int ** a, long long int n, long long int i1, long lon
     arr_ins(a,n,i1);
 }
 
-void arr_replaceArr(long long int ** a, long long int * b, long long int i1, long long int i2)
+void arr_replaceArr(auto ** a, auto * b, long long int i1, long long int i2)
 {
     i1%=(*a)[-1]+1;
     i2%=(*a)[-1]+1;

@@ -1,4 +1,4 @@
 #ifndef ARRAY_H
 #define ARRAY_H
-#include "StructArray.h"
+#include "array.struct.h"
 #endif
