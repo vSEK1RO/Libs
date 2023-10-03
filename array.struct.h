@@ -1,26 +1,26 @@
 #ifndef ARRAY_STRUCT_H
 #define ARRAY_STRUCT_H
 
-auto * arr_init(long long int len);
-void arr_print(auto * a);
-void arr_del(auto * a);
-auto arr_isEqual(auto * a, auto * b);
-void arr_swap(auto * a, auto i1, auto i2);
-void arr_rearr(auto * a, auto i1, auto i2);
-void arr_erase(auto * a, auto i1, auto i2);
-auto * arr_substr(auto * a, auto i1, auto i2);
-auto arr_find(auto * a, auto key, auto entry);
-auto arr_count(auto * a, auto n);
-auto arr_countArr(auto * a, auto * b);
-void arr_pob(auto * a);
-void arr_pub(auto ** a, auto n);
-void arr_pof(auto * a);
-void arr_puf(auto ** a, auto n);
-auto * arr_concat(auto * a, auto * b);
-void arr_ins(auto ** a, auto n, auto i);
-void arr_insArr(auto ** a, auto * b, auto i);
-void arr_replace(auto ** a, auto n, auto i1, auto i2);
-void arr_replaceArr(auto ** a, auto * b, auto i1, auto i2);
+long long int * arr_init(long long int len);
+void arr_print(long long int * a);
+void arr_del(long long int * a);
+long long int arr_isEqual(long long int * a, long long int * b);
+void arr_swap(long long int * a, long long int i1, long long int i2);
+void arr_rearr(long long int * a, long long int i1, long long int i2);
+void arr_erase(long long int * a, long long int i1, long long int i2);
+long long int * arr_substr(long long int * a, long long int i1, long long int i2);
+long long int arr_find(long long int * a, long long int key, long long int entry);
+long long int arr_count(long long int * a, long long int n);
+long long int arr_countArr(long long int * a, long long int * b);
+void arr_pob(long long int * a);
+void arr_pub(long long int ** a, long long int n);
+void arr_pof(long long int * a);
+void arr_puf(long long int ** a, long long int n);
+long long int * arr_concat(long long int * a, long long int * b);
+void arr_ins(long long int ** a, long long int n, long long int i);
+void arr_insArr(long long int ** a, long long int * b, long long int i);
+void arr_replace(long long int ** a, long long int n, long long int i1, long long int i2);
+void arr_replaceArr(long long int ** a, long long int * b, long long int i1, long long int i2);
 
 #include "array.struct.c"
 #endif
