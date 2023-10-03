@@ -21,7 +21,7 @@ void arr_print(long long int * a)
 void arr_del(long long int * a)
 {
     for(long long int i=-1;i<a[-1];i++){
-        free(a);
+        free(a+i);
     }
 }
 
@@ -43,7 +43,7 @@ void arr_swap(long long int * a, long long int i1, long long int i2)
     i1%=a[-1];
     i2%=a[-1];
     a[i1]+=a[i2];
-    a[i2]-=a[i1];
+    a[i2]=a[i1]-a[i2];
     a[i1]-=a[i2];
 }
 
@@ -196,8 +196,6 @@ void arr_replaceArr(long long int ** a, long long int * b, long long int i1, lon
 void arr_reverse(long long int *a)
 {
     for(long long int i=0;i<a[-1]/2;i++){
-        a[i]+=a[a[-1]-1-i];
-        a[a[-1]-1-i]-=a[i];
-        a[i]-=a[a[-1]-1-i];
+        arr_swap(a,i,a[-1]-1-i);
     }
 }
