@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <limits.h>
 
 long long int * arr_init(long long int len)
 {
@@ -9,6 +10,28 @@ long long int * arr_init(long long int len)
         a[i]=0;
     }
     return a;
+}
+
+long long int arr_max(long long int * a)
+{
+    long long int max=LLONG_MIN;
+    for(long long int i=0;i<a[-1];i++){
+        if(max<a[i]){
+            max=a[i];
+        }
+    }
+    return max;
+}
+
+long long int arr_min(long long int * a)
+{
+    long long int min=LLONG_MAX;
+    for(long long int i=0;i<a[-1];i++){
+        if(min>a[i]){
+            min=a[i];
+        }
+    }
+    return min;
 }
 
 void arr_print(long long int * a)

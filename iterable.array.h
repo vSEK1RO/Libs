@@ -2,6 +2,8 @@
 #define ITERABLE_ARRAY_H
 
 long long int * arr_init(long long int len);
+long long int arr_max(long long int * a);
+long long int arr_min(long long int * a);
 void arr_print(long long int * a);
 void arr_del(long long int * a);
 long long int arr_isEqual(long long int * a, long long int * b);
