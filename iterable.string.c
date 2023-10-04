@@ -223,7 +223,7 @@ void str_replaceArr(char ** a, char * b, long long int i1, long long int i2)
     str_insArr(a,b,i1);
 }
 
-void str_reverse(char *a)
+void str_reverse(char * a)
 {
     for(long long int i=0;i<str_len(a)/2;i++){
         str_swap(a,i,str_len(a)-1-i);

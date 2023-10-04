@@ -34,6 +34,11 @@ long long int arr_min(long long int * a)
     return min;
 }
 
+long long int arr_len(long long int * a)
+{
+    return a[-1];
+}
+
 void arr_print(long long int * a)
 {
     for(long long int i=0;i<a[-1];i++){
@@ -225,7 +230,7 @@ void arr_replaceArr(long long int ** a, long long int * b, long long int i1, lon
     arr_insArr(a,b,i1);
 }
 
-void arr_reverse(long long int *a)
+void arr_reverse(long long int * a)
 {
     for(long long int i=0;i<a[-1]/2;i++){
         arr_swap(a,i,a[-1]-1-i);

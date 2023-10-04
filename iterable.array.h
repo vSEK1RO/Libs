@@ -4,6 +4,7 @@
 long long int * arr_init(long long int len);
 long long int arr_max(long long int * a);
 long long int arr_min(long long int * a);
+long long int arr_len(long long int * a);
 void arr_print(long long int * a);
 void arr_del(long long int * a);
 long long int arr_isEqual(long long int * a, long long int * b);
@@ -23,7 +24,7 @@ void arr_ins(long long int ** a, long long int n, long long int i);
 void arr_insArr(long long int ** a, long long int * b, long long int i);
 void arr_replace(long long int ** a, long long int n, long long int i1, long long int i2);
 void arr_replaceArr(long long int ** a, long long int * b, long long int i1, long long int i2);
-void arr_reverse(long long int *a);
+void arr_reverse(long long int * a);
 
 #include "iterable.array.c"
 #endif

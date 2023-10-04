@@ -23,7 +23,7 @@ void str_ins(char ** a, char n, long long int i);
 void str_insArr(char ** a, char * b, long long int i);
 void str_replace(char ** a, char n, long long int i1, long long int i2);
 void str_replaceArr(char ** a, char * b, long long int i1, long long int i2);
-void str_reverse(char *a);
+void str_reverse(char * a);
 
 #include "iterable.string.c"
 #endif
