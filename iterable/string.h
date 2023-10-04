@@ -25,5 +25,5 @@ void str_replace(char ** a, char n, long long int i1, long long int i2);
 void str_replaceArr(char ** a, char * b, long long int i1, long long int i2);
 void str_reverse(char * a);
 
-#include "iterable.string.c"
+#include "string.c"
 #endif

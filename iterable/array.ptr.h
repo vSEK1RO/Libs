@@ -19,5 +19,5 @@ void arr_ptr_replace(long long int *** a, long long int * n, long long int i1, l
 void arr_ptr_replaceArr(long long int *** a, long long int ** b, long long int i1, long long int i2);
 void arr_ptr_reverse(long long int ** a);
 
-#include "iterable.array.ptr.c"
+#include "array.ptr.c"
 #endif

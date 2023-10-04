@@ -26,5 +26,5 @@ void arr_replace(long long int ** a, long long int n, long long int i1, long lon
 void arr_replaceArr(long long int ** a, long long int * b, long long int i1, long long int i2);
 void arr_reverse(long long int * a);
 
-#include "iterable.array.c"
+#include "array.c"
 #endif
