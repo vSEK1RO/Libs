@@ -1,5 +1,5 @@
-#ifndef ITERABLE_ARRAY_PTR_H
-#define ITERABLE_ARRAY_PTR_H
+#ifndef _ITERABLE_ARRAY_PTR_H
+#define _ITERABLE_ARRAY_PTR_H
 
 long long int ** arr_ptr_init(long long int len);
 long long int arr_ptr_len(long long int ** a);
@@ -19,5 +19,5 @@ void arr_ptr_replace(long long int *** a, long long int * n, long long int i1, l
 void arr_ptr_replaceArr(long long int *** a, long long int ** b, long long int i1, long long int i2);
 void arr_ptr_reverse(long long int ** a);
 
-#include "array.ptr.c"
+#include "_array.ptr.c"
 #endif

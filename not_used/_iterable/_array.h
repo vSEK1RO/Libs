@@ -1,5 +1,8 @@
-#ifndef ITERABLE_ARRAY_H
-#define ITERABLE_ARRAY_H
+#ifndef _ITERABLE_ARRAY_H
+#define _ITERABLE_ARRAY_H
+
+//#define arr_template(name, type) arr_ ## name ## _ ## type
+//#define arr_func(...) arr_template(__VA_ARGS__)
 
 long long int * arr_init(long long int len);
 long long int arr_max(long long int * a);
@@ -26,5 +29,9 @@ void arr_replace(long long int ** a, long long int n, long long int i1, long lon
 void arr_replaceArr(long long int ** a, long long int * b, long long int i1, long long int i2);
 void arr_reverse(long long int * a);
 
-#include "array.c"
+#include "_array.c"
+
+//#undef arr_func
+//#undef arr_template
+
 #endif
