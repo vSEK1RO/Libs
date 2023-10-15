@@ -212,20 +212,20 @@ ARR_TYPE * ARR_FUNC(ARR_TYPE,concat)(ARR_TYPE * a, ARR_TYPE * b)
     return c;
 }
 
-void ARR_FUNC(ARR_TYPE,ins)(ARR_TYPE ** a, ARR_TYPE n, ARR_TYPE i)
+void ARR_FUNC(ARR_TYPE,ins)(ARR_TYPE ** a, ARR_TYPE n, uint64_t i)
 {
     i%=ARR_FUNC(ARR_TYPE,len)(*a)+1;
     ARR_FUNC(ARR_TYPE,pub)(a,n);
     ARR_FUNC(ARR_TYPE,rearr)(*a,ARR_FUNC(ARR_TYPE,len)(*a)-1,i);
 }
 
-void ARR_FUNC(ARR_TYPE,insArr)(ARR_TYPE ** a, ARR_TYPE * b, ARR_TYPE i)
+void ARR_FUNC(ARR_TYPE,insArr)(ARR_TYPE ** a, ARR_TYPE * b, uint64_t i)
 {
     i%=ARR_FUNC(ARR_TYPE,len)(*a)+1;
     *a=ARR_FUNC(ARR_TYPE,concat)(ARR_FUNC(ARR_TYPE,concat)(ARR_FUNC(ARR_TYPE,substr)(*a,0,i),b),ARR_FUNC(ARR_TYPE,substr)(*a,i,ARR_FUNC(ARR_TYPE,len)(*a)));
 }
 
-void ARR_FUNC(ARR_TYPE,repl)(ARR_TYPE ** a, ARR_TYPE n, ARR_TYPE i1, ARR_TYPE i2)
+void ARR_FUNC(ARR_TYPE,repl)(ARR_TYPE ** a, ARR_TYPE n, uint64_t i1, uint64_t i2)
 {
     i1%=ARR_FUNC(ARR_TYPE,len)(*a)+1;
     i2%=ARR_FUNC(ARR_TYPE,len)(*a)+1;
@@ -233,7 +233,7 @@ void ARR_FUNC(ARR_TYPE,repl)(ARR_TYPE ** a, ARR_TYPE n, ARR_TYPE i1, ARR_TYPE i2
     ARR_FUNC(ARR_TYPE,ins)(a,n,i1);
 }
 
-void ARR_FUNC(ARR_TYPE,replArr)(ARR_TYPE ** a, ARR_TYPE * b, ARR_TYPE i1, ARR_TYPE i2)
+void ARR_FUNC(ARR_TYPE,replArr)(ARR_TYPE ** a, ARR_TYPE * b, uint64_t i1, uint64_t i2)
 {
     i1%=ARR_FUNC(ARR_TYPE,len)(*a)+1;
     i2%=ARR_FUNC(ARR_TYPE,len)(*a)+1;
