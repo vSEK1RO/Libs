@@ -20,7 +20,7 @@ An array is a pointer to the data type that you specified in ARR_TYPE; the synta
 ```c
 YourType * array = arr_init_YourType(len);
 ```
-The length in the array has a uint64_t data type and is stored in the -1 pointer counting from the beginning of the array. Since the array can contain different data types other than uint64_t, it is necessary to shift to uint64_t, and not to the ARR_TYPE data type pointer:
+The length in the array has a `uint64_t` data type and is stored in the -1 pointer counting from the beginning of the array. Since the array can contain different data types other than `uint64_t`, it is necessary to shift to `uint64_t`, and not to the `ARR_TYPE` data type pointer:
 ```c
 uint64_t arrayLen;
 arrayLen = ((uint64_t *)array)[-1];
