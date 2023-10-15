@@ -5,5 +5,6 @@
 // |_| |_| |_| \___|| .__/ |_| |_||_|  /_/     |_| \___||_||___/ 
 //                  |_|                                          
 //
-//              Created by Vlad Litvinov Б23-534
+//              Created by Vlad Litvinov b23-534
+//                 https://github.com/vSEK1RO
 */
