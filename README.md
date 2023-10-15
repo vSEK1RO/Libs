@@ -2,6 +2,12 @@
 `
 CLib is a library of standard data structures and functions for working with them, supporting work with generic types, which I wrote to practice my C coding skills.
 `
+
+To download the library, run the following command in the console:
+```
+git clone https://github.com/vSEK1RO/clib
+```
+
 ## Schedule
 * [array.h:](https://github.com/vSEK1RO/clib/tree/main#Arrays) working with arrays
 * [string.h:](https://github.com/vSEK1RO/clib/tree/main#Strings) working with strings (c like with '\0' at the end of string)
