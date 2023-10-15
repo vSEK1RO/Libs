@@ -1,5 +1,5 @@
-#ifndef _ITERABLE_STRING_H
-#define _ITERABLE_STRING_H
+#ifndef ITERABLE_STRING_H
+#define ITERABLE_STRING_H
 
 char * str_init(long long int len);
 char * str_cast(const char * a);
@@ -25,5 +25,5 @@ void str_replace(char ** a, char n, long long int i1, long long int i2);
 void str_replaceArr(char ** a, char * b, long long int i1, long long int i2);
 void str_reverse(char * a);
 
-#include "_string.c"
+#include "string.c"
 #endif

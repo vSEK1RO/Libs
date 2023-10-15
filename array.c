@@ -12,8 +12,8 @@ ARR_TYPE * ARR_FUNC(ARR_TYPE,init)(uint64_t len)
             memlen=sizeof(uint64_t)/sizeof(ARR_TYPE)+1;
         }
     }
-    ARR_TYPE * a=(ARR_TYPE *)calloc(sizeof(ARR_TYPE),memlen)+1;
-    (uint64_t *)ARR_FUNC(ARR_TYPE,len)(a)=len;
+    ARR_TYPE * a=(ARR_TYPE *)calloc(sizeof(ARR_TYPE),len+memlen)+1;
+    ((uint64_t *)a)[-1]=len;
     for(uint64_t i=0;i<len;i++){
         a[i]=0;
     }
@@ -22,12 +22,22 @@ ARR_TYPE * ARR_FUNC(ARR_TYPE,init)(uint64_t len)
 
 uint64_t ARR_FUNC(ARR_TYPE,len)(ARR_TYPE * a)
 {
-    return (uint64_t *)ARR_FUNC(ARR_TYPE,len(a);
+    return ((uint64_t *)a)[-1];
 }
 
 void ARR_FUNC(ARR_TYPE,del)(ARR_TYPE * a)
 {
-    free((void *)(a-sizeof(ARR_TYPE)>sizeof(uint64_t)?1:sizeof(uint64_t)/sizeof(ARR_TYPE)+1));
+    uint64_t memlen;
+    if(sizeof(ARR_TYPE)>sizeof(uint64_t)){
+        memlen=1;
+    }else{
+        if(sizeof(uint64_t)%sizeof(ARR_TYPE)==0){
+            memlen=sizeof(uint64_t)/sizeof(ARR_TYPE);
+        }else{
+            memlen=sizeof(uint64_t)/sizeof(ARR_TYPE)+1;
+        }
+    }
+    free((void *)(a-memlen));
 }
 
 ARR_TYPE ARR_FUNC(ARR_TYPE,max)(ARR_TYPE * a)
