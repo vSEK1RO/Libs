@@ -11,7 +11,7 @@ git clone https://github.com/vSEK1RO/clib
 ## Schedule
 * [array.h:](https://github.com/vSEK1RO/clib/tree/main#Arrays) working with arrays
 * [string.h:](https://github.com/vSEK1RO/clib/tree/main#Strings) working with strings (c like with '\0' at the end of string)
-## Arrays
+## [Arrays](https://github.com/vSEK1RO/clib/blob/main/src/array.h)
 
 The following syntax is used to work with arrays:
 ```c
@@ -33,7 +33,7 @@ arrayLen = ((uint64_t *)array)[-1];
 //to avoid writing such a long expression, use the function
 arrayLen = arr_len_YourType(a);
 ```
-You can study the list of other functions available for arrays in the file `src/array.h`
+You can study the list of other functions available for arrays in the file [`src/array.h`](https://github.com/vSEK1RO/clib/blob/main/src/array.h)
 
 [:arrow_up:Shedule](https://github.com/vSEK1RO/clib/tree/main#schedule)
 ## Strings
