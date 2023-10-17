@@ -109,6 +109,19 @@ uint64_t str_find(char * a, char key, uint64_t entry)
     return (entry!=0?-1:i);
 }
 
+uint64_t str_findStr(char * a, char * b, uint64_t entry)
+{
+    entry%=str_len(a)+1;
+    uint64_t i=-1;
+    while(entry && i!=(str_len(a)-str_len(b))){
+        i++;
+        if(str_isEqual(str_substr(a,i,i+str_len(b)),b)){
+            entry--;
+        }
+    }
+    return (entry!=0?-1:i);
+}
+
 uint64_t str_count(char * a, char n)
 {
     uint64_t c=0;
@@ -120,7 +133,7 @@ uint64_t str_count(char * a, char n)
     return c;
 }
 
-uint64_t str_countArr(char * a, char * b)
+uint64_t str_countStr(char * a, char * b)
 {
     uint64_t c=0;
     for(uint64_t i=0;i<str_len(a)-str_len(b);i++){
@@ -196,13 +209,13 @@ void str_ins(char ** a, char n, uint64_t i)
     str_rearr(*a,str_len(*a)-1,i);
 }
 
-void str_insArr(char ** a, char * b, uint64_t i)
+void str_insStr(char ** a, char * b, uint64_t i)
 {
     i%=str_len(*a)+1;
     *a=str_concat(str_concat(str_substr(*a,0,i),b),str_substr(*a,i,str_len(*a)));
 }
 
-void str_replace(char ** a, char n, uint64_t i1, uint64_t i2)
+void str_repl(char ** a, char n, uint64_t i1, uint64_t i2)
 {
     i1%=str_len(*a)+1;
     i2%=str_len(*a)+1;
@@ -210,12 +223,12 @@ void str_replace(char ** a, char n, uint64_t i1, uint64_t i2)
     str_ins(a,n,i1);
 }
 
-void str_replaceArr(char ** a, char * b, uint64_t i1, uint64_t i2)
+void str_replStr(char ** a, char * b, uint64_t i1, uint64_t i2)
 {
     i1%=str_len(*a)+1;
     i2%=str_len(*a)+1;
     str_erase(a,i1,i2);
-    str_insArr(a,b,i1);
+    str_insStr(a,b,i1);
 }
 
 void str_reverse(char * a)

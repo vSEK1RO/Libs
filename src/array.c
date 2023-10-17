@@ -134,6 +134,19 @@ uint64_t ARR_FUNC(ARR_TYPE,find)(ARR_TYPE * a, ARR_TYPE key, uint64_t entry)
     return (entry!=0?-1:i);
 }
 
+uint64_t ARR_FUNC(ARR_TYPE,findArr)(ARR_TYPE * a, ARR_TYPE * b, uint64_t entry)
+{
+    entry%=ARR_FUNC(ARR_TYPE,len)(a)+1;
+    uint64_t i=-1;
+    while(entry && i!=(ARR_FUNC(ARR_TYPE,len)(a)-ARR_FUNC(ARR_TYPE,len)(b))){
+        i++;
+        if(ARR_FUNC(ARR_TYPE,isEqual)(ARR_FUNC(ARR_TYPE,substr)(a,i,i+ARR_FUNC(ARR_TYPE,len)(b)),b)){
+            entry--;
+        }
+    }
+    return (entry!=0?-1:i);
+}
+
 uint64_t ARR_FUNC(ARR_TYPE,count)(ARR_TYPE * a, ARR_TYPE n)
 {
     uint64_t c=0;
