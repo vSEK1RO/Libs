@@ -12,7 +12,7 @@ ARR_TYPE * ARR_FUNC(ARR_TYPE,init)(uint64_t len)
             memlen=sizeof(uint64_t)/sizeof(ARR_TYPE)+1;
         }
     }
-    ARR_TYPE * a=(ARR_TYPE *)calloc(sizeof(ARR_TYPE),len+memlen)+1;
+    ARR_TYPE * a=(ARR_TYPE *)calloc(sizeof(ARR_TYPE),len+memlen)+memlen;
     ((uint64_t *)a)[-1]=len;
     for(uint64_t i=0;i<len;i++){
         a[i]=0;

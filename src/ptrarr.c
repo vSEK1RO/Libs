@@ -12,7 +12,7 @@ PTRARR_TYPE ** PTRARR_FUNC(PTRARR_TYPE,init)(uint64_t len)
             memlen=sizeof(uint64_t)/sizeof(PTRARR_TYPE *)+1;
         }
     }
-    PTRARR_TYPE ** a=(PTRARR_TYPE **)calloc(sizeof(PTRARR_TYPE *),len+memlen)+1;
+    PTRARR_TYPE ** a=(PTRARR_TYPE **)calloc(sizeof(PTRARR_TYPE *),len+memlen)+memlen;
     ((uint64_t *)a)[-1]=len;
     for(uint64_t i=0;i<len;i++){
         a[i]=0;
