@@ -62,7 +62,7 @@ ARR_TYPE ARR_FUNC(ARR_TYPE,min)(ARR_TYPE * a)
     return min;
 }
 
-ARR_TYPE ARR_FUNC(ARR_TYPE,isEqual)(ARR_TYPE * a, ARR_TYPE * b)
+uint8_t ARR_FUNC(ARR_TYPE,isEqual)(ARR_TYPE * a, ARR_TYPE * b)
 {
     if(ARR_FUNC(ARR_TYPE,len)(a)!=ARR_FUNC(ARR_TYPE,len)(b)){
         return 0;
@@ -241,7 +241,7 @@ void ARR_FUNC(ARR_TYPE,replArr)(ARR_TYPE ** a, ARR_TYPE * b, uint64_t i1, uint64
     ARR_FUNC(ARR_TYPE,insArr)(a,b,i1);
 }
 
-void ARR_FUNC(ARR_TYPE,rev)(ARR_TYPE * a)
+void ARR_FUNC(ARR_TYPE,reverse)(ARR_TYPE * a)
 {
     for(uint64_t i=0;i<ARR_FUNC(ARR_TYPE,len)(a)/2;i++){
         ARR_FUNC(ARR_TYPE,swap)(a,i,ARR_FUNC(ARR_TYPE,len)(a)-1-i);

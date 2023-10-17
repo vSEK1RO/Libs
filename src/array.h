@@ -11,7 +11,7 @@ uint64_t ARR_FUNC(ARR_TYPE, len)(ARR_TYPE * a);
 void ARR_FUNC(ARR_TYPE, del)(ARR_TYPE * a);
 ARR_TYPE ARR_FUNC(ARR_TYPE, max)(ARR_TYPE * a);
 ARR_TYPE ARR_FUNC(ARR_TYPE, min)(ARR_TYPE * a);
-ARR_TYPE ARR_FUNC(ARR_TYPE, isEqual)(ARR_TYPE * a, ARR_TYPE * b);
+uint8_t ARR_FUNC(ARR_TYPE, isEqual)(ARR_TYPE * a, ARR_TYPE * b);
 void ARR_FUNC(ARR_TYPE, swap)(ARR_TYPE * a, uint64_t i1, uint64_t i2);
 void ARR_FUNC(ARR_TYPE, rearr)(ARR_TYPE * a, uint64_t i1, uint64_t i2);
 void ARR_FUNC(ARR_TYPE, erase)(ARR_TYPE ** a, uint64_t i1, uint64_t i2);
@@ -28,7 +28,7 @@ void ARR_FUNC(ARR_TYPE, ins)(ARR_TYPE ** a, ARR_TYPE n, uint64_t i);
 void ARR_FUNC(ARR_TYPE, insArr)(ARR_TYPE ** a, ARR_TYPE * b, uint64_t i);
 void ARR_FUNC(ARR_TYPE, repl)(ARR_TYPE ** a, ARR_TYPE n, uint64_t i1, uint64_t i2);
 void ARR_FUNC(ARR_TYPE, replArr)(ARR_TYPE ** a, ARR_TYPE * b, uint64_t i1, uint64_t i2);
-void ARR_FUNC(ARR_TYPE, rev)(ARR_TYPE * a);
+void ARR_FUNC(ARR_TYPE, reverse)(ARR_TYPE * a);
 
 #include "array.c"
 
