@@ -62,13 +62,13 @@ Using an array of pointers and regular array, you can create and use two-dimensi
 #define PTRARR_TYPE int
 #include "clib/src/ptrarr.h"
 #define ARR_TYPE int
-#include "clib/src/arr.h"
+#include "clib/src/array.h"
 int main(){
   int ** a = ptrarr_init_int(10);
   for(int i=0;i<ptrarr_len_int(a);i++){
     a[i] = arr_init_int(10);
     printf("\n");
-    for(int j=0;j<arr_len_int(a[i]);j++{
+    for(int j=0;j<arr_len_int(a[i]);j++){
       a[i][j] = (i*10+j);
       printf("%d ", a[i][j]);
     }
