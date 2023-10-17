@@ -46,7 +46,7 @@ You can study the list of other functions available for arrays in the file [`cli
 
 ## [Pointer_arrays](https://github.com/vSEK1RO/clib/blob/main/src/ptrarr.h)
 
-Including the header file is identical to array.h, only instead of the ARR_TYPE macro you must create the PTRARR_TYPE macro:
+Including the header file is identical to `array.h`, only instead of the `ARR_TYPE` macro you must create the `PTRARR_TYPE` macro:
 ```c
 #define PTRARR_TYPE YourType
 #include "clib/src/ptrarr.h"
@@ -54,7 +54,7 @@ int main(){
   YourType ** ptrarr = ptrarr_init_YourType(len);
 }
 ```
-The functions are the same as for arrays, but you cannot use count, countArr, find, findArr and search min max.
+The functions are the same as for arrays, but you cannot use `count, countArr, find, findArr` and search `min, max`.
 
 Using an array of pointers and regular array, you can create and use two-dimensional arrays. Here's an example code that creates a two-dimensional array filled from 0 to 99:
 ```c
