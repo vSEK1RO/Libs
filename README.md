@@ -77,6 +77,8 @@ int main(){
 ```
 You can study the list of other functions available for pointer arrays in the file [`clib/src/ptrarr.h`](https://github.com/vSEK1RO/clib/blob/main/src/ptrarr.h)
 
+[:arrow_up:Shedule](https://github.com/vSEK1RO/clib/tree/main#schedule)
+
 ## [Strings](https://github.com/vSEK1RO/clib/blob/main/src/string.h)
 
 The header file is included without additional macros. The string is an array of type char, but does not store its length. The end of a line is uniquely identified by adding a `'\0'` terminating null character. In the length value that we pass to the function `str_init(uint64_t len)` `'\0'` the character does not need to be taken into account:
