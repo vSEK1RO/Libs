@@ -51,7 +51,7 @@ Including the header file is identical to `array.h`, only instead of the `ARR_TY
 #define PTRARR_TYPE YourType
 #include "clib/src/ptrarr.h"
 int main(){
-  YourType ** ptrarr = ptrarr_init_YourType(len);
+    YourType ** ptrarr = ptrarr_init_YourType(len);
 }
 ```
 The functions are the same as for arrays, but you cannot use `count, countArr, find, findArr` and search `min, max`.
@@ -64,15 +64,15 @@ Using an array of pointers and regular array, you can create and use two-dimensi
 #define ARR_TYPE int
 #include "clib/src/array.h"
 int main(){
-  int ** a = ptrarr_init_int(10);
-  for(int i=0;i<ptrarr_len_int(a);i++){
-    a[i] = arr_init_int(10);
-    printf("\n");
-    for(int j=0;j<arr_len_int(a[i]);j++){
-      a[i][j] = (i*10+j);
-      printf("%d ", a[i][j]);
+    int ** a = ptrarr_init_int(10);
+    for(int i=0;i<ptrarr_len_int(a);i++){
+        a[i] = arr_init_int(10);
+        printf("\n");
+        for(int j=0;j<arr_len_int(a[i]);j++){
+            a[i][j] = (i*10+j);
+            printf("%d ", a[i][j]);
+        }
     }
-  }
 }
 ```
 You can study the list of other functions available for pointer arrays in the file [`clib/src/ptrarr.h`](https://github.com/vSEK1RO/clib/blob/main/src/ptrarr.h)
@@ -83,17 +83,15 @@ The header file is included without additional macros. The string is an array of
 ```c
 #include "clib/src/string.h"
 int main(){
-  char * string = str_init(len);
-  //will create a char array of (len+1) elements, where (len+1)th is the '\0' character
-  ...
+    char * string = str_init(len);
+    //will create a char array of (len+1) elements, where (len+1)th is the '\0' character
 }
 ```
 if you want to create a string equal to a constant C string, then use the function `str_cast(const char * a)`:
 ```c
-  ...
-  string = str_cast("123abc");
-  printf("%s", string);
-  //will output the line 123abc
+    string = str_cast("123abc");
+    printf("%s", string);
+    //will output the line 123abc
 ```
 You can study the list of other functions available for strings in the file [`clib/src/string.h`](https://github.com/vSEK1RO/clib/blob/main/src/string.h)
 
