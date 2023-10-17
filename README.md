@@ -61,7 +61,7 @@ Using an array of pointers and regular array, you can create and use two-dimensi
 #include <stdio.h>
 #define PTRARR_TYPE int
 #include "clib/src/ptrarr.h"
-#define PTRARR_TYPE int
+#define ARR_TYPE int
 #include "clib/src/arr.h"
 int main(){
   int ** a = ptrarr_init_int(10);
