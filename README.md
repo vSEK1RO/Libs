@@ -44,7 +44,7 @@ You can study the list of other functions available for arrays in the file [`cli
 
 [:arrow_up:Shedule](https://github.com/vSEK1RO/clib/tree/main#schedule)
 
-## [Pointer arrays](https://github.com/vSEK1RO/clib/blob/main/src/ptrarr.h)
+## [Pointer_arrays](https://github.com/vSEK1RO/clib/blob/main/src/ptrarr.h)
 
 Including the header file is identical to array.h, only instead of the ARR_TYPE macro you must create the PTRARR_TYPE macro:
 ```c
