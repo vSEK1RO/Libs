@@ -1,7 +1,3 @@
----
-marp: true
----
-
 <img src="https://i.imgur.com/TGAzySV.png"></img>
 `
 CLib is a library of standard data structures and functions for working with them, supporting work with generic types, which I wrote to practice my C coding skills.
