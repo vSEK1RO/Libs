@@ -1,3 +1,7 @@
+---
+marp: true
+---
+
 <img src="https://i.imgur.com/TGAzySV.png"></img>
 `
 CLib is a library of standard data structures and functions for working with them, supporting work with generic types, which I wrote to practice my C coding skills.
@@ -8,12 +12,16 @@ To download the library, run the following command in the console:
 git clone https://github.com/vSEK1RO/clib
 ```
 
+---
+
 ## Schedule
 
 * [array.h:](https://github.com/vSEK1RO/clib/tree/main#Arrays) working with arrays
 * [ptrarr.h:](https://github.com/vSEK1RO/clib/tree/main#Pointer_arrays) working with pointer arrays
 * [string.h:](https://github.com/vSEK1RO/clib/tree/main#Strings) working with strings (c like with '\0' at the end of string)
 * [numsys.h:](https://github.com/vSEK1RO/clib/tree/main#Number_systems) converting numbers to strings with a number system
+
+---
 
 ## [Arrays](https://github.com/vSEK1RO/clib/blob/main/src/array.h)
 
@@ -44,6 +52,8 @@ arr_del_YourType(array);
 You can study the list of other functions available for arrays in the file [`clib/src/array.h`](https://github.com/vSEK1RO/clib/blob/main/src/array.h)
 
 [:arrow_up:Shedule](https://github.com/vSEK1RO/clib/tree/main#schedule)
+
+---
 
 ## [Pointer_arrays](https://github.com/vSEK1RO/clib/blob/main/src/ptrarr.h)
 
@@ -80,6 +90,8 @@ You can study the list of other functions available for pointer arrays in the fi
 
 [:arrow_up:Shedule](https://github.com/vSEK1RO/clib/tree/main#schedule)
 
+---
+
 ## [Strings](https://github.com/vSEK1RO/clib/blob/main/src/string.h)
 
 The header file is included without additional macros. The string is an array of type char, but does not store its length. The end of a line is uniquely identified by adding a `'\0'` terminating null character. In the length value that we pass to the function `str_init(uint64_t len)` `'\0'` the character does not need to be taken into account:
@@ -100,6 +112,8 @@ if you want to create a string equal to a constant C string, then use the functi
 You can study the list of other functions available for strings in the file [`clib/src/string.h`](https://github.com/vSEK1RO/clib/blob/main/src/string.h)
 
 [:arrow_up:Shedule](https://github.com/vSEK1RO/clib/tree/main#schedule)
+
+---
 
 ## [Number_systems](https://github.com/vSEK1RO/clib/blob/main/src/numsys.h)
 
