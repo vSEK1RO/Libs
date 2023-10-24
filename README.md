@@ -13,6 +13,7 @@ git clone https://github.com/vSEK1RO/clib
 * [array.h:](https://github.com/vSEK1RO/clib/tree/main#Arrays) working with arrays
 * [ptrarr.h:](https://github.com/vSEK1RO/clib/tree/main#Pointer_arrays) working with pointer arrays
 * [string.h:](https://github.com/vSEK1RO/clib/tree/main#Strings) working with strings (c like with '\0' at the end of string)
+* [numsys.h:](https://github.com/vSEK1RO/clib/tree/main#Number_systems) converting numbers to strings with a number system
 
 ## [Arrays](https://github.com/vSEK1RO/clib/blob/main/src/array.h)
 
@@ -58,11 +59,11 @@ The functions are the same as for arrays, but you cannot use `count, countArr, f
 
 Using an array of pointers and regular array, you can create and use two-dimensional arrays. Here's an example code that creates a two-dimensional array filled from 0 to 99:
 ```c
-#include <stdio.h>
 #define PTRARR_TYPE int
 #include "clib/src/ptrarr.h"
 #define ARR_TYPE int
 #include "clib/src/array.h"
+#include <stdio.h>
 int main(){
     int ** a = ptrarr_init_int(10);
     for(int i=0;i<ptrarr_len_int(a);i++){
@@ -84,6 +85,7 @@ You can study the list of other functions available for pointer arrays in the fi
 The header file is included without additional macros. The string is an array of type char, but does not store its length. The end of a line is uniquely identified by adding a `'\0'` terminating null character. In the length value that we pass to the function `str_init(uint64_t len)` `'\0'` the character does not need to be taken into account:
 ```c
 #include "clib/src/string.h"
+#include <stdio.h>
 int main(){
     char * string = str_init(len);
     //will create a char array of (len+1) elements, where (len+1)th is the '\0' character
@@ -96,5 +98,25 @@ if you want to create a string equal to a constant C string, then use the functi
     //will output the line 123abc
 ```
 You can study the list of other functions available for strings in the file [`clib/src/string.h`](https://github.com/vSEK1RO/clib/blob/main/src/string.h)
+
+[:arrow_up:Shedule](https://github.com/vSEK1RO/clib/tree/main#schedule)
+
+## [Number_systems](https://github.com/vSEK1RO/clib/blob/main/src/numsys.h)
+
+Using the functions `numsys_dtoc`, `numsys_ctod`, `numsys_ntos`, `numsys_ston`, you can convert digits to symbols, symbols to digits, numbers to strings, strings to numbers in a specific number system. Examples of use below:
+```c
+#include "clib/src/numsys.h"
+#include <stdio.h>
+int main(){
+    printf("%c ", numsys_dtoc(10));
+    printf("%ld ", numsys_ctod('F'));
+    printf("%s ", numsys_ntos(4095, 16));
+    printf("%ld", numsys_ston("-1010",2));
+    //will output the line A 15 FFF -10
+}
+```
+Floating point numbers are not supported.
+
+You can study the list of other functions available for strings in the file [`clib/src/numsys.h`](https://github.com/vSEK1RO/clib/blob/main/src/numsys.h)
 
 [:arrow_up:Shedule](https://github.com/vSEK1RO/clib/tree/main#schedule)
