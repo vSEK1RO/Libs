@@ -146,11 +146,14 @@ uint64_t ARR_FUNC(ARR_TYPE,findArr)(ARR_TYPE * a, ARR_TYPE * b, uint64_t entry)
 {
     entry%=ARR_FUNC(ARR_TYPE,len)(a)+1;
     uint64_t i=-1;
+    ARR_TYPE * c;
     while(entry && i!=(ARR_FUNC(ARR_TYPE,len)(a)-ARR_FUNC(ARR_TYPE,len)(b))){
         i++;
-        if(ARR_FUNC(ARR_TYPE,isEqual)(ARR_FUNC(ARR_TYPE,substr)(a,i,i+ARR_FUNC(ARR_TYPE,len)(b)),b)){
+        c=ARR_FUNC(ARR_TYPE,substr)(a,i,i+ARR_FUNC(ARR_TYPE,len)(b));
+        if(ARR_FUNC(ARR_TYPE,isEqual)(c,b)){
             entry--;
         }
+        ARR_FUNC(ARR_TYPE,del)(c);
     }
     return (entry!=0?-1:i);
 }
@@ -169,10 +172,13 @@ uint64_t ARR_FUNC(ARR_TYPE,count)(ARR_TYPE * a, ARR_TYPE n)
 uint64_t ARR_FUNC(ARR_TYPE,countArr)(ARR_TYPE * a, ARR_TYPE * b)
 {
     uint64_t c=0;
+    ARR_TYPE * d;
     for(uint64_t i=0;i<ARR_FUNC(ARR_TYPE,len)(a)-ARR_FUNC(ARR_TYPE,len)(b);i++){
-        if(ARR_FUNC(ARR_TYPE,isEqual)(ARR_FUNC(ARR_TYPE,substr)(a,i,i+ARR_FUNC(ARR_TYPE,len)(b)),b)){
+        d=ARR_FUNC(ARR_TYPE,substr)(a,i,i+ARR_FUNC(ARR_TYPE,len)(b));
+        if(ARR_FUNC(ARR_TYPE,isEqual)(d,b)){
             c++;
         }
+        ARR_FUNC(ARR_TYPE,del)(d);
     }
     return c;
 }
@@ -243,7 +249,14 @@ void ARR_FUNC(ARR_TYPE,ins)(ARR_TYPE ** a, ARR_TYPE n, uint64_t i)
 void ARR_FUNC(ARR_TYPE,insArr)(ARR_TYPE ** a, ARR_TYPE * b, uint64_t i)
 {
     i%=ARR_FUNC(ARR_TYPE,len)(*a)+1;
-    *a=ARR_FUNC(ARR_TYPE,concat)(ARR_FUNC(ARR_TYPE,concat)(ARR_FUNC(ARR_TYPE,substr)(*a,0,i),b),ARR_FUNC(ARR_TYPE,substr)(*a,i,ARR_FUNC(ARR_TYPE,len)(*a)));
+    ARR_TYPE * c, * d, * e;
+    c=ARR_FUNC(ARR_TYPE,substr)(*a,0,i);
+    d=ARR_FUNC(ARR_TYPE,concat)(c,b);
+    e=ARR_FUNC(ARR_TYPE,substr)(*a,i,ARR_FUNC(ARR_TYPE,len)(*a));
+    *a=ARR_FUNC(ARR_TYPE,concat)(d,e);
+    ARR_FUNC(ARR_TYPE,del)(c);
+    ARR_FUNC(ARR_TYPE,del)(d);
+    ARR_FUNC(ARR_TYPE,del)(e);
 }
 
 void ARR_FUNC(ARR_TYPE,repl)(ARR_TYPE ** a, ARR_TYPE n, uint64_t i1, uint64_t i2)

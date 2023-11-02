@@ -173,7 +173,14 @@ void PTRARR_FUNC(PTRARR_TYPE,ins)(PTRARR_TYPE *** a, PTRARR_TYPE * n, uint64_t i
 void PTRARR_FUNC(PTRARR_TYPE,insArr)(PTRARR_TYPE *** a, PTRARR_TYPE ** b, uint64_t i)
 {
     i%=PTRARR_FUNC(PTRARR_TYPE,len)(*a)+1;
-    *a=PTRARR_FUNC(PTRARR_TYPE,concat)(PTRARR_FUNC(PTRARR_TYPE,concat)(PTRARR_FUNC(PTRARR_TYPE,substr)(*a,0,i),b),PTRARR_FUNC(PTRARR_TYPE,substr)(*a,i,PTRARR_FUNC(PTRARR_TYPE,len)(*a)));
+    PTRARR_TYPE ** c, ** d, ** e;
+    c=PTRARR_FUNC(PTRARR_TYPE,substr)(*a,0,i);
+    d=PTRARR_FUNC(PTRARR_TYPE,concat)(c,b);
+    e=PTRARR_FUNC(PTRARR_TYPE,substr)(*a,i,PTRARR_FUNC(PTRARR_TYPE,len)(*a));
+    *a=PTRARR_FUNC(PTRARR_TYPE,concat)(d,e);
+    PTRARR_FUNC(PTRARR_TYPE,del)(c);
+    PTRARR_FUNC(PTRARR_TYPE,del)(d);
+    PTRARR_FUNC(PTRARR_TYPE,del)(e);
 }
 
 void PTRARR_FUNC(PTRARR_TYPE,repl)(PTRARR_TYPE *** a, PTRARR_TYPE * n, uint64_t i1, uint64_t i2)
