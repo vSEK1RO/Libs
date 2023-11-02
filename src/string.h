@@ -7,6 +7,7 @@ char * str_init(uint64_t len);
 char * str_cast(const char * a);
 uint64_t str_len(char * a);
 void str_del(char * a);
+void str_copy(char ** a, char * b);
 uint8_t str_isEqual(char * a, char * b);
 void str_swap(char * a, uint64_t i1, uint64_t i2);
 void str_rearr(char * a, uint64_t i1, uint64_t i2);

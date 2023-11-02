@@ -37,6 +37,14 @@ void str_del(char * a)
     free((void *)a);
 }
 
+void str_copy(char ** a, char * b)
+{
+    *a = str_init(str_len(b));
+    for(uint64_t i=0;i<str_len(b);i++){
+        (*a)[i]=b[i];
+    }
+}
+
 uint8_t str_isEqual(char * a, char * b)
 {
     if(str_len(a)!=str_len(b)){

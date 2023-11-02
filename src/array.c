@@ -40,6 +40,14 @@ void ARR_FUNC(ARR_TYPE,del)(ARR_TYPE * a)
     free((void *)(a-memlen));
 }
 
+void ARR_FUNC(ARR_TYPE,copy)(ARR_TYPE ** a, ARR_TYPE * b)
+{
+    *a = ARR_FUNC(ARR_TYPE,init)(ARR_FUNC(ARR_TYPE,len)(b));
+    for(uint64_t i=0;i<ARR_FUNC(ARR_TYPE,len)(b);i++){
+        (*a)[i]=b[i];
+    }
+}
+
 ARR_TYPE ARR_FUNC(ARR_TYPE,max)(ARR_TYPE * a)
 {
     ARR_TYPE max=a[0];

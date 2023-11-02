@@ -9,6 +9,7 @@
 ARR_TYPE * ARR_FUNC(ARR_TYPE, init)(uint64_t len);
 uint64_t ARR_FUNC(ARR_TYPE, len)(ARR_TYPE * a);
 void ARR_FUNC(ARR_TYPE, del)(ARR_TYPE * a);
+void ARR_FUNC(ARR_TYPE, copy)(ARR_TYPE ** a, ARR_TYPE * b);
 ARR_TYPE ARR_FUNC(ARR_TYPE, max)(ARR_TYPE * a);
 ARR_TYPE ARR_FUNC(ARR_TYPE, min)(ARR_TYPE * a);
 uint8_t ARR_FUNC(ARR_TYPE, isEqual)(ARR_TYPE * a, ARR_TYPE * b);
