@@ -37,13 +37,15 @@ char * numsys_ntos(int64_t num, uint8_t base)
             str_puf(&str, numsys_dtoc(num%base));
             num/=base;
         }
-    }else{
+    }else if(num<0){
         num*=-1;
         while(num){
             str_puf(&str, numsys_dtoc(num%base));
             num/=base;
         }
         str_puf(&str, '-');
+    }else if(num==0){
+        str_puf(&str, '0');
     }
     return str;
 }
