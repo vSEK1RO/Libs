@@ -1,5 +1,5 @@
-#ifndef NUMSYS_H
-#define NUMSYS_H
+#ifndef CLIB_NUMSYS_H
+#define CLIB_NUMSYS_H
 
 #include <inttypes.h>
 

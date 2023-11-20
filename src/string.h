@@ -1,5 +1,5 @@
-#ifndef ITERABLE_STRING_H
-#define ITERABLE_STRING_H
+#ifndef CLIB_ITERABLE_STRING_H
+#define CLIB_ITERABLE_STRING_H
 
 #include <inttypes.h>
 

@@ -3,37 +3,40 @@
 #endif
 
 #include <inttypes.h>
-#define ARR_TEMPLATE(type, name) arr_  ## name ## _ ## type
-#define ARR_FUNC(...) ARR_TEMPLATE(__VA_ARGS__)
+#define ARR_FUNC_TEMPLATE(type, name) arr_  ## name ## _ ## type
+#define ARR_FUNC(...) ARR_FUNC_TEMPLATE(__VA_ARGS__)
+#define ARR_TYPEDEF_TEMPLATE(type) __attribute__ array_ ## type
+#define ARR_TYPEDEF(...) ARR_TYPEDEF_TEMPLATE(__VA_ARGS__)
+typedef ARR_TYPE ARR_TYPEDEF(ARR_TYPE)
 
-ARR_TYPE * ARR_FUNC(ARR_TYPE, init)(uint64_t len);
-uint64_t ARR_FUNC(ARR_TYPE, len)(ARR_TYPE * a);
-void ARR_FUNC(ARR_TYPE, del)(ARR_TYPE * a);
-void ARR_FUNC(ARR_TYPE, copy)(ARR_TYPE ** a, ARR_TYPE * b);
-ARR_TYPE ARR_FUNC(ARR_TYPE, max)(ARR_TYPE * a);
-ARR_TYPE ARR_FUNC(ARR_TYPE, min)(ARR_TYPE * a);
-uint8_t ARR_FUNC(ARR_TYPE, isEqual)(ARR_TYPE * a, ARR_TYPE * b);
-void ARR_FUNC(ARR_TYPE, swap)(ARR_TYPE * a, uint64_t i1, uint64_t i2);
-void ARR_FUNC(ARR_TYPE, rearr)(ARR_TYPE * a, uint64_t i1, uint64_t i2);
-void ARR_FUNC(ARR_TYPE, erase)(ARR_TYPE ** a, uint64_t i1, uint64_t i2);
-ARR_TYPE * ARR_FUNC(ARR_TYPE, substr)(ARR_TYPE * a, uint64_t i1, uint64_t i2);
-uint64_t ARR_FUNC(ARR_TYPE, find)(ARR_TYPE * a, ARR_TYPE key, uint64_t entry);
-uint64_t ARR_FUNC(ARR_TYPE, findArr)(ARR_TYPE * a, ARR_TYPE * b, uint64_t entry);
-uint64_t ARR_FUNC(ARR_TYPE, count)(ARR_TYPE * a, ARR_TYPE n);
-uint64_t ARR_FUNC(ARR_TYPE, countArr)(ARR_TYPE * a, ARR_TYPE * b);
-void ARR_FUNC(ARR_TYPE, pob)(ARR_TYPE ** a);
-void ARR_FUNC(ARR_TYPE, pub)(ARR_TYPE ** a, ARR_TYPE n);
-void ARR_FUNC(ARR_TYPE, pof)(ARR_TYPE ** a);
-void ARR_FUNC(ARR_TYPE, puf)(ARR_TYPE ** a, ARR_TYPE n);
-ARR_TYPE * ARR_FUNC(ARR_TYPE, concat)(ARR_TYPE * a, ARR_TYPE * b);
-void ARR_FUNC(ARR_TYPE, ins)(ARR_TYPE ** a, ARR_TYPE n, uint64_t i);
-void ARR_FUNC(ARR_TYPE, insArr)(ARR_TYPE ** a, ARR_TYPE * b, uint64_t i);
-void ARR_FUNC(ARR_TYPE, repl)(ARR_TYPE ** a, ARR_TYPE n, uint64_t i1, uint64_t i2);
-void ARR_FUNC(ARR_TYPE, replArr)(ARR_TYPE ** a, ARR_TYPE * b, uint64_t i1, uint64_t i2);
-void ARR_FUNC(ARR_TYPE, reverse)(ARR_TYPE * a);
+ARR_TYPEDEF(ARR_TYPE) * ARR_FUNC(ARR_TYPE, init)(uint64_t len);
+uint64_t ARR_FUNC(ARR_TYPE, len)(ARR_TYPEDEF(ARR_TYPE) * a);
+void ARR_FUNC(ARR_TYPE, del)(ARR_TYPEDEF(ARR_TYPE) * a);
+void ARR_FUNC(ARR_TYPE, copy)(ARR_TYPEDEF(ARR_TYPE) ** a, ARR_TYPEDEF(ARR_TYPE) * b);
+ARR_TYPEDEF(ARR_TYPE) ARR_FUNC(ARR_TYPE, max)(ARR_TYPEDEF(ARR_TYPE) * a);
+ARR_TYPEDEF(ARR_TYPE) ARR_FUNC(ARR_TYPE, min)(ARR_TYPEDEF(ARR_TYPE) * a);
+uint8_t ARR_FUNC(ARR_TYPE, isEqual)(ARR_TYPEDEF(ARR_TYPE) * a, ARR_TYPEDEF(ARR_TYPE) * b);
+void ARR_FUNC(ARR_TYPE, swap)(ARR_TYPEDEF(ARR_TYPE) * a, uint64_t i1, uint64_t i2);
+void ARR_FUNC(ARR_TYPE, rearr)(ARR_TYPEDEF(ARR_TYPE) * a, uint64_t i1, uint64_t i2);
+void ARR_FUNC(ARR_TYPE, erase)(ARR_TYPEDEF(ARR_TYPE) ** a, uint64_t i1, uint64_t i2);
+ARR_TYPEDEF(ARR_TYPE) * ARR_FUNC(ARR_TYPE, substr)(ARR_TYPEDEF(ARR_TYPE) * a, uint64_t i1, uint64_t i2);
+uint64_t ARR_FUNC(ARR_TYPE, find)(ARR_TYPEDEF(ARR_TYPE) * a, ARR_TYPEDEF(ARR_TYPE) key, uint64_t entry);
+uint64_t ARR_FUNC(ARR_TYPE, findArr)(ARR_TYPEDEF(ARR_TYPE) * a, ARR_TYPEDEF(ARR_TYPE) * b, uint64_t entry);
+uint64_t ARR_FUNC(ARR_TYPE, count)(ARR_TYPEDEF(ARR_TYPE) * a, ARR_TYPEDEF(ARR_TYPE) n);
+uint64_t ARR_FUNC(ARR_TYPE, countArr)(ARR_TYPEDEF(ARR_TYPE) * a, ARR_TYPEDEF(ARR_TYPE) * b);
+void ARR_FUNC(ARR_TYPE, pob)(ARR_TYPEDEF(ARR_TYPE) ** a);
+void ARR_FUNC(ARR_TYPE, pub)(ARR_TYPEDEF(ARR_TYPE) ** a, ARR_TYPEDEF(ARR_TYPE) n);
+void ARR_FUNC(ARR_TYPE, pof)(ARR_TYPEDEF(ARR_TYPE) ** a);
+void ARR_FUNC(ARR_TYPE, puf)(ARR_TYPEDEF(ARR_TYPE) ** a, ARR_TYPEDEF(ARR_TYPE) n);
+ARR_TYPEDEF(ARR_TYPE) * ARR_FUNC(ARR_TYPE, concat)(ARR_TYPEDEF(ARR_TYPE) * a, ARR_TYPEDEF(ARR_TYPE) * b);
+void ARR_FUNC(ARR_TYPE, ins)(ARR_TYPEDEF(ARR_TYPE) ** a, ARR_TYPEDEF(ARR_TYPE) n, uint64_t i);
+void ARR_FUNC(ARR_TYPE, insArr)(ARR_TYPEDEF(ARR_TYPE) ** a, ARR_TYPEDEF(ARR_TYPE) * b, uint64_t i);
+void ARR_FUNC(ARR_TYPE, repl)(ARR_TYPEDEF(ARR_TYPE) ** a, ARR_TYPEDEF(ARR_TYPE) n, uint64_t i1, uint64_t i2);
+void ARR_FUNC(ARR_TYPE, replArr)(ARR_TYPEDEF(ARR_TYPE) ** a, ARR_TYPEDEF(ARR_TYPE) * b, uint64_t i1, uint64_t i2);
+void ARR_FUNC(ARR_TYPE, reverse)(ARR_TYPEDEF(ARR_TYPE) * a);
 
 #include "array.c"
 
 #undef ARR_FUNC
 #undef ARR_TEMPLATE
-#undef ARR_TYPE
+#undef ARR_TYPEDEF(ARR_TYPE)

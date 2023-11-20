@@ -1,18 +1,18 @@
 #include <stdlib.h>
 
-ARR_TYPE * ARR_FUNC(ARR_TYPE,init)(uint64_t len)
+ARR_TYPEDEF(ARR_TYPE) * ARR_FUNC(ARR_TYPE,init)(uint64_t len)
 {
     uint64_t memlen;
-    if(sizeof(ARR_TYPE)>sizeof(uint64_t)){
+    if(sizeof(ARR_TYPEDEF(ARR_TYPE))>sizeof(uint64_t)){
         memlen=1;
     }else{
-        if(sizeof(uint64_t)%sizeof(ARR_TYPE)==0){
-            memlen=sizeof(uint64_t)/sizeof(ARR_TYPE);
+        if(sizeof(uint64_t)%sizeof(ARR_TYPEDEF(ARR_TYPE))==0){
+            memlen=sizeof(uint64_t)/sizeof(ARR_TYPEDEF(ARR_TYPE));
         }else{
-            memlen=sizeof(uint64_t)/sizeof(ARR_TYPE)+1;
+            memlen=sizeof(uint64_t)/sizeof(ARR_TYPEDEF(ARR_TYPE))+1;
         }
     }
-    ARR_TYPE * a=(ARR_TYPE *)calloc(sizeof(ARR_TYPE),len+memlen)+memlen;
+    ARR_TYPEDEF(ARR_TYPE) * a=(ARR_TYPEDEF(ARR_TYPE) *)calloc(sizeof(ARR_TYPEDEF(ARR_TYPE)),len+memlen)+memlen;
     ((uint64_t *)a)[-1]=len;
     for(uint64_t i=0;i<len;i++){
         a[i]=0;
@@ -20,27 +20,27 @@ ARR_TYPE * ARR_FUNC(ARR_TYPE,init)(uint64_t len)
     return a;
 }
 
-uint64_t ARR_FUNC(ARR_TYPE,len)(ARR_TYPE * a)
+uint64_t ARR_FUNC(ARR_TYPE,len)(ARR_TYPEDEF(ARR_TYPE) * a)
 {
     return ((uint64_t *)a)[-1];
 }
 
-void ARR_FUNC(ARR_TYPE,del)(ARR_TYPE * a)
+void ARR_FUNC(ARR_TYPE,del)(ARR_TYPEDEF(ARR_TYPE) * a)
 {
     uint64_t memlen;
-    if(sizeof(ARR_TYPE)>sizeof(uint64_t)){
+    if(sizeof(ARR_TYPEDEF(ARR_TYPE))>sizeof(uint64_t)){
         memlen=1;
     }else{
-        if(sizeof(uint64_t)%sizeof(ARR_TYPE)==0){
-            memlen=sizeof(uint64_t)/sizeof(ARR_TYPE);
+        if(sizeof(uint64_t)%sizeof(ARR_TYPEDEF(ARR_TYPE))==0){
+            memlen=sizeof(uint64_t)/sizeof(ARR_TYPEDEF(ARR_TYPE));
         }else{
-            memlen=sizeof(uint64_t)/sizeof(ARR_TYPE)+1;
+            memlen=sizeof(uint64_t)/sizeof(ARR_TYPEDEF(ARR_TYPE))+1;
         }
     }
     free((void *)(a-memlen));
 }
 
-void ARR_FUNC(ARR_TYPE,copy)(ARR_TYPE ** a, ARR_TYPE * b)
+void ARR_FUNC(ARR_TYPE,copy)(ARR_TYPEDEF(ARR_TYPE) ** a, ARR_TYPEDEF(ARR_TYPE) * b)
 {
     *a = ARR_FUNC(ARR_TYPE,init)(ARR_FUNC(ARR_TYPE,len)(b));
     for(uint64_t i=0;i<ARR_FUNC(ARR_TYPE,len)(b);i++){
@@ -48,9 +48,9 @@ void ARR_FUNC(ARR_TYPE,copy)(ARR_TYPE ** a, ARR_TYPE * b)
     }
 }
 
-ARR_TYPE ARR_FUNC(ARR_TYPE,max)(ARR_TYPE * a)
+ARR_TYPEDEF(ARR_TYPE) ARR_FUNC(ARR_TYPE,max)(ARR_TYPEDEF(ARR_TYPE) * a)
 {
-    ARR_TYPE max=a[0];
+    ARR_TYPEDEF(ARR_TYPE) max=a[0];
     for(uint64_t i=0;i<ARR_FUNC(ARR_TYPE,len)(a);i++){
         if(max<a[i]){
             max=a[i];
@@ -59,9 +59,9 @@ ARR_TYPE ARR_FUNC(ARR_TYPE,max)(ARR_TYPE * a)
     return max;
 }
 
-ARR_TYPE ARR_FUNC(ARR_TYPE,min)(ARR_TYPE * a)
+ARR_TYPEDEF(ARR_TYPE) ARR_FUNC(ARR_TYPE,min)(ARR_TYPEDEF(ARR_TYPE) * a)
 {
-    ARR_TYPE min=a[0];
+    ARR_TYPEDEF(ARR_TYPE) min=a[0];
     for(uint64_t i=0;i<ARR_FUNC(ARR_TYPE,len)(a);i++){
         if(min>a[i]){
             min=a[i];
@@ -70,7 +70,7 @@ ARR_TYPE ARR_FUNC(ARR_TYPE,min)(ARR_TYPE * a)
     return min;
 }
 
-uint8_t ARR_FUNC(ARR_TYPE,isEqual)(ARR_TYPE * a, ARR_TYPE * b)
+uint8_t ARR_FUNC(ARR_TYPE,isEqual)(ARR_TYPEDEF(ARR_TYPE) * a, ARR_TYPEDEF(ARR_TYPE) * b)
 {
     if(ARR_FUNC(ARR_TYPE,len)(a)!=ARR_FUNC(ARR_TYPE,len)(b)){
         return 0;
@@ -83,31 +83,31 @@ uint8_t ARR_FUNC(ARR_TYPE,isEqual)(ARR_TYPE * a, ARR_TYPE * b)
     return 1;
 }
 
-void ARR_FUNC(ARR_TYPE,swap)(ARR_TYPE * a, uint64_t i1, uint64_t i2)
+void ARR_FUNC(ARR_TYPE,swap)(ARR_TYPEDEF(ARR_TYPE) * a, uint64_t i1, uint64_t i2)
 {
     i1%=ARR_FUNC(ARR_TYPE,len)(a);
     i2%=ARR_FUNC(ARR_TYPE,len)(a);
-    ARR_TYPE buff = a[i1];
+    ARR_TYPEDEF(ARR_TYPE) buff = a[i1];
     a[i1]=a[i2];
     a[i2]=buff;
 }
 
-void ARR_FUNC(ARR_TYPE,rearr)(ARR_TYPE * a, uint64_t i1, uint64_t i2)
+void ARR_FUNC(ARR_TYPE,rearr)(ARR_TYPEDEF(ARR_TYPE) * a, uint64_t i1, uint64_t i2)
 {
     i1%=ARR_FUNC(ARR_TYPE,len)(a);
     i2%=ARR_FUNC(ARR_TYPE,len)(a);
-    ARR_TYPE buff=a[i1];
+    ARR_TYPEDEF(ARR_TYPE) buff=a[i1];
     for(uint64_t i=i1;i>i2;i--){
         a[i]=a[i-1];
     }
     a[i2]=buff;
 }
 
-void ARR_FUNC(ARR_TYPE,erase)(ARR_TYPE ** a, uint64_t i1, uint64_t i2)
+void ARR_FUNC(ARR_TYPE,erase)(ARR_TYPEDEF(ARR_TYPE) ** a, uint64_t i1, uint64_t i2)
 {
     i1%=ARR_FUNC(ARR_TYPE,len)(*a)+1;
     i2%=ARR_FUNC(ARR_TYPE,len)(*a)+1;
-    ARR_TYPE * b=ARR_FUNC(ARR_TYPE,init)(ARR_FUNC(ARR_TYPE,len)(*a)-i2+i1);
+    ARR_TYPEDEF(ARR_TYPE) * b=ARR_FUNC(ARR_TYPE,init)(ARR_FUNC(ARR_TYPE,len)(*a)-i2+i1);
     for(uint64_t i=0;i<i1;i++){
         b[i]=(*a)[i];
     }
@@ -118,18 +118,18 @@ void ARR_FUNC(ARR_TYPE,erase)(ARR_TYPE ** a, uint64_t i1, uint64_t i2)
     *a=b;
 }
 
-ARR_TYPE * ARR_FUNC(ARR_TYPE,substr)(ARR_TYPE * a, uint64_t i1, uint64_t i2)
+ARR_TYPEDEF(ARR_TYPE) * ARR_FUNC(ARR_TYPE,substr)(ARR_TYPEDEF(ARR_TYPE) * a, uint64_t i1, uint64_t i2)
 {
     i1%=ARR_FUNC(ARR_TYPE,len)(a)+1;
     i2%=ARR_FUNC(ARR_TYPE,len)(a)+1;
-    ARR_TYPE * b=ARR_FUNC(ARR_TYPE,init)(i2-i1);
+    ARR_TYPEDEF(ARR_TYPE) * b=ARR_FUNC(ARR_TYPE,init)(i2-i1);
     for(uint64_t i=0;i<i2-i1;i++){
         b[i]=a[i+i1];
     }
     return b;
 }
 
-uint64_t ARR_FUNC(ARR_TYPE,find)(ARR_TYPE * a, ARR_TYPE key, uint64_t entry)
+uint64_t ARR_FUNC(ARR_TYPE,find)(ARR_TYPEDEF(ARR_TYPE) * a, ARR_TYPEDEF(ARR_TYPE) key, uint64_t entry)
 {
     entry%=ARR_FUNC(ARR_TYPE,len)(a)+1;
     uint64_t i=-1;
@@ -142,11 +142,11 @@ uint64_t ARR_FUNC(ARR_TYPE,find)(ARR_TYPE * a, ARR_TYPE key, uint64_t entry)
     return (entry!=0?-1:i);
 }
 
-uint64_t ARR_FUNC(ARR_TYPE,findArr)(ARR_TYPE * a, ARR_TYPE * b, uint64_t entry)
+uint64_t ARR_FUNC(ARR_TYPE,findArr)(ARR_TYPEDEF(ARR_TYPE) * a, ARR_TYPEDEF(ARR_TYPE) * b, uint64_t entry)
 {
     entry%=ARR_FUNC(ARR_TYPE,len)(a)+1;
     uint64_t i=-1;
-    ARR_TYPE * c;
+    ARR_TYPEDEF(ARR_TYPE) * c;
     while(entry && i!=(ARR_FUNC(ARR_TYPE,len)(a)-ARR_FUNC(ARR_TYPE,len)(b))){
         i++;
         c=ARR_FUNC(ARR_TYPE,substr)(a,i,i+ARR_FUNC(ARR_TYPE,len)(b));
@@ -158,7 +158,7 @@ uint64_t ARR_FUNC(ARR_TYPE,findArr)(ARR_TYPE * a, ARR_TYPE * b, uint64_t entry)
     return (entry!=0?-1:i);
 }
 
-uint64_t ARR_FUNC(ARR_TYPE,count)(ARR_TYPE * a, ARR_TYPE n)
+uint64_t ARR_FUNC(ARR_TYPE,count)(ARR_TYPEDEF(ARR_TYPE) * a, ARR_TYPEDEF(ARR_TYPE) n)
 {
     uint64_t c=0;
     for(uint64_t i=0;i<ARR_FUNC(ARR_TYPE,len)(a);i++){
@@ -169,10 +169,10 @@ uint64_t ARR_FUNC(ARR_TYPE,count)(ARR_TYPE * a, ARR_TYPE n)
     return c;
 }
 
-uint64_t ARR_FUNC(ARR_TYPE,countArr)(ARR_TYPE * a, ARR_TYPE * b)
+uint64_t ARR_FUNC(ARR_TYPE,countArr)(ARR_TYPEDEF(ARR_TYPE) * a, ARR_TYPEDEF(ARR_TYPE) * b)
 {
     uint64_t c=0;
-    ARR_TYPE * d;
+    ARR_TYPEDEF(ARR_TYPE) * d;
     for(uint64_t i=0;i<ARR_FUNC(ARR_TYPE,len)(a)-ARR_FUNC(ARR_TYPE,len)(b);i++){
         d=ARR_FUNC(ARR_TYPE,substr)(a,i,i+ARR_FUNC(ARR_TYPE,len)(b));
         if(ARR_FUNC(ARR_TYPE,isEqual)(d,b)){
@@ -183,10 +183,10 @@ uint64_t ARR_FUNC(ARR_TYPE,countArr)(ARR_TYPE * a, ARR_TYPE * b)
     return c;
 }
 
-void ARR_FUNC(ARR_TYPE,pob)(ARR_TYPE ** a)
+void ARR_FUNC(ARR_TYPE,pob)(ARR_TYPEDEF(ARR_TYPE) ** a)
 {
     if(ARR_FUNC(ARR_TYPE,len)(*a)!=0){
-        ARR_TYPE * b=ARR_FUNC(ARR_TYPE,init)(ARR_FUNC(ARR_TYPE,len)(*a)-1);
+        ARR_TYPEDEF(ARR_TYPE) * b=ARR_FUNC(ARR_TYPE,init)(ARR_FUNC(ARR_TYPE,len)(*a)-1);
         for(uint64_t i=0;i<ARR_FUNC(ARR_TYPE,len)(*a)-1;i++){
             b[i]=(*a)[i];
         }
@@ -195,9 +195,9 @@ void ARR_FUNC(ARR_TYPE,pob)(ARR_TYPE ** a)
     }
 }
 
-void ARR_FUNC(ARR_TYPE,pub)(ARR_TYPE ** a, ARR_TYPE n)
+void ARR_FUNC(ARR_TYPE,pub)(ARR_TYPEDEF(ARR_TYPE) ** a, ARR_TYPEDEF(ARR_TYPE) n)
 {
-    ARR_TYPE * b=ARR_FUNC(ARR_TYPE,init)(ARR_FUNC(ARR_TYPE,len)(*a)+1);
+    ARR_TYPEDEF(ARR_TYPE) * b=ARR_FUNC(ARR_TYPE,init)(ARR_FUNC(ARR_TYPE,len)(*a)+1);
     for(uint64_t i=0;i<ARR_FUNC(ARR_TYPE,len)(*a);i++){
         b[i]=(*a)[i];
     }
@@ -205,10 +205,10 @@ void ARR_FUNC(ARR_TYPE,pub)(ARR_TYPE ** a, ARR_TYPE n)
     *a=b;
 }
 
-void ARR_FUNC(ARR_TYPE,pof)(ARR_TYPE ** a)
+void ARR_FUNC(ARR_TYPE,pof)(ARR_TYPEDEF(ARR_TYPE) ** a)
 {
     if(ARR_FUNC(ARR_TYPE,len)(*a)!=0){
-        ARR_TYPE * b=ARR_FUNC(ARR_TYPE,init)(ARR_FUNC(ARR_TYPE,len)(*a)-1);
+        ARR_TYPEDEF(ARR_TYPE) * b=ARR_FUNC(ARR_TYPE,init)(ARR_FUNC(ARR_TYPE,len)(*a)-1);
         for(uint64_t i=0;i<ARR_FUNC(ARR_TYPE,len)(*a)-1;i++){
             b[i]=(*a)[i+1];
         }
@@ -217,9 +217,9 @@ void ARR_FUNC(ARR_TYPE,pof)(ARR_TYPE ** a)
     }
 }
 
-void ARR_FUNC(ARR_TYPE,puf)(ARR_TYPE ** a, ARR_TYPE n)
+void ARR_FUNC(ARR_TYPE,puf)(ARR_TYPEDEF(ARR_TYPE) ** a, ARR_TYPEDEF(ARR_TYPE) n)
 {
-    ARR_TYPE * b=ARR_FUNC(ARR_TYPE,init)(ARR_FUNC(ARR_TYPE,len)(*a)+1);
+    ARR_TYPEDEF(ARR_TYPE) * b=ARR_FUNC(ARR_TYPE,init)(ARR_FUNC(ARR_TYPE,len)(*a)+1);
     for(uint64_t i=0;i<ARR_FUNC(ARR_TYPE,len)(*a);i++){
         b[i+1]=(*a)[i];
     }
@@ -227,9 +227,9 @@ void ARR_FUNC(ARR_TYPE,puf)(ARR_TYPE ** a, ARR_TYPE n)
     *a=b;
 }
 
-ARR_TYPE * ARR_FUNC(ARR_TYPE,concat)(ARR_TYPE * a, ARR_TYPE * b)
+ARR_TYPEDEF(ARR_TYPE) * ARR_FUNC(ARR_TYPE,concat)(ARR_TYPEDEF(ARR_TYPE) * a, ARR_TYPEDEF(ARR_TYPE) * b)
 {
-    ARR_TYPE * c=ARR_FUNC(ARR_TYPE,init)(ARR_FUNC(ARR_TYPE,len)(a)+ARR_FUNC(ARR_TYPE,len)(b));
+    ARR_TYPEDEF(ARR_TYPE) * c=ARR_FUNC(ARR_TYPE,init)(ARR_FUNC(ARR_TYPE,len)(a)+ARR_FUNC(ARR_TYPE,len)(b));
     for(uint64_t i=0;i<ARR_FUNC(ARR_TYPE,len)(a);i++){
         c[i]=a[i];
     }
@@ -239,17 +239,17 @@ ARR_TYPE * ARR_FUNC(ARR_TYPE,concat)(ARR_TYPE * a, ARR_TYPE * b)
     return c;
 }
 
-void ARR_FUNC(ARR_TYPE,ins)(ARR_TYPE ** a, ARR_TYPE n, uint64_t i)
+void ARR_FUNC(ARR_TYPE,ins)(ARR_TYPEDEF(ARR_TYPE) ** a, ARR_TYPEDEF(ARR_TYPE) n, uint64_t i)
 {
     i%=ARR_FUNC(ARR_TYPE,len)(*a)+1;
     ARR_FUNC(ARR_TYPE,pub)(a,n);
     ARR_FUNC(ARR_TYPE,rearr)(*a,ARR_FUNC(ARR_TYPE,len)(*a)-1,i);
 }
 
-void ARR_FUNC(ARR_TYPE,insArr)(ARR_TYPE ** a, ARR_TYPE * b, uint64_t i)
+void ARR_FUNC(ARR_TYPE,insArr)(ARR_TYPEDEF(ARR_TYPE) ** a, ARR_TYPEDEF(ARR_TYPE) * b, uint64_t i)
 {
     i%=ARR_FUNC(ARR_TYPE,len)(*a)+1;
-    ARR_TYPE * c, * d, * e;
+    ARR_TYPEDEF(ARR_TYPE) * c, * d, * e;
     c=ARR_FUNC(ARR_TYPE,substr)(*a,0,i);
     d=ARR_FUNC(ARR_TYPE,concat)(c,b);
     e=ARR_FUNC(ARR_TYPE,substr)(*a,i,ARR_FUNC(ARR_TYPE,len)(*a));
@@ -259,7 +259,7 @@ void ARR_FUNC(ARR_TYPE,insArr)(ARR_TYPE ** a, ARR_TYPE * b, uint64_t i)
     ARR_FUNC(ARR_TYPE,del)(e);
 }
 
-void ARR_FUNC(ARR_TYPE,repl)(ARR_TYPE ** a, ARR_TYPE n, uint64_t i1, uint64_t i2)
+void ARR_FUNC(ARR_TYPE,repl)(ARR_TYPEDEF(ARR_TYPE) ** a, ARR_TYPEDEF(ARR_TYPE) n, uint64_t i1, uint64_t i2)
 {
     i1%=ARR_FUNC(ARR_TYPE,len)(*a)+1;
     i2%=ARR_FUNC(ARR_TYPE,len)(*a)+1;
@@ -267,7 +267,7 @@ void ARR_FUNC(ARR_TYPE,repl)(ARR_TYPE ** a, ARR_TYPE n, uint64_t i1, uint64_t i2
     ARR_FUNC(ARR_TYPE,ins)(a,n,i1);
 }
 
-void ARR_FUNC(ARR_TYPE,replArr)(ARR_TYPE ** a, ARR_TYPE * b, uint64_t i1, uint64_t i2)
+void ARR_FUNC(ARR_TYPE,replArr)(ARR_TYPEDEF(ARR_TYPE) ** a, ARR_TYPEDEF(ARR_TYPE) * b, uint64_t i1, uint64_t i2)
 {
     i1%=ARR_FUNC(ARR_TYPE,len)(*a)+1;
     i2%=ARR_FUNC(ARR_TYPE,len)(*a)+1;
@@ -275,7 +275,7 @@ void ARR_FUNC(ARR_TYPE,replArr)(ARR_TYPE ** a, ARR_TYPE * b, uint64_t i1, uint64
     ARR_FUNC(ARR_TYPE,insArr)(a,b,i1);
 }
 
-void ARR_FUNC(ARR_TYPE,reverse)(ARR_TYPE * a)
+void ARR_FUNC(ARR_TYPE,reverse)(ARR_TYPEDEF(ARR_TYPE) * a)
 {
     for(uint64_t i=0;i<ARR_FUNC(ARR_TYPE,len)(a)/2;i++){
         ARR_FUNC(ARR_TYPE,swap)(a,i,ARR_FUNC(ARR_TYPE,len)(a)-1-i);
