@@ -11,32 +11,11 @@ typedef void * clib_str;
 
 /************************************ FLAG ************************************/
 
-typedef enum {
-    clib_success,
-    clib_index,
-    clib_memory,
+typedef enum{
+    CLIB_SUCCESS,
+    CLIB_INDEX,
+    CLIB_MEMORY,
+    CLIB_ENDLOG,
 } clib_flag;
-
-/********************************** RESPONSE **********************************/
-
-typedef struct {
-    clib_flag flag;
-    //void mean no data
-} clib_resp_void;
-
-typedef struct {
-    clib_flag flag;
-    uint64_t item;
-} clib_resp_uint64;
-
-typedef struct {
-    clib_flag flag;
-    clib_item data;
-} clib_resp_item;
-
-typedef struct {
-    clib_flag flag;
-    clib_arr data;
-} clib_resp_arr;
 
 #endif
