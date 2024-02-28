@@ -26,6 +26,30 @@ clib_flag clib_general(){
             return CLIB_TEST_FAILED;
         }
     }
+//comt clib_arr_copy
+    clib_arr b;
+    clib_arr_copy(&b,a);
+    for(int i=0;i<clib_arr_len(&a);i++){
+        if(((int*)b)[i]!=((int*)a)[i]){
+            return CLIB_TEST_FAILED;
+        }
+    }
+//comt clib_arr_isEqual
+    if(!clib_arr_isEqual(&a,b)){
+        return CLIB_TEST_FAILED;
+    }
+//comt clib_arr_find
+    if(clib_arr_find(&b,10,1)!=-1)
+        return CLIB_TEST_FAILED;
+    if(clib_arr_find(&b,2,1)!=1)
+        return CLIB_TEST_FAILED;
+//comt clib_arr_findArr
+    clib_arr c;
+    clib_arr_cast(&c,3,sizeof(int),(int[]){2,3,4});
+    if(clib_arr_findArr(&b,c,10)!=-1)
+        return CLIB_TEST_FAILED;
+    if(clib_arr_findArr(&b,c,1)!=1)
+        return CLIB_TEST_FAILED;
     return CLIB_SUCCESS;
 }
 
