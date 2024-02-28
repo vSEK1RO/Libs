@@ -12,10 +12,19 @@ typedef void * clib_str;
 /************************************ FLAG ************************************/
 
 typedef enum{
+    //general
+    CLIB_FALSE = 0,
+    CLIB_TRUE = 1,
     CLIB_SUCCESS,
-    CLIB_INDEX,
-    CLIB_MEMORY,
-    CLIB_ENDLOG,
+    CLIB_UNNAMED,
+    CLIB_TYPE_INCORRECT,
+    CLIB_TEST_FAILED,
+    //array
+    CLIB_ARR_INDEX,
+    CLIB_ARR_MEMORY,
+    CLIB_ARR_NULL,
+    //string
+    
 } clib_flag;
 
 #endif
