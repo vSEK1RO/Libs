@@ -6,9 +6,6 @@
 clib_flag clib_arr_init(clib_arr * out, uint64_t len, uint64_t size)
 {
     clib_flag flag=CLIB_UNNAMED;
-    if(*out!=NULL){
-        clib_arr_del(out);
-    }
     *out=(clib_arr)((uint64_t*)malloc(size*len+sizeof(uint64_t)*2)+2);
     if(*out==NULL){
         flag=CLIB_ARR_MEMORY;
@@ -22,9 +19,6 @@ clib_flag clib_arr_init(clib_arr * out, uint64_t len, uint64_t size)
 clib_flag clib_arr_cast(clib_arr * out, uint64_t len, uint64_t size, void* arr)
 {
     clib_flag flag=CLIB_UNNAMED;
-    if(*out!=NULL){
-        clib_arr_del(out);
-    }
     flag=clib_arr_init(out,len,size);
     clib_mem_copy(*out,arr,len*size);
     return flag;
@@ -71,9 +65,6 @@ clib_flag clib_arr_copy(clib_arr * a, clib_arr b)
     if(b==NULL){
         flag=CLIB_ARR_NULL;
     }else{
-        if(a!=NULL){
-            clib_arr_del(a);
-        }
         flag=clib_arr_init(a,clib_arr_len(&b),clib_arr_size(&b));
         clib_mem_copy(*a,b,clib_arr_len(&b)*clib_arr_size(&b));
     }
@@ -95,35 +86,63 @@ clib_flag clib_arr_isEqual(clib_arr * a, clib_arr b)
 uint64_t clib_arr_find(clib_arr * a, clib_item key, uint64_t entry)
 {
     entry%=clib_arr_len(a)+1;
-    uint64_t i=-1;
+    uint64_t i=(uint64_t)-1;
     while(entry && i!=clib_arr_len(a)){
         i++;
         if(clib_mem_IsEqual(clib_arr_get(a,i),key,clib_arr_size(a))){
             entry--;
         }
     }
-    return entry!=0?-1:i;
+    return entry!=0?(uint64_t)-1:i;
 }
 uint64_t clib_arr_findArr(clib_arr * a, clib_arr key, uint64_t entry)
 {
     entry%=clib_arr_len(a)+1;
-    uint64_t i=-1;
-    clib_arr buff;
-    while(entry && i!=clib_arr_len(a)-clib_arr_len(&key)){
+    uint64_t i=(uint64_t)-1;
+    if(clib_arr_len(a)<clib_arr_len(&key)){
+        return (uint64_t)-1;
+    }
+    while(entry && i!=(clib_arr_len(a)-clib_arr_len(&key))){
         i++;
         if(
             clib_mem_IsEqual(
                 clib_arr_get(a,i),
-                key,clib_arr_size(a)*clib_arr_len(&key)
+                key,clib_arr_size(&key)*clib_arr_len(&key)
             )
         ){
             entry--;
         }
     }
-    return entry!=0?-1:i;
+    return entry!=0?(uint64_t)-1:i;
 }
-uint64_t clib_arr_count(clib_arr * a, clib_item key);
-uint64_t clib_arr_countArr(clib_arr * a, clib_arr key);
+uint64_t clib_arr_count(clib_arr * a, clib_item key)
+{
+    uint64_t c=0;
+    for(uint64_t i=0;i<clib_arr_len(a);i++){
+        if(clib_mem_IsEqual(clib_arr_get(a,i),key,clib_arr_size(a))){
+            c++;
+        }
+    }
+    return c;
+}
+uint64_t clib_arr_countArr(clib_arr * a, clib_arr key)
+{
+    uint64_t c=0;
+    if(clib_arr_len(a)<clib_arr_len(&key)){
+        return 0;
+    }
+    for(uint64_t i=0;i<clib_arr_len(a)-clib_arr_len(&key);i++){
+        if(
+            clib_mem_IsEqual(
+                clib_arr_get(a,i),
+                key,clib_arr_size(&key)*clib_arr_len(&key)
+            )
+        ){
+            c++;
+        }
+    }
+    return c;
+}
 
 /******************************* PERMUTATIONS 5 *******************************/
 
