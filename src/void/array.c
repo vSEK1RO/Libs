@@ -53,7 +53,7 @@ clib_flag clib_arr_del(clib_arr * a)
     if(*a==NULL){
         flag=CLIB_ARR_NULL;
     }else{
-        free((void *)*a);
+        free((void *)((uint64_t*)*a-2));
         *a=NULL;
         flag=CLIB_SUCCESS;
     }
