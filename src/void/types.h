@@ -13,17 +13,17 @@ typedef void * clib_str;
 
 typedef enum{
     //general
-    CLIB_SUCCESS = 1,
-    CLIB_TRUE = 1,
     CLIB_FALSE = 0,
-    CLIB_UNNAMED = 0,
-    CLIB_TYPE_INCORRECT = 0,
-    CLIB_TEST_FAILED = 0,
-    CLIB_NULL = 0,
+    CLIB_TRUE = 1,
+    CLIB_SUCCESS,
+    CLIB_UNNAMED,
+    CLIB_TYPE_INCORRECT,
+    CLIB_TEST_FAILED,
+    CLIB_NULL,
     //array
-    CLIB_ARR_INDEX = 0,
-    CLIB_ARR_MEMORY = 0,
-    CLIB_ARR_NULL = 0,
+    CLIB_ARR_INDEX,
+    CLIB_ARR_MEMORY,
+    CLIB_ARR_NULL,
     //string
     
 } clib_flag;

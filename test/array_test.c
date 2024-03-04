@@ -64,25 +64,80 @@ clib_flag clib_general(){
     if(clib_arr_countArr(&b,d)!=0)
         return CLIB_TEST_FAILED;
 /******************************** clib_arr_del ********************************/
-    if(!clib_arr_del(&a))
+    if(clib_arr_del(&a)!=CLIB_SUCCESS)
         return CLIB_TEST_FAILED;
-    if(!clib_arr_del(&b))
+    if(clib_arr_del(&b)!=CLIB_SUCCESS)
         return CLIB_TEST_FAILED;
-    if(!clib_arr_del(&c))
+    if(clib_arr_del(&c)!=CLIB_SUCCESS)
         return CLIB_TEST_FAILED;
-    // if(!clib_arr_del(&d))
-    //     return CLIB_TEST_FAILED;
+    if(clib_arr_del(&d)!=CLIB_SUCCESS)
+        return CLIB_TEST_FAILED;
+    return CLIB_SUCCESS;
+}
+
+clib_flag clib_permutations()
+{
+/******************************** clib_arr_swap *******************************/
+    clib_arr a;
+    int arr[]={1,4,3,2,5};
+    clib_arr_cast(&a,5,sizeof(int),(int[]){1,2,3,4,5});
+    clib_arr_swap(&a,1,3);
+    for(uint64_t i=0;i<5;i++){
+        if(arr[i]!=((int*)a)[i]){
+            return CLIB_TEST_FAILED;
+        }
+    }
+/******************************* clib_arr_rearr *******************************/
+    int brr[]={1,4,5,3,2};
+    clib_arr_rearr(&a,4,2);
+    for(uint64_t i=0;i<5;i++){
+        if(brr[i]!=((int*)a)[i]){
+            return CLIB_TEST_FAILED;
+        }
+    }
+/******************************* clib_arr_erase *******************************/
+    if(clib_arr_del(&a)!=CLIB_SUCCESS)
+        return CLIB_TEST_FAILED;
+    clib_arr_cast(&a,7,sizeof(int),(int[]){1,4,5,2,3,3,2});
+    clib_arr_erase(&a,3,5);
+    for(uint64_t i=0;i<5;i++){
+        if(brr[i]!=((int*)a)[i]){
+            return CLIB_TEST_FAILED;
+        }
+    }
+/****************************** clib_arr_reverse ******************************/
+    if(clib_arr_del(&a)!=CLIB_SUCCESS)
+        return CLIB_TEST_FAILED;
+    clib_arr_cast(&a,5,sizeof(int),(int[]){2,3,5,4,1});
+    clib_arr_reverse(&a);
+    for(uint64_t i=0;i<5;i++){
+        if(brr[i]!=((int*)a)[i]){
+            return CLIB_TEST_FAILED;
+        }
+    }
+    //comt clib_arr_substr
+    if(clib_arr_del(&a)!=CLIB_SUCCESS)
+        return CLIB_TEST_FAILED;
+    clib_arr_cast(&a,7,sizeof(int),(int[]){2,1,4,5,3,2,3});
+    clib_arr buff;
+    clib_arr_substr(&buff,&a,1,6);
+    for(uint64_t i=0;i<5;i++){
+        if(brr[i]!=((int*)buff)[i]){
+            return CLIB_TEST_FAILED;
+        }
+    }
     return CLIB_SUCCESS;
 }
 
 void logger(char * s, clib_flag f){
-    if(!f){
-        printf("----%s FAILED",s);
+    if(f!=CLIB_SUCCESS){
+        printf("----%s FAILED\n",s);
     }else{
-        printf("%s success",s);
+        printf("%s success\n",s);
     }
 }
 
 int main(){
-    logger("clib_general",clib_general());
+    logger("clib_arr_general",clib_general());
+    logger("clib_arr_permutations",clib_permutations());
 }

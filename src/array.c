@@ -2,7 +2,7 @@
 
 ARR_TYPE * ARR_FUNC(ARR_TYPE,init)(uint64_t len)
 {
-    uint64_t memlen;
+    uint64_t memlen;//-2 uint64_t instead of memlen
     if(sizeof(ARR_TYPE)>sizeof(uint64_t)){
         memlen=1;
     }else{
@@ -27,7 +27,7 @@ uint64_t ARR_FUNC(ARR_TYPE,len)(ARR_TYPE * a)
 
 void ARR_FUNC(ARR_TYPE,del)(ARR_TYPE * a)
 {
-    uint64_t memlen;
+    uint64_t memlen;//-2 uint64_t instead of memlen
     if(sizeof(ARR_TYPE)>sizeof(uint64_t)){
         memlen=1;
     }else{
@@ -97,7 +97,7 @@ void ARR_FUNC(ARR_TYPE,rearr)(ARR_TYPE * a, uint64_t i1, uint64_t i2)
     i1%=ARR_FUNC(ARR_TYPE,len)(a);
     i2%=ARR_FUNC(ARR_TYPE,len)(a);
     ARR_TYPE buff=a[i1];
-    for(uint64_t i=i1;i>i2;i--){
+    for(uint64_t i=i1;i>i2;i--){//dont work if i1<i2
         a[i]=a[i-1];
     }
     a[i2]=buff;
@@ -133,7 +133,7 @@ uint64_t ARR_FUNC(ARR_TYPE,find)(ARR_TYPE * a, ARR_TYPE key, uint64_t entry)
 {
     entry%=ARR_FUNC(ARR_TYPE,len)(a)+1;
     uint64_t i=-1;
-    while(entry && i!=ARR_FUNC(ARR_TYPE,len)(a)){
+    while(entry && i!=(ARR_FUNC(ARR_TYPE,len)(a)-1)){
         i++;
         if(a[i]==key){
             entry--;

@@ -3,8 +3,6 @@
 
 #include <inttypes.h>
 
-#define clib_abs(a) a>0?a:-a
-
 clib_flag clib_mem_copy(void * dest, void * src, uint64_t size)
 {
     clib_flag flag=CLIB_UNNAMED;

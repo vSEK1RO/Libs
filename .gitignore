@@ -1,4 +1,9 @@
 *.exe
+*.o
+*.s
+*.exp
+*.lib
+*.pdb
 *.out
 .vscode
 .vs
