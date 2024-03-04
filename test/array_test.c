@@ -2,6 +2,13 @@
 #include "../src/void/types.h"
 #include <stdio.h>
 
+void clib_arr_print_int(clib_arr * a){
+    for(uint64_t i=0;i<clib_arr_len(a);i++){
+        printf("%d ",((int*)*a)[i]);
+    }
+    printf("\n");
+}
+
 clib_flag clib_general(){
     clib_arr a;
     int arr[]={1,2,3,4,5};
@@ -115,7 +122,7 @@ clib_flag clib_permutations()
             return CLIB_TEST_FAILED;
         }
     }
-    //comt clib_arr_substr
+/******************************* clib_arr_substr ******************************/
     if(clib_arr_del(&a)!=CLIB_SUCCESS)
         return CLIB_TEST_FAILED;
     clib_arr_cast(&a,7,sizeof(int),(int[]){2,1,4,5,3,2,3});
@@ -123,6 +130,37 @@ clib_flag clib_permutations()
     clib_arr_substr(&buff,&a,1,6);
     for(uint64_t i=0;i<5;i++){
         if(brr[i]!=((int*)buff)[i]){
+            return CLIB_TEST_FAILED;
+        }
+    }
+/******************************** clib_arr_pob ********************************/
+    int crr[]={2,1,4,5,3,2};
+    clib_arr_pob(&a);
+    for(uint64_t i=0;i<6;i++){
+        if(crr[i]!=((int*)a)[i]){
+            return CLIB_TEST_FAILED;
+        }
+    }
+/******************************** clib_arr_pof ********************************/
+    int drr[]={1,4,5,3,2};
+    clib_arr_pof(&a);
+    for(uint64_t i=0;i<5;i++){
+        if(drr[i]!=((int*)a)[i]){
+            return CLIB_TEST_FAILED;
+        }
+    }
+/******************************** clib_arr_pub ********************************/
+    clib_arr_puf(&a,(int[]){2});
+    for(uint64_t i=0;i<6;i++){
+        if(crr[i]!=((int*)a)[i]){
+            return CLIB_TEST_FAILED;
+        }
+    }
+/******************************** clib_arr_puf ********************************/
+    int err[]={2,1,4,5,3,2,3};
+    clib_arr_pub(&a,(int[]){3});
+    for(uint64_t i=0;i<7;i++){
+        if(err[i]!=((int*)a)[i]){
             return CLIB_TEST_FAILED;
         }
     }

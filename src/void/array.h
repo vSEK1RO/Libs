@@ -34,9 +34,9 @@ clib_flag clib_arr_substr(clib_arr * out, clib_arr * a, uint64_t i1, uint64_t i2
 
 /********************************* STACKABLE 4 ********************************/
 
-clib_item clib_arr_pob(clib_arr * a);
+clib_flag clib_arr_pob(clib_arr * a);
 clib_flag clib_arr_pub(clib_arr * a, clib_item b);
-clib_item clib_arr_pof(clib_arr * a);
+clib_flag clib_arr_pof(clib_arr * a);
 clib_flag clib_arr_puf(clib_arr * a, clib_item b);
 
 /******************************** INSERTIONS 5 ********************************/

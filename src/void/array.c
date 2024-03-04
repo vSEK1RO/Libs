@@ -273,10 +273,73 @@ clib_flag clib_arr_substr(clib_arr * out, clib_arr * a, uint64_t i1, uint64_t i2
 
 /********************************* STACKABLE 4 ********************************/
 
-clib_item clib_arr_pob(clib_arr * a);
-clib_flag clib_arr_pub(clib_arr * a, clib_item b);
-clib_item clib_arr_pof(clib_arr * a);
-clib_flag clib_arr_puf(clib_arr * a, clib_item b);
+clib_flag clib_arr_pob(clib_arr * a)
+{
+    clib_flag flag=CLIB_UNNAMED;
+    clib_arr buff;
+    flag=clib_arr_cast(
+        &buff,clib_arr_len(a)-1,
+        clib_arr_size(a),*a
+    );
+    if(flag!=CLIB_SUCCESS)return flag;
+    flag=clib_arr_del(a);
+    if(flag==CLIB_SUCCESS){
+        *a=buff;
+    }
+    return flag;
+}
+clib_flag clib_arr_pub(clib_arr * a, clib_item b)
+{
+    clib_flag flag=CLIB_UNNAMED;
+    clib_arr buff;
+    flag=clib_arr_init(&buff,clib_arr_len(a)+1,clib_arr_size(a));
+    if(flag!=CLIB_SUCCESS)return flag;
+    flag=clib_mem_copy(buff,*a,clib_arr_len(a)*clib_arr_size(a));
+    if(flag!=CLIB_SUCCESS)return flag;
+    flag=clib_mem_copy(
+        clib_arr_get(&buff,clib_arr_len(&buff)-1),
+        b,clib_arr_size(a)
+    );
+    if(flag==CLIB_SUCCESS){
+        clib_arr_del(a);
+        *a=buff;
+    }
+    return flag;
+}
+clib_flag clib_arr_pof(clib_arr * a)
+{
+    clib_flag flag=CLIB_UNNAMED;
+    clib_arr buff;
+    flag=clib_arr_cast(
+        &buff,clib_arr_len(a)-1,
+        clib_arr_size(a),
+        clib_arr_get(a,1)
+    );
+    if(flag!=CLIB_SUCCESS)return flag;
+    flag=clib_arr_del(a);
+    if(flag==CLIB_SUCCESS){
+        *a=buff;
+    }
+    return flag;
+}
+clib_flag clib_arr_puf(clib_arr * a, clib_item b)
+{
+    clib_flag flag=CLIB_UNNAMED;
+    clib_arr buff;
+    flag=clib_arr_init(&buff,clib_arr_len(a)+1,clib_arr_size(a));
+    if(flag!=CLIB_SUCCESS)return flag;
+    flag=clib_mem_copy(
+        clib_arr_get(&buff,1),
+        *a,clib_arr_len(a)*clib_arr_size(a)
+    );
+    if(flag!=CLIB_SUCCESS)return flag;
+    flag=clib_mem_copy(buff,b,clib_arr_size(a));
+    if(flag==CLIB_SUCCESS){
+        clib_arr_del(a);
+        *a=buff;
+    }
+    return flag;
+}
 
 /******************************** INSERTIONS 5 ********************************/
 
