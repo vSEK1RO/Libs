@@ -44,7 +44,7 @@ clib_flag clib_arr_puf(clib_arr * a, clib_item b);
 clib_flag clib_arr_concat(clib_arr * out, clib_arr * a, clib_arr b);
 clib_flag clib_arr_ins(clib_arr * a, clib_item b, uint64_t i);
 clib_flag clib_arr_insArr(clib_arr * a, clib_arr b, uint64_t i);
-clib_flag clib_arr_repl(clib_arr * a, clib_item b, uint64_t i);
-clib_flag clib_arr_replArr(clib_arr * a, clib_arr b, uint64_t i);
+clib_flag clib_arr_repl(clib_arr * a, clib_item b, uint64_t i1, uint64_t i2);
+clib_flag clib_arr_replArr(clib_arr * a, clib_arr b, uint64_t i1, uint64_t i2);
 
 #endif
