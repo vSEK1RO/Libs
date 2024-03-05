@@ -6,8 +6,10 @@ SRCDIR = src
 OBJDIR = obj
 TESTSDIR = tests
 
-build: ${OBJS}
+build: ${OBJDIR} ${OBJS}
 	
+${OBJDIR}:
+	mkdir ${OBJDIR}
 
 array.o: ${SRCDIR}/array.c ${SRCDIR}/array.h
 	${CC} -o ${OBJDIR}/array.o -c $< ${CFLAGS}
