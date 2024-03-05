@@ -1,5 +1,4 @@
-#include "string.h"
-#include <math.h>
+#include "numsys.h"
 
 char numsys_dtoc(int64_t digit)
 {

@@ -1,4 +1,4 @@
-#include <stdlib.h>
+#include "string.h"
 
 char * str_init(uint64_t len)
 {
@@ -107,27 +107,27 @@ char * str_substr(char * a, uint64_t i1, uint64_t i2)
 uint64_t str_find(char * a, char key, uint64_t entry)
 {
     entry%=str_len(a)+1;
-    uint64_t i=-1;
-    while(entry && i!=str_len(a)){
+    uint64_t i=(uint64_t)-1;
+    while(entry && i!=str_len(a)-1){
         i++;
         if(a[i]==key){
             entry--;
         }
     }
-    return (entry!=0?-1:i);
+    return (entry!=0?(uint64_t)-1:i);
 }
 
 uint64_t str_findStr(char * a, char * b, uint64_t entry)
 {
     entry%=str_len(a)+1;
-    uint64_t i=-1;
+    uint64_t i=(uint64_t)-1;
     while(entry && i!=(str_len(a)-str_len(b))){
         i++;
         if(str_isEqual(str_substr(a,i,i+str_len(b)),b)){
             entry--;
         }
     }
-    return (entry!=0?-1:i);
+    return (entry!=0?(uint64_t)-1:i);
 }
 
 uint64_t str_count(char * a, char n)

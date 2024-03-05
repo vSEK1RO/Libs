@@ -1,7 +1,20 @@
+/************************** Tue Mar 05 22:39:34 2024 **************************/
+/*                                _      _       __   _        _              */
+/*        _ __ ___    ___  _ __  | |__  (_)     / /  (_)  ___ (_) ___         */
+/*       | '_ ` _ \  / _ \| '_ \ | '_ \ | |    / /   | | / __|| |/ __|        */
+/*       | | | | | ||  __/| |_) || | | || |   / /    | || (__ | |\__ \        */
+/*       |_| |_| |_| \___|| .__/ |_| |_||_|  /_/     |_| \___||_||___/        */
+/*                        |_|                                                 */
+/*                                                                            */
+/*                    Created by Vlad Litvinov b23-534                        */
+/*                       https://github.com/vSEK1RO                           */
+/*                                                                            */
+/******************************************************************************/
 #ifndef ITERABLE_STRING_H
 #define ITERABLE_STRING_H
 
 #include <inttypes.h>
+#include <stdlib.h>
 
 char * str_init(uint64_t len);
 char * str_cast(const char * a);
@@ -28,5 +41,4 @@ void str_repl(char ** a, char n, uint64_t i1, uint64_t i2);
 void str_replStr(char ** a, char * b, uint64_t i1, uint64_t i2);
 void str_reverse(char * a);
 
-#include "string.c"
 #endif

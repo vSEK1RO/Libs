@@ -10,17 +10,34 @@
 /*                       https://github.com/vSEK1RO                           */
 /*                                                                            */
 /******************************************************************************/
-#ifndef NUMSYS_H
-#define NUMSYS_H
+#ifndef CLIB_TYPES_H
+#define CLIB_TYPES_H
 
-#include <math.h>
 #include <inttypes.h>
 
-#include "string.h"
+/*********************************** GENERAL **********************************/
 
-char numsys_dtoc(int64_t digit);
-int64_t numsys_ctod(char digit);
-char * numsys_ntos(int64_t num, uint8_t base);
-int64_t numsys_ston(char * str, uint8_t base);
+typedef void * clib_item;
+typedef void * clib_arr;
+typedef void * clib_str;
+
+/************************************ FLAG ************************************/
+
+typedef enum{
+    //general
+    CLIB_FALSE = 0,
+    CLIB_TRUE = 1,
+    CLIB_SUCCESS,
+    CLIB_UNNAMED,
+    CLIB_TYPE_INCORRECT,
+    CLIB_TEST_FAILED,
+    CLIB_NULL,
+    //array
+    CLIB_ARR_INDEX,
+    CLIB_ARR_MEMORY,
+    CLIB_ARR_NULL,
+    //string
+    
+} clib_flag;
 
 #endif
