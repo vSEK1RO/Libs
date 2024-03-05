@@ -2,6 +2,7 @@
 #define ITERABLE_STRING_H
 
 #include <inttypes.h>
+#include <stdlib.h>
 
 char * str_init(uint64_t len);
 char * str_cast(const char * a);
@@ -28,5 +29,4 @@ void str_repl(char ** a, char n, uint64_t i1, uint64_t i2);
 void str_replStr(char ** a, char * b, uint64_t i1, uint64_t i2);
 void str_reverse(char * a);
 
-#include "string.c"
 #endif

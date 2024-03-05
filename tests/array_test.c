@@ -1,5 +1,5 @@
-#include "../src/void/array.c"
-#include "../src/void/types.h"
+#include "../src/array.h"
+#include "../src/types.h"
 #include <stdio.h>
 
 void clib_arr_print_int(clib_arr * a){
@@ -133,7 +133,18 @@ clib_flag clib_permutations()
             return CLIB_TEST_FAILED;
         }
     }
+    if(clib_arr_del(&a)!=CLIB_SUCCESS)
+        return CLIB_TEST_FAILED;
+    if(clib_arr_del(&buff)!=CLIB_SUCCESS)
+        return CLIB_TEST_FAILED;
+    return CLIB_SUCCESS;
+}
+
+clib_flag clib_stackable()
+{
 /******************************** clib_arr_pob ********************************/
+    clib_arr a;
+    clib_arr_cast(&a,7,sizeof(int),(int[]){2,1,4,5,3,2,3});
     int crr[]={2,1,4,5,3,2};
     clib_arr_pob(&a);
     for(uint64_t i=0;i<6;i++){
@@ -164,10 +175,13 @@ clib_flag clib_permutations()
             return CLIB_TEST_FAILED;
         }
     }
+    if(clib_arr_del(&a)!=CLIB_SUCCESS)
+        return CLIB_TEST_FAILED;
     return CLIB_SUCCESS;
 }
 
-clib_flag clib_insertions(){
+clib_flag clib_insertions()
+{
 /******************************* clib_arr_concat ******************************/
     int crr[]={2,1,4,5,3,2};
     int drr[]={1,4,5,3,2};
@@ -228,14 +242,16 @@ clib_flag clib_insertions(){
 
 void logger(char * s, clib_flag f){
     if(f!=CLIB_SUCCESS){
-        printf("----%s FAILED\n",s);
+        printf("\033[41mFAILED\033[m\t%s",s);
     }else{
-        printf("%s success\n",s);
+        printf("\033[42mSUCCESS\033[m\t%s",s);
     }
 }
 
 int main(){
-    logger("clib_arr_general",clib_general());
-    logger("clib_arr_permutations",clib_permutations());
-    logger("clib_arr_insertions",clib_insertions());
+    logger("\033[2mclib:\033[m\tarr_general\n",clib_general());
+    logger("\033[2mclib:\033[m\tarr_permutations\n",clib_permutations());
+    logger("\033[2mclib:\033[m\tarr_stackable\n",clib_stackable());
+    logger("\033[2mclib:\033[m\tarr_insertions\n",clib_insertions());
+    return 0;
 }
