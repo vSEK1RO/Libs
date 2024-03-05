@@ -1,3 +1,15 @@
+/************************** Tue Mar 05 22:39:34 2024 **************************/
+/*                                _      _       __   _        _              */
+/*        _ __ ___    ___  _ __  | |__  (_)     / /  (_)  ___ (_) ___         */
+/*       | '_ ` _ \  / _ \| '_ \ | '_ \ | |    / /   | | / __|| |/ __|        */
+/*       | | | | | ||  __/| |_) || | | || |   / /    | || (__ | |\__ \        */
+/*       |_| |_| |_| \___|| .__/ |_| |_||_|  /_/     |_| \___||_||___/        */
+/*                        |_|                                                 */
+/*                                                                            */
+/*                    Created by Vlad Litvinov b23-534                        */
+/*                       https://github.com/vSEK1RO                           */
+/*                                                                            */
+/******************************************************************************/
 #ifndef CLIB_ARRAY_H
 #define CLIB_ARRAY_H
 
@@ -67,7 +79,7 @@ typedef ARR_TYPE * ARR_TDEF(ARR_TYPE,clib_item);
     if(clib_arr_size((clib_arr*)arr)!=sizeof(type))\
         return res
 
-//comt GENERAL 12
+/********************************* GENERAL 12 *********************************/
 
 clib_flag ARR_FUNC(ARR_TYPE,init)(ARR_TDEF(ARR_TYPE,clib_arr) * out, uint64_t len)
 {
