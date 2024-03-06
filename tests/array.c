@@ -232,10 +232,16 @@ clib_flag clib_insertions()
 /****************************** clib_arr_replArr ******************************/
     if(clib_arr_del(&a)!=CLIB_SUCCESS)
         return CLIB_TEST_FAILED;
-    clib_arr_cast(&a,5,sizeof(int),(int[]){1,0,3,4,5});
+    clib_arr_cast(&a,6,sizeof(int),(int[]){1,0,3,4,10,5});
     clib_arr_cast(&c,2,sizeof(int),(int[]){2,10});
-    clib_arr_replArr(&a,c,1,4);
+    clib_arr_replArr(&a,c,1,5);
     if(!clib_arr_isEqual(&a,b))
+        return CLIB_TEST_FAILED;
+    if(clib_arr_del(&a)!=CLIB_SUCCESS)
+        return CLIB_TEST_FAILED;
+    if(clib_arr_del(&b)!=CLIB_SUCCESS)
+        return CLIB_TEST_FAILED;
+    if(clib_arr_del(&c)!=CLIB_SUCCESS)
         return CLIB_TEST_FAILED;
     return CLIB_SUCCESS;
 }

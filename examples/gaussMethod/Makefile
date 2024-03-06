@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -O0
+CFLAGS = -Wall -Wextra -Werror -O0 -g
 OBJS = mtrx.o
 INCS = array.o utils.o
 
@@ -10,7 +10,7 @@ INCDIR = include
 
 TARGET = ${SRCDIR}/main.c
 
-build: ${BINDIR} ${OBJDIR} ${OBJS} ../../obj/array.o
+build: ${BINDIR} ${OBJDIR} ${patsubst %.o, ${OBJDIR}/%.o, ${OBJS}}
 	${CC} -o ${BINDIR}/app.exe \
 	${patsubst %.o, ${OBJDIR}/%.o, ${OBJS}} \
 	${patsubst %.o, ${INCDIR}/%.o, ${INCS}} \
@@ -22,5 +22,9 @@ ${OBJDIR}:
 ${BINDIR}:
 	mkdir ${BINDIR}
 
-mtrx.o: ${SRCDIR}/mtrx.c ${SRCDIR}/mtrx.h
-	${CC} -o ${OBJDIR}/mtrx.o -c $< ${CFLAGS}
+${OBJDIR}/mtrx.o: ${SRCDIR}/mtrx.c ${SRCDIR}/mtrx.h
+	${CC} -o $@ -c $< ${CFLAGS}
+
+clean:
+	rm */*.o
+	rm */*.exe
