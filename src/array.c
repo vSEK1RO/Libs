@@ -1,4 +1,4 @@
-#include "array.h"
+#include <clib/array.h>
 
 #define chkflg(flag) if(flag!=CLIB_SUCCESS)return flag
 

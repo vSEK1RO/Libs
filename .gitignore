@@ -8,7 +8,6 @@
 *.lib
 *.pdb
 *.out
-obj
 .vscode
 .vs
 .idea

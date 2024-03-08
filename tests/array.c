@@ -1,6 +1,6 @@
-#include "../src/array.h"
-#include "../src/types.h"
 #include <stdio.h>
+#include <clib/array.h>
+#include <clib/types.h>
 
 void clib_arr_print_int(clib_arr * a){
     for(uint64_t i=0;i<clib_arr_len(a);i++){

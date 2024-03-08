@@ -19,8 +19,8 @@
 #include <stdarg.h>
 #include <limits.h>
 
-#include "types.h"
-#include "utils.h"
+#include <clib/types.h>
+#include <clib/utils.h>
 
 /********************************* GENERAL 12 *********************************/
 

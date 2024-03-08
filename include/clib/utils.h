@@ -10,17 +10,15 @@
 /*                       https://github.com/vSEK1RO                           */
 /*                                                                            */
 /******************************************************************************/
-#ifndef NUMSYS_H
-#define NUMSYS_H
+#ifndef CLIB_UTILS_H
+#define CLIB_UTILS_H
 
-#include <math.h>
 #include <inttypes.h>
+#include <stdlib.h>
 
-#include "string.h"
+#include <clib/types.h>
 
-char numsys_dtoc(int64_t digit);
-int64_t numsys_ctod(char digit);
-char * numsys_ntos(int64_t num, uint8_t base);
-int64_t numsys_ston(char * str, uint8_t base);
+clib_flag clib_mem_copy(void * dest, void * src, uint64_t size);
+clib_flag clib_mem_IsEqual(void * dest, void * src, uint64_t size);
 
 #endif

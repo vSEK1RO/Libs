@@ -1,4 +1,4 @@
-#include "string.h"
+#include <clib/string.h>
 
 char * str_init(uint64_t len)
 {
