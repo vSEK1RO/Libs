@@ -27,7 +27,7 @@ ${OBJDIR}/%.o: ${SRCDIR}/%.c ${INCDIR}/${LIB}/%.h
 ${LIBDIR}/lib${LIB}.a: ${patsubst %.o, ${OBJDIR}/%.o, ${OBJS}}
 	ar rcs $@ $^
 
-${TESTSDIR}: ${patsubst %.exe, ${TESTSDIR}/%.exe, ${TESTS}}
+${TESTSDIR}: build ${patsubst %.exe, ${TESTSDIR}/%.exe, ${TESTS}}
 	${patsubst %.exe, ./${TESTSDIR}/%.exe, ${TESTS}}
 
 ${TESTSDIR}/%.exe: ${TESTSDIR}/%.c

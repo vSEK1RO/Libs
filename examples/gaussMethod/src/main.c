@@ -29,7 +29,7 @@ int main()
     }
     mtrx_mutRow(m,0,(int[]){2},mtrx_mut_int);
     mtrx_mutRow(m,1,(int[]){4},mtrx_mut_int);
-    mtrx_subRow(m,0,1,mtrx_sub_int);
+    // mtrx_subRow(m,0,1,mtrx_sub_int);
     for(uint64_t i=0;i<mtrx_height(&m);i++){
         for(uint64_t j=0;j<mtrx_width(&m);j++){
             printf("%d ",((int**)m)[i][j]);
