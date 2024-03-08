@@ -230,7 +230,7 @@ clib_flag clib_arr_erase(clib_arr * a, uint64_t i1, uint64_t i2)
     flag=clib_mem_copy(
         clib_arr_get(&buff,i1),
         clib_arr_get(a,i2),
-        clib_arr_size(a)*(clib_arr_len(a)-i2+1)
+        clib_arr_size(a)*(clib_arr_len(a)-i2)
     );
     if(flag==CLIB_SUCCESS){
         clib_arr_del(a);
