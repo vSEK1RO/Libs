@@ -8,7 +8,7 @@ clib_flag mtrx_init(mtrx * out, uint64_t m, uint64_t n, uint64_t size)
     flagcheck(flag);
     for(uint64_t i=0;i<m;i++){
         clib_arr buff=(clib_arr)clib_arr_get((clib_arr*)out,i);
-        flag=clib_arr_init(&buff,n,size);
+        flag=clib_arr_init(buff,n,size);
         flagcheck(flag);
     }
     return flag;

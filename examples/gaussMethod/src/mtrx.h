@@ -3,8 +3,8 @@
 
 #include <inttypes.h>
 
-#include "../../../src/array.h"
-#include "../../../src/types.h"
+#include <clib/array.h>
+#include <clib/types.h>
 
 typedef void * mtrx;
 typedef void * mtrx_item;

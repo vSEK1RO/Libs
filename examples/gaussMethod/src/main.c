@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <ncurses/include/ncursesw/curses.h>
+#include <ncursesw/curses.h>
 #include "mtrx.h"
 
 clib_flag mtrx_sub_int(mtrx_item a, mtrx_item b, uint64_t size)

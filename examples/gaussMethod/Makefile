@@ -1,32 +1,39 @@
+### Change -I -L -l vars for your dependencies locations
+DEPSDIR = C:/_SE/libs
+DEPS = clib ncurses
+-I = ${patsubst %, -I${DEPSDIR}/%/include, ${DEPS}}
+-L = ${patsubst %, -L${DEPSDIR}/%/lib, ${DEPS}}
+-l = -lclib
+### Read upper
+
 CC = gcc
 DBG = gdb
 CFLAGS = -Wall -Wextra -Werror -O0 -g
 OBJS = mtrx.o
-INCS = array.o utils.o
 
 SRCDIR = src
 OBJDIR = obj
 BINDIR = bin
-INCDIR = include
+DIRS = ${SCRDIR} ${OBJDIR} ${BINDIR}
 
 TARGET = ${SRCDIR}/main.c
 
-${BINDIR}/app.exe: ${patsubst %.o, ${OBJDIR}/%.o, ${OBJS}} ${TARGET} ${BINDIR}
-	${CC} -o $@ $< ${patsubst %.o, ${INCDIR}/%.o, ${INCS}} ${TARGET} ${CFLAGS}
+build: ${DIRS} ${BINDIR}/app.exe
+
+${DIRS}:
+	mkdir $@
+
+${BINDIR}/app.exe: ${patsubst %.o, ${OBJDIR}/%.o, ${OBJS}} ${TARGET}
+	${CC} -o $@ $^ ${-I} ${-L} ${-l} ${CFLAGS}
 
 run: ${BINDIR}/app.exe
-	./${BINDIR}/app.exe
+	./$^
 
 ${DBG}: ${BINDIR}/app.exe
-	gdb ${BINDIR}/app.exe
+	gdb $^
 
-${OBJDIR}:
-	mkdir ${OBJDIR}
-${BINDIR}:
-	mkdir ${BINDIR}
-
-${OBJDIR}/mtrx.o: ${SRCDIR}/mtrx.c ${SRCDIR}/mtrx.h ${OBJDIR}
-	${CC} -o $@ -c $< ${CFLAGS}
+${OBJDIR}/%.o: ${SRCDIR}/%.c ${SRCDIR}/%.h
+	${CC} -o $@ -c $< ${-I} ${CFLAGS}
 
 clean:
 	rm obj/*.o
