@@ -17,6 +17,19 @@ clib_flag clib_arr_init(clib_arr * out, uint64_t len, uint64_t size)
     }
     return flag;
 }
+clib_flag clib_arr_eInit(clib_arr * out, uint64_t len, uint64_t size, uint64_t eLen)
+{
+    clib_flag flag=CLIB_UNNAMED;
+    *out=(clib_arr)((uint64_t*)malloc(size*len+sizeof(uint64_t)*2)+eLen);
+    if(*out==NULL){
+        flag=CLIB_ARR_MEMORY;
+    }else{
+        flag=CLIB_SUCCESS;
+        ((uint64_t*)*out)[-1]=len;
+        ((uint64_t*)*out)[-2]=size;
+    }
+    return flag;
+}
 clib_flag clib_arr_cast(clib_arr * out, uint64_t len, uint64_t size, void* arr)
 {
     clib_flag flag=CLIB_UNNAMED;

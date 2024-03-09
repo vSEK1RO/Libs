@@ -14,10 +14,7 @@
 #define CLIB_ARRAY_H
 
 #include <inttypes.h>
-#include <stdio.h>
 #include <stdlib.h>
-#include <stdarg.h>
-#include <limits.h>
 
 #include <clib/types.h>
 #include <clib/utils.h>
