@@ -1,4 +1,5 @@
 #include <stdio.h>
+#define ARR_TYPE int
 #include <clib/array.h>
 #include <clib/types.h>
 
@@ -19,6 +20,24 @@ clib_flag clib_general(){
             return CLIB_TEST_FAILED;
         }
     }
+/******************************** clib_arr_eCast *******************************/
+    clib_arr q;
+    clib_arr_eCast(&q,5,sizeof(int),4,(int[]){1,2,3,4,5});
+    for(uint64_t i=0;i<clib_arr_len(&q);i++){
+        if(arr[i]!=((int*)q)[i]){
+            return CLIB_TEST_FAILED;
+        }
+    }
+/******************************** clib_arr_eLen ********************************/
+    if(clib_arr_eLen(&q)!=4){
+        return CLIB_TEST_FAILED;
+    }
+/******************************** clib_arr_eGet ********************************/
+    if(clib_arr_eGet(&q,10)!=NULL){
+        return CLIB_TEST_FAILED;
+    }
+    if(clib_arr_del(&q)!=CLIB_SUCCESS)
+        return CLIB_TEST_FAILED;
 /******************************** clib_arr_len ********************************/
     if(clib_arr_len(&a)!=5){
         return CLIB_TEST_FAILED;

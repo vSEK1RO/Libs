@@ -19,13 +19,17 @@
 #include <clib/types.h>
 #include <clib/utils.h>
 
-/********************************* GENERAL 12 *********************************/
+/********************************* GENERAL 16 *********************************/
 
 clib_flag clib_arr_init(clib_arr * out, uint64_t len, uint64_t size);
+clib_flag clib_arr_eInit(clib_arr * out, uint64_t len, uint64_t size, uint64_t eLen);
 clib_flag clib_arr_cast(clib_arr * out, uint64_t len, uint64_t size, void* arr);
+clib_flag clib_arr_eCast(clib_arr * out, uint64_t len, uint64_t size, uint64_t eLen, void* arr);
 uint64_t clib_arr_len(clib_arr * a);
 uint64_t clib_arr_size(clib_arr * a);
+uint64_t clib_arr_eLen(clib_arr * a);
 clib_item clib_arr_get(clib_arr * a, uint64_t i);
+clib_item clib_arr_eGet(clib_arr * a, uint64_t eI);
 clib_flag clib_arr_del(clib_arr * a);
 clib_flag clib_arr_copy(clib_arr * a, clib_arr b);
 clib_flag clib_arr_isEqual(clib_arr * a, clib_arr b);
@@ -76,15 +80,23 @@ typedef ARR_TYPE * ARR_TDEF(ARR_TYPE,clib_item);
     if(clib_arr_size((clib_arr*)arr)!=sizeof(type))\
         return res
 
-/********************************* GENERAL 12 *********************************/
+/********************************* GENERAL 16 *********************************/
 
 clib_flag ARR_FUNC(ARR_TYPE,init)(ARR_TDEF(ARR_TYPE,clib_arr) * out, uint64_t len)
 {
     return clib_arr_init((clib_arr*)out,len,sizeof(ARR_TYPE));
 }
+clib_flag ARR_FUNC(ARR_TYPE,eInit)(ARR_TDEF(ARR_TYPE,clib_arr) * out, uint64_t len, uint64_t eLen)
+{
+    return clib_arr_eInit((clib_arr*)out,len,sizeof(ARR_TYPE),eLen);
+}
 clib_flag ARR_FUNC(ARR_TYPE,cast)(ARR_TDEF(ARR_TYPE,clib_arr) * out, uint64_t len, void* arr)
 {
     return clib_arr_cast((clib_arr*)out,len,sizeof(ARR_TYPE),arr);
+}
+clib_flag ARR_FUNC(ARR_TYPE,eCast)(ARR_TDEF(ARR_TYPE,clib_arr) * out, uint64_t len, uint64_t eLen, void* arr)
+{
+    return clib_arr_eCast((clib_arr*)out,len,sizeof(ARR_TYPE),eLen,arr);
 }
 uint64_t ARR_FUNC(ARR_TYPE,len)(ARR_TDEF(ARR_TYPE,clib_arr) * a)
 {
@@ -96,10 +108,20 @@ uint64_t ARR_FUNC(ARR_TYPE,size)(ARR_TDEF(ARR_TYPE,clib_arr) * a)
     ARR_CHECK_TYPE(ARR_TYPE,a,0);
     return clib_arr_size((clib_arr*)a);
 }
+uint64_t ARR_FUNC(ARR_TYPE,eLen)(ARR_TDEF(ARR_TYPE,clib_arr) * a)
+{
+    ARR_CHECK_TYPE(ARR_TYPE,a,0);
+    return clib_arr_eLen((clib_arr*)a);
+}
 ARR_TDEF(ARR_TYPE,clib_item) ARR_FUNC(ARR_TYPE,get)(ARR_TDEF(ARR_TYPE,clib_arr) * a, uint64_t i)
 {
     ARR_CHECK_TYPE(ARR_TYPE,a,NULL);
     return (ARR_TDEF(ARR_TYPE,clib_item))clib_arr_get((clib_arr*)a,i);
+}
+ARR_TDEF(ARR_TYPE,clib_item) ARR_FUNC(ARR_TYPE,eGet)(ARR_TDEF(ARR_TYPE,clib_arr) * a, uint64_t eI)
+{
+    ARR_CHECK_TYPE(ARR_TYPE,a,NULL);
+    return clib_arr_eGet((clib_arr*)a,eI);
 }
 clib_flag ARR_FUNC(ARR_TYPE,del)(ARR_TDEF(ARR_TYPE,clib_arr) * a)
 {
