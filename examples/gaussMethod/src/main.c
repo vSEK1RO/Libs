@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <ncursesw/curses.h>
+#include <PDCurses/curses.h>
 #include "mtrx.h"
 #include "mtrx_int.h"
 

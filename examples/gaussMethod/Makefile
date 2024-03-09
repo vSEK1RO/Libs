@@ -1,9 +1,9 @@
 ### Change -I -L -l vars for your dependencies locations
 DEPSDIR = C:/_SE/libs
-DEPS = clib ncurses
+DEPS = clib PDCurses
 -I = ${patsubst %, -I${DEPSDIR}/%/include, ${DEPS}}
 -L = ${patsubst %, -L${DEPSDIR}/%/lib, ${DEPS}}
--l = -lclib
+-l = -lclib -lpdcurses
 ### Read upper
 
 CC = gcc
