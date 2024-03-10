@@ -2,7 +2,7 @@
 
 #define flagcheck(flag) if(flag!=CLIB_SUCCESS)return flag
 
-/********************************* GENERAL 12 *********************************/
+/********************************* GENERAL 16 *********************************/
 
 clib_flag clib_arr_init(clib_arr * out, uint64_t len, uint64_t size)
 {
@@ -98,16 +98,16 @@ clib_flag clib_arr_copy(clib_arr * a, clib_arr b)
     }
     return flag;
 }
-clib_flag clib_arr_isEqual(clib_arr * a, clib_arr b)
+clib_flag clib_arr_isEqual(clib_arr * a, clib_arr * b)
 {
     clib_flag flag=CLIB_TRUE;
     if(
-        clib_arr_len(a)!=clib_arr_len(&b) ||
-        clib_arr_size(a)!=clib_arr_size(&b)
+        clib_arr_len(a)!=clib_arr_len(b) ||
+        clib_arr_size(a)!=clib_arr_size(b)
     ){
         flag=CLIB_FALSE;
     }else{
-        flag=clib_mem_IsEqual(*a,b,clib_arr_len(a)*clib_arr_size(a));
+        flag=clib_mem_IsEqual(*a,*b,clib_arr_len(a)*clib_arr_size(a));
     }
     return flag;
 }
@@ -369,16 +369,16 @@ clib_flag clib_arr_puf(clib_arr * a, clib_item b)
 
 /******************************** INSERTIONS 5 ********************************/
 
-clib_flag clib_arr_concat(clib_arr * out, clib_arr * a, clib_arr b)
+clib_flag clib_arr_concat(clib_arr * out, clib_arr * a, clib_arr * b)
 {
     clib_flag flag=CLIB_UNNAMED;
-    if(clib_arr_size(a)!=clib_arr_size(&b)){
+    if(clib_arr_size(a)!=clib_arr_size(b)){
         return CLIB_TYPE_INCORRECT;
     }
     clib_arr buff;
     flag=clib_arr_init(
         &buff,
-        clib_arr_len(a)+clib_arr_len(&b),
+        clib_arr_len(a)+clib_arr_len(b),
         clib_arr_size(a)
     );
     flagcheck(flag);
@@ -390,8 +390,8 @@ clib_flag clib_arr_concat(clib_arr * out, clib_arr * a, clib_arr b)
     flagcheck(flag);
     flag=clib_mem_copy(
         clib_arr_get(&buff,clib_arr_len(a)),
-        b,
-        clib_arr_len(&b)*clib_arr_size(&b)
+        *b,
+        clib_arr_len(b)*clib_arr_size(b)
     );
     if(flag==CLIB_SUCCESS){
         *out=buff;
@@ -424,9 +424,9 @@ clib_flag clib_arr_insArr(clib_arr * a, clib_arr b, uint64_t i)
     flagcheck(flag);
     flag=clib_arr_substr(&buffr,a,i,clib_arr_len(a));
     flagcheck(flag);
-    flag=clib_arr_concat(&buffl,&buffl,b);
+    flag=clib_arr_concat(&buffl,&buffl,&b);
     flagcheck(flag);
-    flag=clib_arr_concat(&buffl,&buffl,buffr);
+    flag=clib_arr_concat(&buffl,&buffl,&buffr);
     flagcheck(flag);
     flag=clib_arr_del(&buffr);
     if(flag==CLIB_SUCCESS){

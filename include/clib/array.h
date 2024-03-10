@@ -32,7 +32,7 @@ clib_item clib_arr_get(clib_arr * a, uint64_t i);
 clib_item clib_arr_eGet(clib_arr * a, uint64_t eI);
 clib_flag clib_arr_del(clib_arr * a);
 clib_flag clib_arr_copy(clib_arr * a, clib_arr b);
-clib_flag clib_arr_isEqual(clib_arr * a, clib_arr b);
+clib_flag clib_arr_isEqual(clib_arr * a, clib_arr * b);
 uint64_t clib_arr_find(clib_arr * a, clib_item key, uint64_t entry);
 uint64_t clib_arr_findArr(clib_arr * a, clib_arr key, uint64_t entry);
 uint64_t clib_arr_count(clib_arr * a, clib_item key);
@@ -55,7 +55,7 @@ clib_flag clib_arr_puf(clib_arr * a, clib_item b);
 
 /******************************** INSERTIONS 5 ********************************/
 
-clib_flag clib_arr_concat(clib_arr * out, clib_arr * a, clib_arr b);
+clib_flag clib_arr_concat(clib_arr * out, clib_arr * a, clib_arr * b);
 clib_flag clib_arr_ins(clib_arr * a, clib_item b, uint64_t i);
 clib_flag clib_arr_insArr(clib_arr * a, clib_arr b, uint64_t i);
 clib_flag clib_arr_repl(clib_arr * a, clib_item b, uint64_t i1, uint64_t i2);
@@ -133,10 +133,10 @@ clib_flag ARR_FUNC(ARR_TYPE,copy)(ARR_TDEF(ARR_TYPE,arr) * a, ARR_TDEF(ARR_TYPE,
     ARR_CHECK_TYPE(ARR_TYPE,a,CLIB_TYPE_INCORRECT);
     return clib_arr_copy((clib_arr*)a,(clib_arr)b);
 }
-clib_flag ARR_FUNC(ARR_TYPE,isEqual)(ARR_TDEF(ARR_TYPE,arr) * a, ARR_TDEF(ARR_TYPE,arr) b)
+clib_flag ARR_FUNC(ARR_TYPE,isEqual)(ARR_TDEF(ARR_TYPE,arr) * a, ARR_TDEF(ARR_TYPE,arr) * b)
 {
     ARR_CHECK_TYPE(ARR_TYPE,a,CLIB_TYPE_INCORRECT);
-    return clib_arr_isEqual((clib_arr*)a,(clib_arr)b);
+    return clib_arr_isEqual((clib_arr*)a,(clib_arr*)b);
 }
 uint64_t ARR_FUNC(ARR_TYPE,find)(ARR_TDEF(ARR_TYPE,arr) * a, ARR_TDEF(ARR_TYPE,item) key, uint64_t entry)
 {
@@ -212,10 +212,10 @@ clib_flag ARR_FUNC(ARR_TYPE,puf)(ARR_TDEF(ARR_TYPE,arr) * a, ARR_TDEF(ARR_TYPE,i
 
 /******************************** INSERTIONS 5 ********************************/
 
-clib_flag ARR_FUNC(ARR_TYPE,concat)(ARR_TDEF(ARR_TYPE,arr) * out, ARR_TDEF(ARR_TYPE,arr) * a, ARR_TDEF(ARR_TYPE,arr) b)
+clib_flag ARR_FUNC(ARR_TYPE,concat)(ARR_TDEF(ARR_TYPE,arr) * out, ARR_TDEF(ARR_TYPE,arr) * a, ARR_TDEF(ARR_TYPE,arr) * b)
 {
     ARR_CHECK_TYPE(ARR_TYPE,a,CLIB_TYPE_INCORRECT);
-    return clib_arr_concat((clib_arr*)out,(clib_arr*)a,(clib_arr)b);
+    return clib_arr_concat((clib_arr*)out,(clib_arr*)a,(clib_arr*)b);
 }
 clib_flag ARR_FUNC(ARR_TYPE,ins)(ARR_TDEF(ARR_TYPE,arr) * a, ARR_TDEF(ARR_TYPE,item) b, uint64_t i)
 {
