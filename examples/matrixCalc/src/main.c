@@ -1,25 +1,45 @@
-#include <stdio.h>
 #include <PDCurses/curses.h>
-#include "matrix.h"
-#include "field_int.h"
-
-#define flagcheck(flag) if(flag!=CLIB_SUCCESS)return -1;
+typedef char * pchar;
+#define ARR_TYPE pchar
+#include <clib/array.h>
+typedef void (*pfn)(WINDOW * win);
+#define ARR_TYPE pfn
+#include <clib/array.h>
+#include "curses_menu.h"
+#include "curses_colors.h"
 
 int main()
 {
-    mtrx_field f;
-    mtrx_field_int_init(&f);
-    uint64_t h,w,h2,w2;
-    scanf("%lu %lu %lu %lu",&h,&w,&h2,&w2);
-    mtrx a,b;
-    mtrx_init(&a,h,w,sizeof(int),&f);
-    mtrx_init(&b,h2,w2,sizeof(int),&f);
-    mtrx_scan(&a);
-    mtrx_scan(&b);
-    mtrx c;
-    mtrx_add(&c,&a,&b);
-    mtrx_print(&c,"\t","\n");
-    mtrx_del(&a);
-    mtrx_del(&b);
-    mtrx_del(&c);
+    init_stdscr();
+    WINDOW * title = init_title(stdscr);
+
+    clib_arr_pchar strs;
+    clib_arr_cast_pchar(&strs,6,(pchar[]){
+        "Scan matrix",
+        "Print matrix",
+        "Add matrixies",
+        "Mut matrixies",
+        "Transpose matrix",
+        "Exit"
+    });
+
+    clib_arr_pfn fns;
+    clib_arr_cast_pfn(&fns,6,(pfn[]){
+
+    });
+
+    WINDOW * menu = init_menu(
+        "Chose action:",
+        &strs,
+        &fns,
+        stdscr,
+        COLOR_CYAN_BG,
+        "-> ",
+        3
+    );
+
+    delwin(title);
+    delwin(menu);
+    endwin();
+    return 0;
 }
