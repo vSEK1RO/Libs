@@ -20,6 +20,6 @@ clib_flag mtrx_mutRow(mtrx * m, uint64_t im, mtrx_item lambda);
 clib_flag mtrx_scan(mtrx * m);
 clib_flag mtrx_print(mtrx * m, char * sep, char * end);
 clib_flag mtrx_concat(mtrx * out, mtrx * m, mtrx * b);
-// clib_flag mtrx_splitByColumn(mtrx * out1, mtrx * out2, mtrx * m, uint64_t i);
+clib_flag mtrx_splitByColumn(mtrx * out1, mtrx * out2, mtrx * m, uint64_t j);
 
 #endif

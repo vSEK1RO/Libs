@@ -124,12 +124,49 @@ clib_flag mtrx_concat(mtrx * out, mtrx * m, mtrx * b)
             buff,
             clib_arr_size(&buff)*clib_arr_len(&buff)  
         );
+        flagcheck(flag);
+        flag=clib_arr_del(&buff);
     }
-    flagcheck(flag);
-    flag=clib_arr_del(&buff);
     return flag;
 }
-// clib_flag mtrx_splitByColumn(mtrx * out1, mtrx * out2, mtrx * m, uint64_t i)
-// {
-
-// }
+clib_flag mtrx_splitByColumn(mtrx * out1, mtrx * out2, mtrx * m, uint64_t j)
+{
+    clib_flag flag=CLIB_UNNAMED;
+    flag=mtrx_init(out1,mtrx_height(m),j,mtrx_size(m),mtrx_fGet(m));
+    flagcheck(flag);
+    flag=mtrx_init(out2,mtrx_height(m),mtrx_width(m)-j,mtrx_size(m),mtrx_fGet(m));
+    clib_arr buff;
+    for(uint64_t i=0;i<mtrx_height(out1);i++){
+        flagcheck(flag);
+        flag=clib_arr_substr(
+            &buff,
+            clib_arr_get((clib_arr*)m,i),
+            0,
+            j
+        );
+        flagcheck(flag);
+        flag=clib_mem_copy(
+            *(clib_arr*)clib_arr_get((clib_arr*)out1,i),
+            buff,
+            clib_arr_size(&buff)*clib_arr_len(&buff)  
+        );
+        flagcheck(flag);
+        flag=clib_arr_del(&buff);
+        flagcheck(flag);
+        flag=clib_arr_substr(
+            &buff,
+            clib_arr_get((clib_arr*)m,i),
+            j,
+            mtrx_width(m)
+        );
+        flagcheck(flag);
+        flag=clib_mem_copy(
+            *(clib_arr*)clib_arr_get((clib_arr*)out2,i),
+            buff,
+            clib_arr_size(&buff)*clib_arr_len(&buff)  
+        );
+        flagcheck(flag);
+        flag=clib_arr_del(&buff);
+    }
+    return flag;
+}

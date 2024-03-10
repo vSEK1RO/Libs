@@ -48,16 +48,19 @@ clib_flag clib_arr_eCast(clib_arr * out, uint64_t len, uint64_t size, uint64_t e
 uint64_t clib_arr_len(clib_arr * a)
 {
     nullcheck(a,0);
+    nullcheck(*a,0);
     return ((uint64_t*)*a)[-1];
 }
 uint64_t clib_arr_size(clib_arr * a)
 {
     nullcheck(a,0);
+    nullcheck(*a,0);
     return ((uint64_t*)*a)[-2];
 }
 uint64_t clib_arr_eLen(clib_arr * a)
 {
     nullcheck(a,0);
+    nullcheck(*a,0);
     return ((uint64_t*)*a)[-3];
 }
 clib_item clib_arr_get(clib_arr * a, uint64_t i)

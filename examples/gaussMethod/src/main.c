@@ -30,5 +30,12 @@ int main()
     mtrx em;
     mtrx_concat(&em,&m,&b);
     mtrx_print(&em,"\t","\n");
+    mtrx ema, emb;
+    mtrx_splitByColumn(&ema,&emb,&em,mtrx_width(&em)-1);
+    mtrx_print(&ema,"\t","\n");
+    mtrx_print(&emb,"\t","\n");
     mtrx_del(&m);
+    mtrx_del(&em);
+    mtrx_del(&ema);
+    mtrx_del(&emb);
 }
