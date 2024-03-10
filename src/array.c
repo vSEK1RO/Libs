@@ -1,5 +1,6 @@
 #include <clib/array.h>
 
+#define nullcheck(arr,ret) if(arr==NULL)return ret
 #define flagcheck(flag) if(flag!=CLIB_SUCCESS)return flag
 
 /********************************* GENERAL 16 *********************************/
@@ -46,14 +47,17 @@ clib_flag clib_arr_eCast(clib_arr * out, uint64_t len, uint64_t size, uint64_t e
 }
 uint64_t clib_arr_len(clib_arr * a)
 {
+    nullcheck(a,0);
     return ((uint64_t*)*a)[-1];
 }
 uint64_t clib_arr_size(clib_arr * a)
 {
+    nullcheck(a,0);
     return ((uint64_t*)*a)[-2];
 }
 uint64_t clib_arr_eLen(clib_arr * a)
 {
+    nullcheck(a,0);
     return ((uint64_t*)*a)[-3];
 }
 clib_item clib_arr_get(clib_arr * a, uint64_t i)
@@ -76,26 +80,20 @@ clib_item clib_arr_eGet(clib_arr * a, uint64_t eI)
 clib_flag clib_arr_del(clib_arr * a)
 {
     clib_flag flag=CLIB_UNNAMED;
-    if(*a==NULL){
-        flag=CLIB_ARR_NULL;
-    }else{
-        uint64_t offset=sizeof(uint64_t)*3+clib_arr_eLen(a);
-        free((void *)((char*)*a-offset));
-        *a=NULL;
-        flag=CLIB_SUCCESS;
-    }
+    nullcheck(a,CLIB_ARR_NULL);
+    uint64_t offset=sizeof(uint64_t)*3+clib_arr_eLen(a);
+    free((void *)((char*)*a-offset));
+    *a=NULL;
+    flag=CLIB_SUCCESS;
     return flag;
 }
 clib_flag clib_arr_copy(clib_arr * a, clib_arr b)
 {
     clib_flag flag=CLIB_UNNAMED;
-    if(b==NULL){
-        flag=CLIB_ARR_NULL;
-    }else{
-        flag=clib_arr_init(a,clib_arr_len(&b),clib_arr_size(&b));
-        flagcheck(flag);
-        flag=clib_mem_copy(*a,b,clib_arr_len(&b)*clib_arr_size(&b));
-    }
+    nullcheck(b,CLIB_ARR_NULL);
+    flag=clib_arr_init(a,clib_arr_len(&b),clib_arr_size(&b));
+    flagcheck(flag);
+    flag=clib_mem_copy(*a,b,clib_arr_len(&b)*clib_arr_size(&b));
     return flag;
 }
 clib_flag clib_arr_isEqual(clib_arr * a, clib_arr * b)
@@ -181,9 +179,7 @@ clib_flag clib_arr_swap(clib_arr * a, uint64_t i1, uint64_t i2)
         return CLIB_ARR_INDEX;
     }
     clib_item buff=malloc(clib_arr_size(a));
-    if(buff==NULL){
-        return CLIB_ARR_MEMORY;
-    }
+    nullcheck(buff,CLIB_ARR_MEMORY);
     flag=clib_mem_copy(
         buff,clib_arr_get(a,i1),clib_arr_size(a)
     );
@@ -204,9 +200,7 @@ clib_flag clib_arr_rearr(clib_arr * a, uint64_t i1, uint64_t i2)
         return CLIB_ARR_INDEX;
     }
     clib_item buff=malloc(clib_arr_size(a));
-    if(buff==NULL){
-        return CLIB_ARR_MEMORY;
-    }
+    nullcheck(buff,CLIB_ARR_MEMORY);
     flag=clib_mem_copy(
         buff,clib_arr_get(a,i1),clib_arr_size(a)
     );
