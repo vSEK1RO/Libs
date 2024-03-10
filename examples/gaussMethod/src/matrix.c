@@ -97,14 +97,38 @@ clib_flag mtrx_print(mtrx * m, char * sep, char * end)
     }
     return CLIB_SUCCESS;
 }
-// clib_flag mtrx_concat(mtrx * out, mtrx * m, mtrx b)
-// {
-//     clib_flag flag=CLIB_UNNAMED;
-//     if(mtrx_height(m)!=mtrx_height(&b))return CLIB_TYPE_INCORRECT;
-//     flag=mtrx_init(out,mtrx_height(m),mtrx_width(m)+mtrx_width(&b),mtrx_size(m));
-//     flagcheck(flag);
-//     return flag;
-// }
+clib_flag mtrx_concat(mtrx * out, mtrx * m, mtrx * b)
+{
+    clib_flag flag=CLIB_UNNAMED;
+    if(mtrx_height(m)!=mtrx_height(b))return CLIB_TYPE_INCORRECT;
+    flag=mtrx_init(
+        out,
+        mtrx_height(m),
+        mtrx_width(m)+mtrx_width(b),
+        mtrx_size(m),
+        mtrx_fGet(m)
+    );
+    flagcheck(flag);
+    clib_arr buff;
+    flag=clib_arr_init(&buff,mtrx_width(out),mtrx_size(m));
+    for(uint64_t i=0;i<mtrx_height(m);i++){
+        flagcheck(flag);
+        flag=clib_arr_concat(
+            &buff,
+            clib_arr_get((clib_arr*)m,i),
+            clib_arr_get((clib_arr*)b,i)
+        );
+        flagcheck(flag);
+        flag=clib_mem_copy(
+            *(clib_arr*)clib_arr_get((clib_arr*)out,i),
+            buff,
+            clib_arr_size(&buff)*clib_arr_len(&buff)  
+        );
+    }
+    flagcheck(flag);
+    flag=clib_arr_del(&buff);
+    return flag;
+}
 // clib_flag mtrx_splitByColumn(mtrx * out1, mtrx * out2, mtrx * m, uint64_t i)
 // {
 

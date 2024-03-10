@@ -3,22 +3,32 @@
 #include "matrix.h"
 #include "field_int.h"
 
-#define flagcheck(flag) if(flag!=CLIB_SUCCESS)return 0;
+#define flagcheck(flag) if(flag!=CLIB_SUCCESS)return -1;
 
 int main()
 {
-    clib_flag flag;
     mtrx_field f;
-    flag=mtrx_field_int_init(&f);
-    flagcheck(flag)
+    mtrx_field_int_init(&f);
+    uint64_t h,w;
+    scanf("%lu %lu",&h,&w);
     mtrx m;
-    flag=mtrx_init(&m,2,2,sizeof(int),&f);
-    flagcheck(flag)
-    flag=mtrx_scan(&m);
-    flagcheck(flag)
-    mtrx_mutRow(&m,0,(int[]){2});
-    mtrx_mutRow(&m,1,(int[]){4});
-    mtrx_subRow(&m,0,1);
+    mtrx_init(&m,h,w,sizeof(int),&f);
+    for(uint64_t i=0;i<mtrx_height(&m);i++){
+        for(uint64_t j=0;j<mtrx_width(&m);j++){
+            ((int**)m)[i][j]=(int)(i*mtrx_width(&m)+j);
+        }
+    }
+    mtrx b;
+    mtrx_init(&b,h,1,sizeof(int),&f);
+    for(uint64_t i=0;i<mtrx_height(&b);i++){
+        for(uint64_t j=0;j<mtrx_width(&b);j++){
+            ((int**)b)[i][j]=(int)(i*mtrx_width(&b)+j);
+        }
+    }
     mtrx_print(&m," ","\n");
+    mtrx_print(&b," ","\n");
+    mtrx em;
+    mtrx_concat(&em,&m,&b);
+    mtrx_print(&em,"\t","\n");
     mtrx_del(&m);
 }
