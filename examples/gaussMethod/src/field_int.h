@@ -6,7 +6,10 @@
 
 #include "matrix.h"
 #include "matrix_types.h"
-
+clib_flag mtrx_item_null_int(mtrx_item out){
+    *(int*)out=0;
+    return CLIB_SUCCESS;
+}
 clib_flag mtrx_item_neg_int(mtrx_item out, mtrx_item a)
 {
     *(int*)out=-*(int*)a;
@@ -26,17 +29,16 @@ clib_flag mtrx_item_sub_int(mtrx_item out, mtrx_item a, mtrx_item b)
 }
 clib_flag mtrx_item_mut_int(mtrx_item out, mtrx_item a, mtrx_item b)
 {
-    if(*(int*)a>INT32_MAX/ *(int*)b)return CLIB_OVERFLOW;
+    if(*(int*)b!=0){
+        if(*(int*)a>INT32_MAX/ *(int*)b)return CLIB_OVERFLOW;
+    }
     *(int*)out=*(int*)a**(int*)b;
     return CLIB_SUCCESS;
 }
 clib_flag mtrx_item_div_int(mtrx_item out, mtrx_item a, mtrx_item b)
 {
-    if(*(int*)b!=0){
-        *(int*)out=*(int*)a/ *(int*)b;
-    }else{
-        return CLIB_NULL;
-    }
+    if(*(int*)b==0)return CLIB_NULL;
+    *(int*)out=*(int*)a/ *(int*)b;
     return CLIB_SUCCESS;
 }
 clib_flag mtrx_item_scan_int(mtrx_item a)
@@ -58,6 +60,7 @@ clib_flag mtrx_field_int_init(mtrx_field * out)
 {
     *out=(mtrx_field){
         .size=sizeof(int),
+        .null=mtrx_item_null_int,
         .neg=mtrx_item_neg_int,
         .add=mtrx_item_add_int,
         .sub=mtrx_item_sub_int,

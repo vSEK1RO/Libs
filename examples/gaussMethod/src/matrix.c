@@ -95,6 +95,7 @@ clib_flag mtrx_print(mtrx * m, char * sep, char * end)
         flag=mtrx_fGet(m)->prints(end);
         flagcheck(flag);
     }
+    flag=mtrx_fGet(m)->prints(end);
     return CLIB_SUCCESS;
 }
 clib_flag mtrx_concat(mtrx * out, mtrx * m, mtrx * b)
@@ -167,6 +168,62 @@ clib_flag mtrx_splitByColumn(mtrx * out1, mtrx * out2, mtrx * m, uint64_t j)
         );
         flagcheck(flag);
         flag=clib_arr_del(&buff);
+    }
+    return flag;
+}
+clib_flag mtrx_add(mtrx * out, mtrx * m, mtrx * b)
+{
+    clib_flag flag=CLIB_UNNAMED;
+    if(
+        mtrx_height(m)!=mtrx_height(b) ||
+        mtrx_width(m)!=mtrx_width(b) ||
+        mtrx_size(m)!=mtrx_size(b)
+    )return CLIB_TYPE_INCORRECT;
+    flag=mtrx_init(out,mtrx_height(m),mtrx_width(m),mtrx_size(m),mtrx_fGet(m));
+    for(uint64_t i=0;i<mtrx_height(out);i++){
+        for(uint64_t j=0;j<mtrx_width(out);j++){
+            flagcheck(flag);
+            flag=mtrx_fGet(out)->add(mtrx_get(out,i,j),mtrx_get(m,i,j),mtrx_get(b,i,j));
+        }
+    }
+    return flag;
+}
+clib_flag mtrx_mut(mtrx * out, mtrx * m, mtrx * b)
+{
+    clib_flag flag=CLIB_UNNAMED;
+    if(
+        mtrx_width(m)!=mtrx_height(b) ||
+        mtrx_size(m)!=mtrx_size(b)
+    )return CLIB_TYPE_INCORRECT;
+    flag=mtrx_init(out,mtrx_height(m),mtrx_width(b),mtrx_size(m),mtrx_fGet(m));
+    mtrx_item buff=(mtrx_item)malloc(mtrx_size(m));
+    mtrx_item null=(mtrx_item)malloc(mtrx_size(m));
+    flagcheck(flag);
+    for(uint64_t i=0;i<mtrx_height(out);i++){
+        for(uint64_t j=0;j<mtrx_width(out);j++){
+            flag=clib_mem_copy(mtrx_get(out,i,j),null,mtrx_size(m));
+            for(uint64_t k=0;k<mtrx_width(m);k++){
+                flagcheck(flag);
+                flag=mtrx_fGet(out)->mut(buff,mtrx_get(m,i,k),mtrx_get(b,k,j));
+                flagcheck(flag);
+                flag=mtrx_fGet(out)->add(mtrx_get(out,i,j),mtrx_get(out,i,j),buff);
+            }
+        }
+    }
+    free((void*)buff);
+    free((void*)null);
+    return flag;
+}
+clib_flag mtrx_transp(mtrx * out, mtrx * m)
+{
+    clib_flag flag=CLIB_UNNAMED;
+    flag=mtrx_init(out,mtrx_width(m),mtrx_height(m),mtrx_size(m),mtrx_fGet(m));
+    flagcheck(flag);
+    for(uint64_t i=0;i<mtrx_height(out);i++){
+        for(uint64_t j=0;j<mtrx_width(out);j++){
+            flag=clib_mem_copy(mtrx_get(out,i,j),mtrx_get(m,j,i),mtrx_size(m));
+            flagcheck(flag);
+        }
     }
     return flag;
 }
