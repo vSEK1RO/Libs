@@ -1,15 +1,17 @@
-#include "mtrx.h"
+#include "matrix.h"
 
 #define flagcheck(flag) if(flag!=CLIB_SUCCESS)return flag
-clib_flag mtrx_init(mtrx * out, uint64_t m, uint64_t n, uint64_t size)
+clib_flag mtrx_init(mtrx * out, uint64_t m, uint64_t n, uint64_t size, mtrx_field * field)
 {
     clib_flag flag=CLIB_UNNAMED;
-    flag=clib_arr_init((clib_arr*)out,m,sizeof(void*));
+    if(size!=field->size)return CLIB_TYPE_INCORRECT;
+    flag=clib_arr_eInit((clib_arr*)out,m,sizeof(void*),sizeof(void*));
     flagcheck(flag);
     for(uint64_t i=0;i<m;i++){
         flag=clib_arr_init((clib_arr*)clib_arr_get((clib_arr*)out,i),n,size);
         flagcheck(flag);
     }
+    flag=clib_mem_copy((void*)clib_arr_eGet((clib_arr*)out,0),(void*)&field,sizeof(void*));
     return flag;
 }
 uint64_t mtrx_height(mtrx * m)
@@ -31,6 +33,10 @@ mtrx_item mtrx_get(mtrx * m, uint64_t im, uint64_t jn)
     item=(mtrx_item)clib_arr_get((clib_arr*)clib_arr_get((clib_arr*)m,im),jn);
     return item;
 }
+mtrx_field * mtrx_fGet(mtrx * m)
+{
+    return *(mtrx_field**)clib_arr_eGet((clib_arr*)m,0);
+}
 clib_flag mtrx_del(mtrx * m)
 {
     clib_flag flag=CLIB_UNNAMED;
@@ -42,26 +48,54 @@ clib_flag mtrx_del(mtrx * m)
     flag=clib_arr_del((clib_arr*)m);
     return flag;
 }
-clib_flag mtrx_subRow(mtrx * m, uint64_t i1, uint64_t i2, clib_flag(*sub)(clib_item a, clib_item b, uint64_t size))
+clib_flag mtrx_subRow(mtrx * m, uint64_t i1, uint64_t i2)
 {
     clib_flag flag=CLIB_UNNAMED;
     clib_arr * a=(clib_arr*)clib_arr_get((clib_arr*)m,i1);
     clib_arr * b=(clib_arr*)clib_arr_get((clib_arr*)m,i2);
     for(uint64_t i=0;i<clib_arr_len(a);i++){
-        flag=sub(clib_arr_get(a,i),clib_arr_get(b,i),clib_arr_size(a));
+        flag=mtrx_fGet(m)->sub(clib_arr_get(a,i),clib_arr_get(a,i),clib_arr_get(b,i));
         flagcheck(flag);
     }
     return flag;
 }
-clib_flag mtrx_mutRow(mtrx * m, uint64_t im, mtrx_item lambda, clib_flag(*mut)(clib_item a, clib_item b, uint64_t size))
+clib_flag mtrx_mutRow(mtrx * m, uint64_t im, mtrx_item lambda)
 {
     clib_flag flag=CLIB_UNNAMED;
     clib_arr * a=(clib_arr*)clib_arr_get((clib_arr*)m,im);
     for(uint64_t i=0;i<clib_arr_len(a);i++){
-        flag=mut(clib_arr_get(a,i),(clib_item)lambda,clib_arr_size(a));
+        flag=mtrx_fGet(m)->mut(clib_arr_get(a,i),clib_arr_get(a,i),lambda);
         flagcheck(flag);
     }
     return flag;
+}
+clib_flag mtrx_scan(mtrx * m)
+{
+    if(mtrx_size(m)!=mtrx_fGet(m)->size)return CLIB_TYPE_INCORRECT;
+    clib_flag flag=CLIB_UNNAMED;
+    for(uint64_t i=0;i<mtrx_height(m);i++){
+        for(uint64_t j=0;j<mtrx_width(m);j++){
+            flag=mtrx_fGet(m)->scan(mtrx_get(m,i,j));
+            flagcheck(flag);
+        }
+    }
+    return CLIB_SUCCESS;
+}
+clib_flag mtrx_print(mtrx * m, char * sep, char * end)
+{
+    if(mtrx_size(m)!=mtrx_fGet(m)->size)return CLIB_TYPE_INCORRECT;
+    clib_flag flag=CLIB_UNNAMED;
+    for(uint64_t i=0;i<mtrx_height(m);i++){
+        for(uint64_t j=0;j<mtrx_width(m);j++){
+            flag=mtrx_fGet(m)->print(mtrx_get(m,i,j));
+            flagcheck(flag);
+            flag=mtrx_fGet(m)->prints(sep);
+            flagcheck(flag);
+        }
+        flag=mtrx_fGet(m)->prints(end);
+        flagcheck(flag);
+    }
+    return CLIB_SUCCESS;
 }
 // clib_flag mtrx_concat(mtrx * out, mtrx * m, mtrx b)
 // {

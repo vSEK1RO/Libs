@@ -9,7 +9,7 @@ DEPS = clib PDCurses
 CC = gcc
 DBG = gdb
 CFLAGS = -Wall -Wextra -Werror -O0 -g
-OBJS = mtrx.o
+OBJS = matrix.o
 
 SRCDIR = src
 OBJDIR = obj
