@@ -69,7 +69,7 @@ clib_item clib_arr_eGet(clib_arr * a, uint64_t eI)
     clib_item item=NULL;
     uint64_t offset=sizeof(uint64_t)*3+clib_arr_eLen(a);
     if(eI<clib_arr_eLen(a)){
-        item=((char*)*a-offset+eI);
+        item=(clib_item)((char*)*a-offset+eI);
     }
     return item;
 }
