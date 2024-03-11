@@ -3,6 +3,7 @@
 
 #include <PDCurses/curses.h>
 #include <clib/string.h>
+#include <clib/array.h>
 #include "curses_colors.h"
 
 void init_stdscr()
@@ -58,8 +59,16 @@ void print_menu(clib_arr_pchar * a, WINDOW * win, chtype color, char * pick, uin
         }
     }
 }
-WINDOW * init_menu(char * title, clib_arr_pchar * a, clib_arr_pfn * f, WINDOW * p, chtype color, char * pick, int x)
-{
+WINDOW * init_menu(
+    char * title,
+    clib_arr_pchar * a,
+    clib_arr_pfn * f,
+    clib_arr * vars,
+    WINDOW * p,
+    chtype color,
+    char * pick,
+    int x   
+){
     WINDOW * menu = init_win(
         "Menu",
         p,
@@ -95,9 +104,11 @@ WINDOW * init_menu(char * title, clib_arr_pchar * a, clib_arr_pfn * f, WINDOW * 
                 if(iter==iterl-1){
                     return menu;
                 }
-                print_menu(a,menu,COLOR_PAIR(COLOR_WHITE_FG),pick,iter);
+                print_menu(a,menu,COLOR_WHITE_FG,pick,iter);
+                box(menu,ACS_VLINE|COLOR_PAIR(COLOR_WHITE_FG),ACS_HLINE|COLOR_PAIR(COLOR_WHITE_FG));
                 wrefresh(menu);
-                (*f)[iter](menu);
+                (*f)[iter](vars);
+                box(menu,ACS_VLINE|COLOR_PAIR(COLOR_BLUE_BG),ACS_HLINE|COLOR_PAIR(COLOR_BLUE_BG));
                 break;
         }
         print_menu(a,menu,color,pick,iter);

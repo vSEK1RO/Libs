@@ -1,20 +1,10 @@
+#ifndef CURSES_FUNCTIONS_H
+#define CURSES_FUNCTIONS_H
+
 #include <PDCurses/curses.h>
-typedef char * pchar;
-#define ARR_TYPE pchar
 #include <clib/array.h>
-typedef void (*pfn)(clib_arr * vars);
-#define ARR_TYPE pfn
-#include <clib/array.h>
-#include "curses_menu.h"
-#include "curses_colors.h"
-#include "curses_functions.h"
-#include "matrix.h"
 
-int main()
-{
-    init_stdscr();
-    WINDOW * title = init_title(stdscr);
-
+void menu_scan(clib_arr * vars){
     clib_arr_pchar strs;
     clib_arr_cast_pchar(&strs,6,(pchar[]){
         "Scan matrix",
@@ -27,26 +17,23 @@ int main()
 
     clib_arr_pfn fns;
     clib_arr_cast_pfn(&fns,6,(pfn[]){
-        menu_scan,
         
     });
-
-    clib_arr vars;
-    clib_arr_init(&vars,0,sizeof(mtrx));
 
     WINDOW * menu = init_menu(
         "Chose action:",
         &strs,
         &fns,
-        &vars,
+        vars,
         stdscr,
         COLOR_CYAN_BG,
         "-> ",
-        3
+        43
     );
 
-    delwin(title);
+    wclear(menu);
+    wrefresh(menu);
     delwin(menu);
-    endwin();
-    return 0;
 }
+
+#endif
