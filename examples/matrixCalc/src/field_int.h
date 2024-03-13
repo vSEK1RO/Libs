@@ -3,6 +3,7 @@
 
 #include <inttypes.h>
 #include <clib/types.h>
+#include <PDCurses/curses.h>
 
 #include "matrix.h"
 #include "matrix_types.h"
@@ -48,22 +49,23 @@ clib_flag mtrx_item_mod_int(mtrx_item out, mtrx_item a, mtrx_item b)
 }
 clib_flag mtrx_item_scan_int(mtrx_item a)
 {
-    scanf("%d",(int*)a);
+    scanw("%d",(int*)a);
     return CLIB_SUCCESS;
 }
 clib_flag mtrx_item_print_int(mtrx_item a)
 {
-    printf("%d",*(int*)a);
+    printw("%d",*(int*)a);
     return CLIB_SUCCESS;
 }
 clib_flag mtrx_item_prints_int(char * s)
 {
-    printf("%s",s);
+    printw("%s",s);
     return CLIB_SUCCESS;
 }
 clib_flag mtrx_field_int_init(mtrx_field * out)
 {
     *out=(mtrx_field){
+        .type="%d",
         .size=sizeof(int),
         .null=mtrx_item_null_int,
         .neg=mtrx_item_neg_int,

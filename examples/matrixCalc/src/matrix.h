@@ -8,10 +8,13 @@
 #include "matrix_types.h"
 
 clib_flag mtrx_init(mtrx * out, uint64_t m, uint64_t n, uint64_t size, mtrx_field * field);
+clib_flag mtrx_eInit(mtrx * out, uint64_t m, uint64_t n, uint64_t size, uint64_t eLen, mtrx_field * field);
 uint64_t mtrx_height(mtrx * m);
 uint64_t mtrx_width(mtrx * m);
 uint64_t mtrx_size(mtrx * m);
+uint64_t mtrx_eLen(mtrx * m);
 mtrx_item mtrx_get(mtrx * m, uint64_t im, uint64_t jn);
+mtrx_item mtrx_eGet(mtrx * m, uint64_t eI);
 mtrx_field * mtrx_fGet(mtrx * m);
 clib_flag mtrx_del(mtrx * m);
 clib_flag mtrx_subRow(mtrx * m, uint64_t i1, uint64_t i2);

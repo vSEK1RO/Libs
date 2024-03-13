@@ -7,6 +7,7 @@ typedef void * mtrx;
 typedef void * mtrx_item;
 
 typedef struct mtrx_field{
+    char type[32];
     uint64_t size;
     clib_flag (*null)(mtrx_item out);
     clib_flag (*neg)(mtrx_item out, mtrx_item a);

@@ -3,9 +3,13 @@
 #define flagcheck(flag) if(flag!=CLIB_SUCCESS)return flag
 clib_flag mtrx_init(mtrx * out, uint64_t m, uint64_t n, uint64_t size, mtrx_field * field)
 {
+    return mtrx_eInit(out,m,n,size,0,field);
+}
+clib_flag mtrx_eInit(mtrx * out, uint64_t m, uint64_t n, uint64_t size, uint64_t eLen, mtrx_field * field)
+{
     clib_flag flag=CLIB_UNNAMED;
     if(size!=field->size)return CLIB_TYPE_INCORRECT;
-    flag=clib_arr_eInit((clib_arr*)out,m,sizeof(void*),sizeof(void*));
+    flag=clib_arr_eInit((clib_arr*)out,m,sizeof(void*),sizeof(mtrx_field*)+eLen);
     flagcheck(flag);
     for(uint64_t i=0;i<m;i++){
         flag=clib_arr_init((clib_arr*)clib_arr_get((clib_arr*)out,i),n,size);
@@ -26,11 +30,24 @@ uint64_t mtrx_size(mtrx * m)
 {
     return clib_arr_size((clib_arr*)clib_arr_get((clib_arr*)m,0));
 }
+uint64_t mtrx_eLen(mtrx * m)
+{
+    return clib_arr_eLen((clib_arr*)m)-sizeof(mtrx_field*);
+}
 mtrx_item mtrx_get(mtrx * m, uint64_t im, uint64_t jn)
 {
     mtrx_item item=NULL;
     if(im>mtrx_height(m) || jn>mtrx_width(m))return item;
     item=(mtrx_item)clib_arr_get((clib_arr*)clib_arr_get((clib_arr*)m,im),jn);
+    return item;
+}
+mtrx_item mtrx_eGet(mtrx * m, uint64_t eI)
+{
+    mtrx_item item=NULL;
+    uint64_t offset=sizeof(uint64_t)*3+mtrx_eLen(m);
+    if(eI<mtrx_eLen(m)){
+        item=(mtrx_item)((char*)*m-offset+eI);
+    }
     return item;
 }
 mtrx_field * mtrx_fGet(mtrx * m)

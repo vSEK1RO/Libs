@@ -61,8 +61,8 @@ void print_menu(clib_arr_pchar * a, WINDOW * win, chtype color, char * pick, uin
 }
 WINDOW * init_menu(
     char * title,
-    clib_arr_pchar * a,
-    clib_arr_pfn * f,
+    clib_arr_pchar * strs,
+    clib_arr_pfn * fns,
     clib_arr * vars,
     WINDOW * p,
     chtype color,
@@ -83,10 +83,10 @@ WINDOW * init_menu(
     wattroff(menu,COLOR_PAIR(COLOR_WHITE_BG));
     chtype input;
     int64_t iter=0;
-    int64_t iterl=(int64_t)clib_arr_len_pchar(a);
-    print_menu(a,menu,color,pick,iter);
+    int64_t iterl=(int64_t)clib_arr_len_pchar(strs);
+    print_menu(strs,menu,color,pick,iter);
     wrefresh(menu);
-    while((input=wgetch(menu))!='q'){
+    while((input=wgetch(menu))){
         switch(input){
             case KEY_UP:
                 iter--;
@@ -101,17 +101,19 @@ WINDOW * init_menu(
                 }
                 break;
             case 10:
-                if(iter==iterl-1){
-                    return menu;
-                }
-                print_menu(a,menu,COLOR_WHITE_FG,pick,iter);
+                print_menu(strs,menu,COLOR_WHITE_FG,pick,iter);
                 box(menu,ACS_VLINE|COLOR_PAIR(COLOR_WHITE_FG),ACS_HLINE|COLOR_PAIR(COLOR_WHITE_FG));
                 wrefresh(menu);
-                (*f)[iter](vars);
+                if((*fns)[iter](vars)!=CLIB_TRUE){
+                    return menu;
+                }
                 box(menu,ACS_VLINE|COLOR_PAIR(COLOR_BLUE_BG),ACS_HLINE|COLOR_PAIR(COLOR_BLUE_BG));
+                wattron(menu,COLOR_PAIR(COLOR_WHITE_BG));
+                mvwprintw(menu,0,(40-str_len("Menu"))/2,"Menu");
+                wattroff(menu,COLOR_PAIR(COLOR_WHITE_BG));
                 break;
         }
-        print_menu(a,menu,color,pick,iter);
+        print_menu(strs,menu,color,pick,iter);
         wrefresh(menu);
     }
     return menu;
