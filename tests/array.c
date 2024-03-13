@@ -131,6 +131,20 @@ clib_flag clib_permutations()
             return CLIB_TEST_FAILED;
         }
     }
+    clib_arr erase_a;
+    clib_arr_cast(&erase_a,4,sizeof(int),(int[]){1,2,3,4});
+    clib_arr erase_b;
+    clib_arr_cast(&erase_b,2,sizeof(int),(int[]){3,4});
+    clib_arr_erase(&erase_a,0,2);
+    if(clib_arr_isEqual(&erase_a,&erase_b)==CLIB_FALSE)return CLIB_TEST_FAILED;
+    clib_arr_del(&erase_a);
+    clib_arr_del(&erase_b);
+    clib_arr_cast(&erase_a,4,sizeof(int),(int[]){3,4,1,2});
+    clib_arr_cast(&erase_b,2,sizeof(int),(int[]){3,4});
+    clib_arr_erase(&erase_a,2,4);
+    if(clib_arr_isEqual(&erase_a,&erase_b)==CLIB_FALSE)return CLIB_TEST_FAILED;
+    clib_arr_del(&erase_a);
+    clib_arr_del(&erase_b);
 /****************************** clib_arr_reverse ******************************/
     if(clib_arr_del(&a)!=CLIB_SUCCESS)
         return CLIB_TEST_FAILED;
