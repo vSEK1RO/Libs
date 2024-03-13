@@ -33,9 +33,10 @@ int main()
     WINDOW * title = init_title(stdscr);
 
     clib_arr_pchar strs;
-    clib_arr_cast_pchar(&strs,2,(pchar[]){
+    clib_arr_cast_pchar(&strs,4,(pchar[]){
         "Scan matrix",
-        // "Print matrix",
+        "Print matrix",
+        "Del matrix",
         // "Add matrixies",
         // "Mut matrixies",
         // "Transpose matrix",
@@ -43,8 +44,10 @@ int main()
     });
 
     clib_arr_pfn fns;
-    clib_arr_cast_pfn(&fns,2,(pfn[]){
+    clib_arr_cast_pfn(&fns,4,(pfn[]){
         menu_scan,
+        menu_print,
+        menu_del,
         menu_exit
     });
 
@@ -62,6 +65,15 @@ int main()
         3
     );
 
+    clib_arr_del((clib_arr*)&strs);
+    clib_arr_del((clib_arr*)&fns);
+    for(uint64_t i=0;i<clib_arr_len(&vars);i++){
+        mtrx * m = (mtrx*)clib_arr_get(&vars,i);
+        mtrx_field * field = mtrx_fGet(m);
+        free(field);
+        mtrx_del(m);
+    }
+    clib_arr_del(&vars);
     delwin(title);
     delwin(menu);
     endwin();

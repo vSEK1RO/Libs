@@ -67,7 +67,6 @@ clib_flag mtrx_item_prints_float(char * s)
 clib_flag mtrx_field_float_init(mtrx_field * out)
 {
     *out=(mtrx_field){
-        .type="%f",
         .size=sizeof(float),
         .null=mtrx_item_null_float,
         .neg=mtrx_item_neg_float,
