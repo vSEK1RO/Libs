@@ -5,7 +5,7 @@
 #include <clib/array.h>
 #include <clib/string.h>
 #include "field_int.h"
-#include "field_float.h"
+#include "field_double.h"
 
 #define menu_win(name)\
     init_win(name,stdscr,getmaxy(stdscr)-12,40,12,43,COLOR_PAIR(COLOR_BLUE_BG));
@@ -20,9 +20,9 @@ clib_flag menu_type_int(clib_arr * vars)
     mtrx_field_int_init((mtrx_field*)*vars);
     return CLIB_FALSE;
 }
-clib_flag menu_type_float(clib_arr * vars)
+clib_flag menu_type_double(clib_arr * vars)
 {
-    mtrx_field_int_init((mtrx_field*)*vars);
+    mtrx_field_double_init((mtrx_field*)*vars);
     return CLIB_FALSE;
 }
 clib_flag menu_scan(clib_arr * vars)
@@ -37,7 +37,7 @@ clib_flag menu_scan(clib_arr * vars)
     clib_arr_pfn type_fns;
     clib_arr_cast_pfn(&type_fns,2,(pfn[]){
         menu_type_int,
-        menu_type_float
+        menu_type_double
     });
 
     clib_arr type_vars;
@@ -192,12 +192,13 @@ clib_flag menu_print(clib_arr * vars)
     int64_t id = menu_choose(vars);
     WINDOW * win = menu_win("Print menu");
     if(id==-1){
-        mvwprintw(win,4,4,"No matrixies!");
+        mvwprintw(win,2,4,"No matrixies!");
         wrefresh(win);
         getch();
     }else{
         mtrx m = *(mtrx*)clib_arr_get(vars,id);
         mtrx_field field = *mtrx_fGet(&m);
+        mvwprintw(win,2,4,"%s:",*(char**)mtrx_eGet(&m,0));
         for(uint64_t i=0;i<mtrx_height(&m);i++){
             for(uint64_t j=0;j<mtrx_width(&m);j++){
                 move(16+i,47+j*5);
@@ -217,16 +218,18 @@ clib_flag menu_del(clib_arr * vars)
     int64_t id = menu_choose(vars);
     WINDOW * win = menu_win("Del menu");
     if(id==-1){
-        mvwprintw(win,4,4,"No matrixies!");
+        mvwprintw(win,2,4,"No matrixies!");
         wrefresh(win);
         getch();
     }else{
         mtrx * m = (mtrx*)clib_arr_get(vars,id);
         mtrx_field * field = mtrx_fGet(m);
+        char * s = *(char**)mtrx_eGet(m,0);
         free(field);
+        free(s);
         mtrx_del(m);
         clib_arr_erase(vars,id,id+1);
-        mvwprintw(win,4,4,"Matrix deleted!");
+        mvwprintw(win,2,4,"Matrix was deleted!");
         wrefresh(win);
         getch();
     }
@@ -235,5 +238,258 @@ clib_flag menu_del(clib_arr * vars)
     delwin(win);
     return CLIB_TRUE;
 }
+clib_flag menu_add(clib_arr * vars){
+    int64_t id1 = menu_choose(vars);
+    char ** str1;
+    if(id1!=-1){
+        str1 = mtrx_eGet(clib_arr_get(vars,id1),0);
+        str_insStr(str1,"(*) ",0);
+    }
+    int64_t id2 = menu_choose(vars);
+    if(id1!=-1){
+        str_erase(str1,0,4);
+    }
+    WINDOW * win = menu_win("Add menu");
+    if(id1==-1 || id2==-1){
+        mvwprintw(win,2,4,"No matrixies!");
+        wrefresh(win);
+        getch();
+    }else{
+        mtrx m1 = *(mtrx*)clib_arr_get(vars,id1);
+        mtrx m2 = *(mtrx*)clib_arr_get(vars,id2);
+        mtrx m;
+        clib_flag flag = mtrx_add(&m,&m1,&m2);
+        if(flag!=CLIB_SUCCESS){
+            mvwprintw(win,2,4,"Incorrect types!");
+            wrefresh(win);
+            getch();
+        }else{
+            clib_arr_pub(vars,&m);
+            char * s = str_cast("_add_");
+            str_insStr(&s,*(char**)mtrx_eGet(&m1,0),0);
+            str_insStr(&s,*(char**)mtrx_eGet(&m2,0),str_len(s));
+            clib_mem_copy(mtrx_eGet(&m,0),&s,sizeof(char*));
+            mvwprintw(win,2,4,"%s:",*(char**)mtrx_eGet(&m,0));
+            mtrx_field field = *mtrx_fGet(&m);
+            for(uint64_t i=0;i<mtrx_height(&m);i++){
+                for(uint64_t j=0;j<mtrx_width(&m);j++){
+                    move(16+i,47+j*5);
+                    field.print(mtrx_get(&m,i,j));
+                }
+            }
+            wrefresh(win);
+            getch();
+        }
+    }
+    wclear(win);
+    wrefresh(win);
+    delwin(win);
+    return CLIB_TRUE;
+}
+clib_flag menu_mut(clib_arr * vars){
+    int64_t id1 = menu_choose(vars);
+    char ** str1;
+    if(id1!=-1){
+        str1 = mtrx_eGet(clib_arr_get(vars,id1),0);
+        str_insStr(str1,"(*) ",0);
+    }
+    int64_t id2 = menu_choose(vars);
+    if(id1!=-1){
+        str_erase(str1,0,4);
+    }
+    WINDOW * win = menu_win("Mut menu");
+    if(id1==-1 || id2==-1){
+        mvwprintw(win,2,4,"No matrixies!");
+        wrefresh(win);
+        getch();
+    }else{
+        mtrx m1 = *(mtrx*)clib_arr_get(vars,id1);
+        mtrx m2 = *(mtrx*)clib_arr_get(vars,id2);
+        mtrx m;
+        clib_flag flag = mtrx_mut(&m,&m1,&m2);
+        if(flag!=CLIB_SUCCESS){
+            mvwprintw(win,2,4,"Incorrect types!");
+            wrefresh(win);
+            getch();
+        }else{
+            clib_arr_pub(vars,&m);
+            char * s = str_cast("_mut_");
+            str_insStr(&s,*(char**)mtrx_eGet(&m1,0),0);
+            str_insStr(&s,*(char**)mtrx_eGet(&m2,0),str_len(s));
+            clib_mem_copy(mtrx_eGet(&m,0),&s,sizeof(char*));
+            mvwprintw(win,2,4,"%s:",*(char**)mtrx_eGet(&m,0));
+            mtrx_field field = *mtrx_fGet(&m);
+            for(uint64_t i=0;i<mtrx_height(&m);i++){
+                for(uint64_t j=0;j<mtrx_width(&m);j++){
+                    move(16+i,47+j*5);
+                    field.print(mtrx_get(&m,i,j));
+                }
+            }
+            wrefresh(win);
+            getch();
+        }
+    }
+    wclear(win);
+    wrefresh(win);
+    delwin(win);
+    return CLIB_TRUE;
+}
+clib_flag menu_transp(clib_arr * vars){
+    int64_t id1 = menu_choose(vars);
+    WINDOW * win = menu_win("Transp menu");
+    if(id1==-1){
+        mvwprintw(win,2,4,"No matrixies!");
+        wrefresh(win);
+        getch();
+    }else{
+        mtrx m1 = *(mtrx*)clib_arr_get(vars,id1);
+        mtrx m;
+        clib_flag flag = mtrx_transp(&m,&m1);
+        if(flag!=CLIB_SUCCESS){
+            mvwprintw(win,2,4,"Incorrect types!");
+            wrefresh(win);
+            getch();
+        }else{
+            clib_arr_pub(vars,&m);
+            char * s = str_cast("_transp");
+            str_insStr(&s,*(char**)mtrx_eGet(&m1,0),0);
+            clib_mem_copy(mtrx_eGet(&m,0),&s,sizeof(char*));
+            mvwprintw(win,2,4,"%s:",*(char**)mtrx_eGet(&m,0));
+            mtrx_field field = *mtrx_fGet(&m);
+            for(uint64_t i=0;i<mtrx_height(&m);i++){
+                for(uint64_t j=0;j<mtrx_width(&m);j++){
+                    move(16+i,47+j*5);
+                    field.print(mtrx_get(&m,i,j));
+                }
+            }
+            wrefresh(win);
+            getch();
+        }
+    }
+    wclear(win);
+    wrefresh(win);
+    delwin(win);
+    return CLIB_TRUE;
+}
+clib_flag menu_split(clib_arr * vars){
+    int64_t id = menu_choose(vars);
+    WINDOW * win = menu_win("Split menu");
+    if(id==-1){
+        mvwprintw(win,2,4,"No matrixies!");
+        wrefresh(win);
+        getch();
+    }else{
+        echo();
+        curs_set(1);
+        wattron(win,COLOR_PAIR(COLOR_WHITE_BG));
+        mvwprintw(win,2,4,"Enter column to split:");
+        wattroff(win,COLOR_PAIR(COLOR_WHITE_BG));
+        wrefresh(win);
+        uint64_t column;
+        mvwscanw(win,4,4,"%lu",&column);
+        wclear(win);
+        wrefresh(win);
+        echo();
+        curs_set(0);
+        delwin(win);
+
+        win = menu_win("Split menu");
+
+        mtrx m = *(mtrx*)clib_arr_get(vars,id);
+        mtrx m1, m2;
+        clib_flag flag = mtrx_splitByColumn(&m1,&m2,&m,column);
+        if(flag!=CLIB_SUCCESS){
+            mvwprintw(win,2,4,"Incorrect types!");
+            wrefresh(win);
+            getch();
+        }else{
+            clib_arr_pub(vars,&m1);
+            char * s1 = str_cast("_split_1");
+            str_insStr(&s1,*(char**)mtrx_eGet(&m,0),0);
+            clib_mem_copy(mtrx_eGet(&m1,0),&s1,sizeof(char*));
+
+            clib_arr_pub(vars,&m2);
+            char * s2 = str_cast("_split_2");
+            str_insStr(&s2,*(char**)mtrx_eGet(&m,0),0);
+            clib_mem_copy(mtrx_eGet(&m2,0),&s2,sizeof(char*));
+
+            mvwprintw(win,2,4,"%s:",*(char**)mtrx_eGet(&m1,0));
+            mtrx_field field1 = *mtrx_fGet(&m1);
+            for(uint64_t i=0;i<mtrx_height(&m1);i++){
+                for(uint64_t j=0;j<mtrx_width(&m1);j++){
+                    move(16+i,47+j*5);
+                    field1.print(mtrx_get(&m1,i,j));
+                }
+            }
+            wrefresh(win);
+            getch();
+
+            mvwprintw(win,2,4,"%s:",*(char**)mtrx_eGet(&m2,0));
+            mtrx_field field2 = *mtrx_fGet(&m2);
+            for(uint64_t i=0;i<mtrx_height(&m2);i++){
+                for(uint64_t j=0;j<mtrx_width(&m2);j++){
+                    move(16+i,47+j*5);
+                    field2.print(mtrx_get(&m2,i,j));
+                }
+            }
+            wrefresh(win);
+            getch();
+        }
+    }
+    wclear(win);
+    wrefresh(win);
+    delwin(win);
+    return CLIB_TRUE;
+}
+clib_flag menu_concat(clib_arr * vars){
+    int64_t id1 = menu_choose(vars);
+    char ** str1;
+    if(id1!=-1){
+        str1 = mtrx_eGet(clib_arr_get(vars,id1),0);
+        str_insStr(str1,"(*) ",0);
+    }
+    int64_t id2 = menu_choose(vars);
+    if(id1!=-1){
+        str_erase(str1,0,4);
+    }
+    WINDOW * win = menu_win("Concat menu");
+    if(id1==-1 || id2==-1){
+        mvwprintw(win,2,4,"No matrixies!");
+        wrefresh(win);
+        getch();
+    }else{
+        mtrx m1 = *(mtrx*)clib_arr_get(vars,id1);
+        mtrx m2 = *(mtrx*)clib_arr_get(vars,id2);
+        mtrx m;
+        clib_flag flag = mtrx_concat(&m,&m1,&m2);
+        if(flag!=CLIB_SUCCESS){
+            mvwprintw(win,2,4,"Incorrect types!");
+            wrefresh(win);
+            getch();
+        }else{
+            clib_arr_pub(vars,&m);
+            char * s = str_cast("_concat_");
+            str_insStr(&s,*(char**)mtrx_eGet(&m1,0),0);
+            str_insStr(&s,*(char**)mtrx_eGet(&m2,0),str_len(s));
+            clib_mem_copy(mtrx_eGet(&m,0),&s,sizeof(char*));
+            mvwprintw(win,2,4,"%s:",*(char**)mtrx_eGet(&m,0));
+            mtrx_field field = *mtrx_fGet(&m);
+            for(uint64_t i=0;i<mtrx_height(&m);i++){
+                for(uint64_t j=0;j<mtrx_width(&m);j++){
+                    move(16+i,47+j*5);
+                    field.print(mtrx_get(&m,i,j));
+                }
+            }
+            wrefresh(win);
+            getch();
+        }
+    }
+    wclear(win);
+    wrefresh(win);
+    delwin(win);
+    return CLIB_TRUE;
+}
+
+
 
 #endif

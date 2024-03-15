@@ -117,14 +117,17 @@ clib_flag mtrx_print(mtrx * m, char * sep, char * end)
 }
 clib_flag mtrx_concat(mtrx * out, mtrx * m, mtrx * b)
 {
+    mtrx_field * field = malloc(sizeof(mtrx_field));
+    clib_mem_copy(field,mtrx_fGet(m),sizeof(mtrx_field));
     clib_flag flag=CLIB_UNNAMED;
     if(mtrx_height(m)!=mtrx_height(b))return CLIB_TYPE_INCORRECT;
-    flag=mtrx_init(
+    flag=mtrx_eInit(
         out,
         mtrx_height(m),
         mtrx_width(m)+mtrx_width(b),
         mtrx_size(m),
-        mtrx_fGet(m)
+        mtrx_eLen(m),
+        field
     );
     flagcheck(flag);
     clib_arr buff;
@@ -150,9 +153,13 @@ clib_flag mtrx_concat(mtrx * out, mtrx * m, mtrx * b)
 clib_flag mtrx_splitByColumn(mtrx * out1, mtrx * out2, mtrx * m, uint64_t j)
 {
     clib_flag flag=CLIB_UNNAMED;
-    flag=mtrx_init(out1,mtrx_height(m),j,mtrx_size(m),mtrx_fGet(m));
+    mtrx_field * field1 = malloc(sizeof(mtrx_field));
+    mtrx_field * field2 = malloc(sizeof(mtrx_field));
+    clib_mem_copy(field1,mtrx_fGet(m),sizeof(mtrx_field));
+    clib_mem_copy(field2,mtrx_fGet(m),sizeof(mtrx_field));
+    flag=mtrx_eInit(out1,mtrx_height(m),j,mtrx_size(m),mtrx_eLen(m),field1);
     flagcheck(flag);
-    flag=mtrx_init(out2,mtrx_height(m),mtrx_width(m)-j,mtrx_size(m),mtrx_fGet(m));
+    flag=mtrx_eInit(out2,mtrx_height(m),mtrx_width(m)-j,mtrx_size(m),mtrx_eLen(m),field2);
     clib_arr buff;
     for(uint64_t i=0;i<mtrx_height(out1);i++){
         flagcheck(flag);
@@ -190,13 +197,15 @@ clib_flag mtrx_splitByColumn(mtrx * out1, mtrx * out2, mtrx * m, uint64_t j)
 }
 clib_flag mtrx_add(mtrx * out, mtrx * m, mtrx * b)
 {
+    mtrx_field * field = malloc(sizeof(mtrx_field));
+    clib_mem_copy(field,mtrx_fGet(m),sizeof(mtrx_field));
     clib_flag flag=CLIB_UNNAMED;
     if(
         mtrx_height(m)!=mtrx_height(b) ||
         mtrx_width(m)!=mtrx_width(b) ||
         mtrx_size(m)!=mtrx_size(b)
     )return CLIB_TYPE_INCORRECT;
-    flag=mtrx_init(out,mtrx_height(m),mtrx_width(m),mtrx_size(m),mtrx_fGet(m));
+    flag=mtrx_eInit(out,mtrx_height(m),mtrx_width(m),mtrx_size(m),mtrx_eLen(m),field);
     for(uint64_t i=0;i<mtrx_height(out);i++){
         for(uint64_t j=0;j<mtrx_width(out);j++){
             flagcheck(flag);
@@ -207,12 +216,14 @@ clib_flag mtrx_add(mtrx * out, mtrx * m, mtrx * b)
 }
 clib_flag mtrx_mut(mtrx * out, mtrx * m, mtrx * b)
 {
+    mtrx_field * field = malloc(sizeof(mtrx_field));
+    clib_mem_copy(field,mtrx_fGet(m),sizeof(mtrx_field));
     clib_flag flag=CLIB_UNNAMED;
     if(
         mtrx_width(m)!=mtrx_height(b) ||
         mtrx_size(m)!=mtrx_size(b)
     )return CLIB_TYPE_INCORRECT;
-    flag=mtrx_init(out,mtrx_height(m),mtrx_width(b),mtrx_size(m),mtrx_fGet(m));
+    flag=mtrx_eInit(out,mtrx_height(m),mtrx_width(b),mtrx_size(m),mtrx_eLen(m),field);
     mtrx_item buff=(mtrx_item)malloc(mtrx_size(m));
     mtrx_item null=(mtrx_item)malloc(mtrx_size(m));
     flagcheck(flag);
@@ -233,8 +244,10 @@ clib_flag mtrx_mut(mtrx * out, mtrx * m, mtrx * b)
 }
 clib_flag mtrx_transp(mtrx * out, mtrx * m)
 {
+    mtrx_field * field = malloc(sizeof(mtrx_field));
+    clib_mem_copy(field,mtrx_fGet(m),sizeof(mtrx_field));
     clib_flag flag=CLIB_UNNAMED;
-    flag=mtrx_init(out,mtrx_width(m),mtrx_height(m),mtrx_size(m),mtrx_fGet(m));
+    flag=mtrx_eInit(out,mtrx_width(m),mtrx_height(m),mtrx_size(m),mtrx_eLen(m),field);
     flagcheck(flag);
     for(uint64_t i=0;i<mtrx_height(out);i++){
         for(uint64_t j=0;j<mtrx_width(out);j++){
