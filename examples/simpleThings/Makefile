@@ -1,20 +1,18 @@
 ### Change -I -L -l vars for your dependencies locations
 DEPSDIR = C:/_SE/libs
-DEPS = clib PDCurses
+DEPS = clib
 -I = ${patsubst %, -I${DEPSDIR}/%/include, ${DEPS}}
 -L = ${patsubst %, -L${DEPSDIR}/%/lib, ${DEPS}}
--l = -lclib -lpdcurses
+-l = -lclib
 ### Read upper
 
 CC = gcc
 DBG = gdb
 CFLAGS = -Wall -Wextra -Werror -O0 -g
-OBJS = matrix.o
 
 SRCDIR = src
-OBJDIR = obj
 BINDIR = bin
-DIRS = ${OBJDIR} ${BINDIR}
+DIRS = ${BINDIR}
 
 TARGET = ${SRCDIR}/main.c
 

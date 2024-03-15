@@ -14,7 +14,7 @@ INCDIR = include
 OBJDIR = obj
 LIBDIR = lib
 TESTSDIR = tests
-DIRS = ${SCRDIR} ${INCDIR} ${OBJDIR} ${LIBDIR} ${BINDIR}
+DIRS = ${SCRDIR} ${INCDIR}
 
 build: ${DIRS} ${LIBDIR}/lib${LIB}.a
 
