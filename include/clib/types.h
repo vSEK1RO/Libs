@@ -23,7 +23,7 @@ typedef void * clib_str;
 
 /************************************ FLAG ************************************/
 
-typedef enum{
+typedef enum clib_flag{
     //general
     CLIB_FALSE = 0,
     CLIB_TRUE = 1,
@@ -31,6 +31,7 @@ typedef enum{
     CLIB_UNNAMED,
     CLIB_TYPE_INCORRECT,
     CLIB_TEST_FAILED,
+    CLIB_OVERFLOW,
     CLIB_NULL,
     //array
     CLIB_ARR_INDEX,

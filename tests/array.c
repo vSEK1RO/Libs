@@ -1,6 +1,7 @@
-#include "../src/array.h"
-#include "../src/types.h"
 #include <stdio.h>
+#define ARR_TYPE int
+#include <clib/array.h>
+#include <clib/types.h>
 
 void clib_arr_print_int(clib_arr * a){
     for(uint64_t i=0;i<clib_arr_len(a);i++){
@@ -19,6 +20,24 @@ clib_flag clib_general(){
             return CLIB_TEST_FAILED;
         }
     }
+/******************************** clib_arr_eCast *******************************/
+    clib_arr q;
+    clib_arr_eCast(&q,5,sizeof(int),4,(int[]){1,2,3,4,5});
+    for(uint64_t i=0;i<clib_arr_len(&q);i++){
+        if(arr[i]!=((int*)q)[i]){
+            return CLIB_TEST_FAILED;
+        }
+    }
+/******************************** clib_arr_eLen ********************************/
+    if(clib_arr_eLen(&q)!=4){
+        return CLIB_TEST_FAILED;
+    }
+/******************************** clib_arr_eGet ********************************/
+    if(clib_arr_eGet(&q,10)!=NULL){
+        return CLIB_TEST_FAILED;
+    }
+    if(clib_arr_del(&q)!=CLIB_SUCCESS)
+        return CLIB_TEST_FAILED;
 /******************************** clib_arr_len ********************************/
     if(clib_arr_len(&a)!=5){
         return CLIB_TEST_FAILED;
@@ -42,7 +61,7 @@ clib_flag clib_general(){
         }
     }
 /****************************** clib_arr_isEqual ******************************/
-    if(!clib_arr_isEqual(&a,b))
+    if(!clib_arr_isEqual(&a,&b))
         return CLIB_TEST_FAILED;
 /******************************** clib_arr_find *******************************/
     if(clib_arr_find(&b,(int[]){10},1)!=(uint64_t)-1)
@@ -112,6 +131,20 @@ clib_flag clib_permutations()
             return CLIB_TEST_FAILED;
         }
     }
+    clib_arr erase_a;
+    clib_arr_cast(&erase_a,4,sizeof(int),(int[]){1,2,3,4});
+    clib_arr erase_b;
+    clib_arr_cast(&erase_b,2,sizeof(int),(int[]){3,4});
+    clib_arr_erase(&erase_a,0,2);
+    if(clib_arr_isEqual(&erase_a,&erase_b)==CLIB_FALSE)return CLIB_TEST_FAILED;
+    clib_arr_del(&erase_a);
+    clib_arr_del(&erase_b);
+    clib_arr_cast(&erase_a,4,sizeof(int),(int[]){3,4,1,2});
+    clib_arr_cast(&erase_b,2,sizeof(int),(int[]){3,4});
+    clib_arr_erase(&erase_a,2,4);
+    if(clib_arr_isEqual(&erase_a,&erase_b)==CLIB_FALSE)return CLIB_TEST_FAILED;
+    clib_arr_del(&erase_a);
+    clib_arr_del(&erase_b);
 /****************************** clib_arr_reverse ******************************/
     if(clib_arr_del(&a)!=CLIB_SUCCESS)
         return CLIB_TEST_FAILED;
@@ -192,7 +225,7 @@ clib_flag clib_insertions()
     clib_arr_cast(&a,3,sizeof(int),(int[]){2,1,4});
     clib_arr_cast(&b,3,sizeof(int),(int[]){5,3,2});
     clib_arr c;
-    clib_arr_concat(&c,&a,b);
+    clib_arr_concat(&c,&a,&b);
     for(uint64_t i=0;i<6;i++){
         if(crr[i]!=((int*)c)[i]){
             return CLIB_TEST_FAILED;
@@ -227,15 +260,21 @@ clib_flag clib_insertions()
     clib_arr_cast(&a,5,sizeof(int),(int[]){1,2,3,4,5});
     clib_arr_cast(&b,4,sizeof(int),(int[]){1,2,10,5});
     clib_arr_repl(&a,(int[]){10},2,4);
-    if(!clib_arr_isEqual(&a,b))
+    if(!clib_arr_isEqual(&a,&b))
         return CLIB_TEST_FAILED;
 /****************************** clib_arr_replArr ******************************/
     if(clib_arr_del(&a)!=CLIB_SUCCESS)
         return CLIB_TEST_FAILED;
-    clib_arr_cast(&a,5,sizeof(int),(int[]){1,0,3,4,5});
+    clib_arr_cast(&a,6,sizeof(int),(int[]){1,0,3,4,10,5});
     clib_arr_cast(&c,2,sizeof(int),(int[]){2,10});
-    clib_arr_replArr(&a,c,1,4);
-    if(!clib_arr_isEqual(&a,b))
+    clib_arr_replArr(&a,c,1,5);
+    if(!clib_arr_isEqual(&a,&b))
+        return CLIB_TEST_FAILED;
+    if(clib_arr_del(&a)!=CLIB_SUCCESS)
+        return CLIB_TEST_FAILED;
+    if(clib_arr_del(&b)!=CLIB_SUCCESS)
+        return CLIB_TEST_FAILED;
+    if(clib_arr_del(&c)!=CLIB_SUCCESS)
         return CLIB_TEST_FAILED;
     return CLIB_SUCCESS;
 }

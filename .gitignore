@@ -2,12 +2,12 @@
 *.o
 *.a
 *.dll
+*.ilk
 *.s
 *.exp
 *.lib
 *.pdb
 *.out
-obj
 .vscode
 .vs
 .idea

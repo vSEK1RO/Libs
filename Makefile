@@ -1,28 +1,39 @@
+# make
+# make tests
+# make clean
+
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -O0
+CFLAGS = -Wall -Wextra -Werror -O0 -g
 OBJS = array.o numsys.o string.o utils.o
+TESTS = array.exe
+
+LIB = clib
 
 SRCDIR = src
+INCDIR = include
 OBJDIR = obj
+LIBDIR = lib
 TESTSDIR = tests
+DIRS = ${SCRDIR} ${INCDIR} ${OBJDIR} ${LIBDIR} ${BINDIR}
 
-build: ${OBJDIR} ${OBJS}
-	
-${OBJDIR}:
-	mkdir ${OBJDIR}
+build: ${DIRS} ${LIBDIR}/lib${LIB}.a
 
-array.o: ${SRCDIR}/array.c ${SRCDIR}/array.h
-	${CC} -o ${OBJDIR}/array.o -c $< ${CFLAGS}
-string.o: ${SRCDIR}/string.c ${SRCDIR}/string.h
-	${CC} -o ${OBJDIR}/string.o -c $< ${CFLAGS}
-numsys.o: ${SRCDIR}/numsys.c ${SRCDIR}/numsys.h
-	${CC} -o ${OBJDIR}/numsys.o -c $< ${CFLAGS}
-utils.o: ${SRCDIR}/utils.c ${SRCDIR}/utils.h
-	${CC} -o ${OBJDIR}/utils.o -c $< ${CFLAGS}
+${DIRS}:
+	mkdir ${DIRS}
 
-tests: build array_test.exe
+${OBJDIR}/%.o: ${SRCDIR}/%.c ${INCDIR}/${LIB}/%.h
+	${CC} -o $@ -c $< -I${INCDIR} ${CFLAGS}
 
-array_test.exe: 
-	${CC} -o ${TESTSDIR}/array_test.o -g -c ${TESTSDIR}/array_test.c ${CFLAGS}
-	${CC} -o ${TESTSDIR}/array_test.exe ${patsubst %.o, ${OBJDIR}/%.o, ${OBJS}} ${TESTSDIR}/array_test.o ${CFLAGS}
-	./${TESTSDIR}/array_test.exe
+${LIBDIR}/lib${LIB}.a: ${patsubst %.o, ${OBJDIR}/%.o, ${OBJS}}
+	ar rcs $@ $^
+
+${TESTSDIR}: build ${patsubst %.exe, ${TESTSDIR}/%.exe, ${TESTS}}
+	${patsubst %.exe, ./${TESTSDIR}/%.exe, ${TESTS}}
+
+${TESTSDIR}/%.exe: ${TESTSDIR}/%.c
+	${CC} -o $@ $^ -I${INCDIR} -L${LIBDIR} -l${LIB} ${CFLAGS}
+
+clean:
+	rm ${OBJDIR}/*.o
+	rm ${LIBDIR}/*.a
+	rm */*.exe
