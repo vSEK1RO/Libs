@@ -219,8 +219,6 @@ clib_flag clib_insertions()
     int crr[]={2,1,4,5,3,2};
     int drr[]={1,4,5,3,2};
     clib_arr a;
-    if(clib_arr_del(&a)!=CLIB_SUCCESS)
-        return CLIB_TEST_FAILED;
     clib_arr b;
     clib_arr_cast(&a,3,sizeof(int),(int[]){2,1,4});
     clib_arr_cast(&b,3,sizeof(int),(int[]){5,3,2});
