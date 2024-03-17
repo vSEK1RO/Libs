@@ -14,12 +14,12 @@ INCDIR = include
 OBJDIR = obj
 LIBDIR = lib
 TESTSDIR = tests
-DIRS = ${SCRDIR} ${INCDIR}
+DIRS = ${OBJDIR} ${LIBDIR}
 
 build: ${DIRS} ${LIBDIR}/lib${LIB}.a
 
 ${DIRS}:
-	mkdir ${DIRS}
+	mkdir $@
 
 ${OBJDIR}/%.o: ${SRCDIR}/%.c ${INCDIR}/${LIB}/%.h
 	${CC} -o $@ -c $< -I${INCDIR} ${CFLAGS}

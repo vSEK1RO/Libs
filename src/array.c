@@ -1,7 +1,7 @@
 #include <clib/array.h>
 
 #define nullcheck(arr,ret) if(arr==NULL)return ret
-#define flagcheck(flag) if(flag!=CLIB_SUCCESS)return flag
+#define flagcheck(flag) if(flag!=CLIB_SUCCESS)goto end
 
 /********************************* GENERAL 16 *********************************/
 
@@ -35,6 +35,8 @@ clib_flag clib_arr_cast(clib_arr * out, uint64_t len, uint64_t size, void* arr)
     flag=clib_arr_init(out,len,size);
     flagcheck(flag);
     flag=clib_mem_copy(*out,arr,len*size);
+
+    end:
     return flag;
 }
 clib_flag clib_arr_eCast(clib_arr * out, uint64_t len, uint64_t size, uint64_t eLen, void* arr)
@@ -43,6 +45,8 @@ clib_flag clib_arr_eCast(clib_arr * out, uint64_t len, uint64_t size, uint64_t e
     flag=clib_arr_eInit(out,len,size,eLen);
     flagcheck(flag);
     flag=clib_mem_copy(*out,arr,len*size);
+
+    end:
     return flag;
 }
 uint64_t clib_arr_len(clib_arr * a)
@@ -97,6 +101,8 @@ clib_flag clib_arr_copy(clib_arr * a, clib_arr b)
     flag=clib_arr_init(a,clib_arr_len(&b),clib_arr_size(&b));
     flagcheck(flag);
     flag=clib_mem_copy(*a,b,clib_arr_len(&b)*clib_arr_size(&b));
+
+    end:
     return flag;
 }
 clib_flag clib_arr_isEqual(clib_arr * a, clib_arr * b)
@@ -194,6 +200,9 @@ clib_flag clib_arr_swap(clib_arr * a, uint64_t i1, uint64_t i2)
     flag=clib_mem_copy(
         clib_arr_get(a,i2),buff,clib_arr_size(a)
     );
+
+    end:
+    free(buff);
     return flag;
 }
 clib_flag clib_arr_rearr(clib_arr * a, uint64_t i1, uint64_t i2)
@@ -232,6 +241,9 @@ clib_flag clib_arr_rearr(clib_arr * a, uint64_t i1, uint64_t i2)
         buff,
         clib_arr_size(a)
     );
+
+    end:
+    free(buff);
     return flag;
 }
 clib_flag clib_arr_erase(clib_arr * a, uint64_t i1, uint64_t i2)
@@ -254,9 +266,13 @@ clib_flag clib_arr_erase(clib_arr * a, uint64_t i1, uint64_t i2)
         clib_arr_get(a,i2),
         clib_arr_size(a)*(clib_arr_len(a)-i2)
     );
+
+    end:
     if(flag==CLIB_SUCCESS){
         clib_arr_del(a);
         *a=buff;
+    }else{
+        clib_arr_del(&buff);
     }
     return flag;
 }
@@ -288,8 +304,12 @@ clib_flag clib_arr_substr(clib_arr * out, clib_arr * a, uint64_t i1, uint64_t i2
         buff,clib_arr_get(a,i1),
         clib_arr_size(a)*(i2-i1)
     );
+
+    end:
     if(flag==CLIB_SUCCESS){
         *out=buff;
+    }else{
+        clib_arr_del(&buff);
     }
     return flag;
 }
@@ -304,10 +324,11 @@ clib_flag clib_arr_pob(clib_arr * a)
         &buff,clib_arr_len(a)-1,
         clib_arr_size(a),*a
     );
-    flagcheck(flag);
-    flag=clib_arr_del(a);
     if(flag==CLIB_SUCCESS){
+        clib_arr_del(a);
         *a=buff;
+    }else{
+        clib_arr_del(&buff);
     }
     return flag;
 }
@@ -323,9 +344,13 @@ clib_flag clib_arr_pub(clib_arr * a, clib_item b)
         clib_arr_get(&buff,clib_arr_len(&buff)-1),
         b,clib_arr_size(a)
     );
+
+    end:
     if(flag==CLIB_SUCCESS){
         clib_arr_del(a);
         *a=buff;
+    }else{
+        clib_arr_del(&buff);
     }
     return flag;
 }
@@ -338,10 +363,11 @@ clib_flag clib_arr_pof(clib_arr * a)
         clib_arr_size(a),
         clib_arr_get(a,1)
     );
-    flagcheck(flag);
-    flag=clib_arr_del(a);
     if(flag==CLIB_SUCCESS){
+        clib_arr_del(a);
         *a=buff;
+    }else{
+        clib_arr_del(&buff);
     }
     return flag;
 }
@@ -357,9 +383,13 @@ clib_flag clib_arr_puf(clib_arr * a, clib_item b)
     );
     flagcheck(flag);
     flag=clib_mem_copy(buff,b,clib_arr_size(a));
+
+    end:
     if(flag==CLIB_SUCCESS){
         clib_arr_del(a);
         *a=buff;
+    }else{
+        clib_arr_del(&buff);
     }
     return flag;
 }
@@ -390,8 +420,12 @@ clib_flag clib_arr_concat(clib_arr * out, clib_arr * a, clib_arr * b)
         *b,
         clib_arr_len(b)*clib_arr_size(b)
     );
+
+    end:
     if(flag==CLIB_SUCCESS){
         *out=buff;
+    }else{
+        clib_arr_del(&buff);
     }
     return flag;
 }
@@ -404,9 +438,13 @@ clib_flag clib_arr_ins(clib_arr * a, clib_item b, uint64_t i)
     flag=clib_arr_pub(&buff,b);
     flagcheck(flag);
     flag=clib_arr_rearr(&buff,clib_arr_len(&buff)-1,i);
+
+    end:
     if(flag==CLIB_SUCCESS){
         clib_arr_del(a);
         *a=buff;
+    }else{
+        clib_arr_del(&buff);
     }
     return flag;
 }
@@ -416,19 +454,25 @@ clib_flag clib_arr_insArr(clib_arr * a, clib_arr b, uint64_t i)
     if(clib_arr_size(a)!=clib_arr_size(&b)){
         return CLIB_TYPE_INCORRECT;
     }
-    clib_arr buffl, buffr;
+    clib_arr buffl, buffr, buff;
     flag=clib_arr_substr(&buffl,a,0,i);
     flagcheck(flag);
     flag=clib_arr_substr(&buffr,a,i,clib_arr_len(a));
     flagcheck(flag);
-    flag=clib_arr_concat(&buffl,&buffl,&b);
+    flag=clib_arr_concat(&buff,&buffl,&b);
     flagcheck(flag);
-    flag=clib_arr_concat(&buffl,&buffl,&buffr);
+    clib_arr_del(&buffl);
+    flag=clib_arr_concat(&buffl,&buff,&buffr);
     flagcheck(flag);
-    flag=clib_arr_del(&buffr);
+    clib_arr_del(&buff);
+    clib_arr_del(&buffr);
+
+    end:
     if(flag==CLIB_SUCCESS){
         clib_arr_del(a);
         *a=buffl;
+    }else{
+        clib_arr_del(&buffl);
     }
     return flag;
 }
@@ -438,6 +482,8 @@ clib_flag clib_arr_repl(clib_arr * a, clib_item b, uint64_t i1, uint64_t i2)
     flag=clib_arr_erase(a,i1,i2);
     flagcheck(flag);
     flag=clib_arr_ins(a,b,i1);
+
+    end:
     return flag;
 }
 clib_flag clib_arr_replArr(clib_arr * a, clib_arr b, uint64_t i1, uint64_t i2)
@@ -446,5 +492,7 @@ clib_flag clib_arr_replArr(clib_arr * a, clib_arr b, uint64_t i1, uint64_t i2)
     flag=clib_arr_erase(a,i1,i2);
     flagcheck(flag);
     flag=clib_arr_insArr(a,b,i1);
+
+    end:
     return flag;
 }
