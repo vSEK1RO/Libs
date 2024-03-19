@@ -24,13 +24,13 @@ ${DIRS}:
 ${BINDIR}/app.exe: ${patsubst %.o, ${OBJDIR}/%.o, ${OBJS}} ${TARGET}
 	${CC} -o $@ $^ ${-I} ${-L} ${-l} ${CFLAGS}
 
-run: ${DIRS} ${BINDIR}/app.exe
+run: build
 	./${BINDIR}/app.exe
 
 ${DBG}: ${BINDIR}/app.exe
 	gdb $^
 
-${OBJDIR}/%.o: ${SRCDIR}/%.c ${SRCDIR}/%.h ${DIRS}
+${OBJDIR}/%.o: ${SRCDIR}/%.c ${SRCDIR}/%.h
 	${CC} -o $@ -c $< ${-I} ${CFLAGS}
 
 clean:
