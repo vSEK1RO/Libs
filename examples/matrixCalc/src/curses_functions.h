@@ -1,7 +1,7 @@
 #ifndef CURSES_FUNCTIONS_H
 #define CURSES_FUNCTIONS_H
 
-#include <PDCurses/curses.h>
+#include <curses.h>
 #include <clib/array.h>
 #include <clib/string.h>
 #include "field_int.h"

@@ -1,7 +1,7 @@
 #ifndef _COLORS_H
 #define _COLORS_H
 
-#include <PDCurses/curses.h>
+#include <curses.h>
 
 #define COLOR_BLACK_FG 1
 #define COLOR_GREEN_FG 2

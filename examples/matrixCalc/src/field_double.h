@@ -3,7 +3,7 @@
 
 #include <inttypes.h>
 #include <clib/types.h>
-#include <PDCurses/curses.h>
+#include <curses.h>
 
 #include "matrix.h"
 #include "matrix_types.h"

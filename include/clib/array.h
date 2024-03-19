@@ -109,6 +109,11 @@ uint64_t ARR_FUNC(ARR_TYPE,size)(ARR_TDEF(ARR_TYPE,arr) * a)
     ARR_CHECK_TYPE(ARR_TYPE,a,0);
     return clib_arr_size((clib_arr*)a);
 }
+uint64_t ARR_FUNC(ARR_TYPE,mLen)(ARR_TDEF(ARR_TYPE,arr) * a)
+{
+    ARR_CHECK_TYPE(ARR_TYPE,a,0);
+    return clib_arr_mLen((clib_arr*)a);
+}
 uint64_t ARR_FUNC(ARR_TYPE,eLen)(ARR_TDEF(ARR_TYPE,arr) * a)
 {
     ARR_CHECK_TYPE(ARR_TYPE,a,0);

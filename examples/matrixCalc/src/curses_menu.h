@@ -1,7 +1,7 @@
 #ifndef CURSES_MENU_H
 #define CURSES_MENU_H
 
-#include <PDCurses/curses.h>
+#include <curses.h>
 #include <clib/string.h>
 #include <clib/array.h>
 #include "curses_colors.h"

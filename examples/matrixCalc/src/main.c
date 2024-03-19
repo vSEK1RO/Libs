@@ -13,7 +13,7 @@
 //#endclude "include/clib/title.h"
 /********************************** INCLUDES **********************************/
 
-#include <PDCurses/curses.h>
+#include <curses.h>
 typedef char * pchar;
 #define ARR_TYPE pchar
 #include <clib/array.h>
