@@ -77,7 +77,8 @@ int main()
     for(uint64_t i=0;i<clib_arr_len(&vars);i++){
         mtrx * m = (mtrx*)clib_arr_get(&vars,i);
         mtrx_field * field = mtrx_fGet(m);
-        free(field);
+        free((void*)field);
+        free((void*)*(char**)mtrx_eGet(m,0));
         mtrx_del(m);
     }
     clib_arr_del(&vars);

@@ -15,7 +15,7 @@ clib_flag mtrx_eInit(mtrx * out, uint64_t m, uint64_t n, uint64_t size, uint64_t
         flag=clib_arr_init((clib_arr*)clib_arr_get((clib_arr*)out,i),n,size);
         flagcheck(flag);
     }
-    flag=clib_mem_copy((void*)clib_arr_eGet((clib_arr*)out,0),(void*)&field,sizeof(void*));
+    flag=clib_mem_copy(clib_arr_eGet((clib_arr*)out,mtrx_eLen(out)),&field,sizeof(void*));
     return flag;
 }
 uint64_t mtrx_height(mtrx * m)
@@ -44,15 +44,14 @@ mtrx_item mtrx_get(mtrx * m, uint64_t im, uint64_t jn)
 mtrx_item mtrx_eGet(mtrx * m, uint64_t eI)
 {
     mtrx_item item=NULL;
-    uint64_t offset=sizeof(uint64_t)*3+mtrx_eLen(m);
     if(eI<mtrx_eLen(m)){
-        item=(mtrx_item)((char*)*m-offset+eI);
+        item=(mtrx_item)clib_arr_eGet((clib_arr*)m,eI);
     }
     return item;
 }
 mtrx_field * mtrx_fGet(mtrx * m)
 {
-    return *(mtrx_field**)clib_arr_eGet((clib_arr*)m,0);
+    return *(mtrx_field**)clib_arr_eGet((clib_arr*)m,mtrx_eLen(m));
 }
 clib_flag mtrx_del(mtrx * m)
 {

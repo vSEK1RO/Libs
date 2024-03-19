@@ -162,13 +162,13 @@ int64_t menu_choose(clib_arr * vars)
     wrefresh(menu);
     while((input=wgetch(menu))){
         switch(input){
-            case KEY_UP:
+            case 'w':
                 iter--;
                 if(iter<0){
                     iter=iterl-1;
                 }
                 break;
-            case KEY_DOWN:
+            case 's':
                 iter++;
                 if(iter>=iterl){
                     iter=0;

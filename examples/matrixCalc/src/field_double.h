@@ -51,12 +51,12 @@ clib_flag mtrx_item_mod_double(
 }
 clib_flag mtrx_item_scan_double(mtrx_item a)
 {
-    scanw("%d",(double*)a);
+    scanw("%lf",(double*)a);
     return CLIB_SUCCESS;
 }
 clib_flag mtrx_item_print_double(mtrx_item a)
 {
-    printw("%d",*(double*)a);
+    printw("%lf",*(double*)a);
     return CLIB_SUCCESS;
 }
 clib_flag mtrx_item_prints_double(char * s)
