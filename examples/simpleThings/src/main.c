@@ -1,4 +1,4 @@
-    #define ARR_TYPE int
+#define ARR_TYPE int
 #include <clib/array.h>
 #include <stdio.h>
 
