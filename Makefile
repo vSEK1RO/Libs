@@ -12,11 +12,12 @@ LIB = clib
 SRCDIR = src
 INCDIR = include
 OBJDIR = obj
+BINDIR = bin
 LIBDIR = lib
-TESTSDIR = tests
-DIRS = ${OBJDIR} ${LIBDIR}
+TESTDIR = test
+DIRS = ${OBJDIR} ${LIBDIR} ${BINDIR}
 
-build: ${DIRS} ${LIBDIR}/lib${LIB}.a
+build: ${DIRS} ${LIBDIR}/lib${LIB}.a ${BINDIR}/lib${LIB}.so
 
 ${DIRS}:
 	mkdir $@
@@ -24,16 +25,20 @@ ${DIRS}:
 ${OBJDIR}/%.o: ${SRCDIR}/%.c ${INCDIR}/${LIB}/%.h
 	${CC} -o $@ -c $< -I${INCDIR} ${CFLAGS}
 
+${BINDIR}/lib${LIB}.so: ${patsubst %.o, ${OBJDIR}/%.o, ${OBJS}}
+	${CC} -shared -o $@ $^ 
+
 ${LIBDIR}/lib${LIB}.a: ${patsubst %.o, ${OBJDIR}/%.o, ${OBJS}}
 	ar rcs $@ $^
 
-${TESTSDIR}: build ${patsubst %.exe, ${TESTSDIR}/%.exe, ${TESTS}}
-	${patsubst %.exe, ./${TESTSDIR}/%.exe, ${TESTS}}
+${TESTDIR}: build ${patsubst %.exe, ${TESTDIR}/%.exe, ${TESTS}}
+	${patsubst %.exe, ./${TESTDIR}/%.exe, ${TESTS}}
 
-${TESTSDIR}/%.exe: ${TESTSDIR}/%.c
+${TESTDIR}/%.exe: ${TESTDIR}/%.c
 	${CC} -o $@ $^ -I${INCDIR} -L${LIBDIR} -l${LIB} ${CFLAGS}
 
 clean:
 	rm ${OBJDIR}/*.o
 	rm ${LIBDIR}/*.a
+	rm ${BINDIR}/*.so
 	rm */*.exe

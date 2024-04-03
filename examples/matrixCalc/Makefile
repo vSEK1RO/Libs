@@ -1,5 +1,5 @@
 ### Change -I -L -l vars for your dependencies locations
-DEPSDIR = /home/sek1ro/Desktop/se/libs
+DEPSDIR = ../../..
 DEPS = clib
 -I = ${patsubst %, -I${DEPSDIR}/%/include, ${DEPS}}
 -L = ${patsubst %, -L${DEPSDIR}/%/lib, ${DEPS}}

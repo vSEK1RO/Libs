@@ -11,7 +11,7 @@ make
 ```
 To check tests run:
 ```
-make tests
+make test
 ```
 To build and run any examples you should to change their makefile, specifying in the DEPSDIR variable the path where the libraries specified in DEPS are located:
 ```
