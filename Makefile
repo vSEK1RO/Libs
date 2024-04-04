@@ -5,7 +5,7 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -O0 -g
 OBJS = array.o numsys.o string.o utils.o
-TESTS = array.exe
+TESTS = arr_unit.exe arr_spd.exe
 
 LIB = clib
 

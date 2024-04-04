@@ -26,6 +26,7 @@ clib_flag clib_arr_eInit(clib_arr * out, uint64_t len, uint64_t size, uint64_t e
 clib_flag clib_arr_cast(clib_arr * out, uint64_t len, uint64_t size, void* arr);
 clib_flag clib_arr_eCast(clib_arr * out, uint64_t len, uint64_t size, uint64_t eLen, void* arr);
 uint64_t clib_arr_len(clib_arr * a);
+clib_flag __clib_arr_lenSet(clib_arr * a, uint64_t len);
 uint64_t clib_arr_size(clib_arr * a);
 uint64_t clib_arr_mLen(clib_arr * a);
 uint64_t clib_arr_eLen(clib_arr * a);
