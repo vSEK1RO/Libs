@@ -32,7 +32,7 @@ ${LIBDIR}/lib${LIB}.a: ${patsubst %.o, ${OBJDIR}/%.o, ${OBJS}}
 	ar rcs $@ $^
 
 ${TESTDIR}: build ${patsubst %.exe, ${TESTDIR}/%.exe, ${TESTS}}
-	${patsubst %.exe, ./${TESTDIR}/%.exe, ${TESTS}}
+	${patsubst %.exe, ./${TESTDIR}/%.exe;, ${TESTS}}
 
 ${TESTDIR}/%.exe: ${TESTDIR}/%.c
 	${CC} -o $@ $^ -I${INCDIR} -L${LIBDIR} -l${LIB} ${CFLAGS}

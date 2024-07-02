@@ -1,10 +1,14 @@
 #include <clib/array.h>
 
+#include <stdlib.h>
+
+#include <clib/utils.h>
+
 #define nullcheck(arr,ret) if(arr==NULL)return ret
 #define flagcheck(flag) if(flag!=CLIB_SUCCESS)goto end
 #define CLIB_ARR_OFFSET sizeof(uint64_t)*4
 
-/********************************* GENERAL 16 *********************************/
+/********************************* GENERAL 17 *********************************/
 
 clib_flag clib_arr_init(clib_arr * out, uint64_t len, uint64_t size)
 {
@@ -277,13 +281,12 @@ clib_flag clib_arr_erase(clib_arr * a, uint64_t i1, uint64_t i2)
     uint64_t len=clib_arr_len(a)-(i2-i1);
     uint64_t mLen=clib_arr_mLen(a);
     if(mLen/2<=len){
-        for(uint64_t i=i2;i<clib_arr_len(a);i++){
-            clib_mem_copy(
-                clib_arr_get(a,i-(i2-i1)),
-                clib_arr_get(a,i),
-                clib_arr_size(a)
-            );
-        }
+        flag=clib_mem_copy(
+            clib_arr_get(a,i1),
+            clib_arr_get(a,i2),
+            clib_arr_size(a)*(clib_arr_len(a)-i2)
+        );
+        if(flag!=CLIB_SUCCESS)return flag;
         return __clib_arr_lenSet(a,len);
     }
     while(mLen/2>len){
@@ -296,7 +299,7 @@ clib_flag clib_arr_erase(clib_arr * a, uint64_t i1, uint64_t i2)
         clib_arr_size(a)
     );
     flagcheck(flag);
-    flag=__clib_arr_lenSet(a,len);
+    flag=__clib_arr_lenSet(&buff,len);
     flagcheck(flag);
     flag=clib_mem_copy(buff,*a,clib_arr_size(a)*i1);
     flagcheck(flag);

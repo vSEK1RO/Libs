@@ -1,5 +1,4 @@
 #include <stdio.h>
-#define ARR_TYPE int
 #include <clib/array.h>
 #include <clib/types.h>
 
@@ -279,16 +278,16 @@ clib_flag clib_insertions()
 
 void logger(char * s, clib_flag f){
     if(f!=CLIB_SUCCESS){
-        printf("\033[41mFAILED\033[m\t%s",s);
+        printf("\033[41mFAILED\033[m\t%s\n",s);
     }else{
-        printf("\033[42mSUCCESS\033[m\t%s",s);
+        printf("\033[42mSUCCESS\033[m\t%s\n",s);
     }
 }
 
 int main(){
-    logger("\033[2mclib:\033[m\tarr_general\n",clib_general());
-    logger("\033[2mclib:\033[m\tarr_permutations\n",clib_permutations());
-    logger("\033[2mclib:\033[m\tarr_stackable\n",clib_stackable());
-    logger("\033[2mclib:\033[m\tarr_insertions\n",clib_insertions());
+    logger("\033[2marr_unit:\033[m\tarr_general()",clib_general());
+    logger("\033[2marr_unit:\033[m\tarr_permutations()",clib_permutations());
+    logger("\033[2marr_unit:\033[m\tarr_stackable()",clib_stackable());
+    logger("\033[2marr_unit:\033[m\tarr_insertions()",clib_insertions());
     return 0;
 }

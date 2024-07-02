@@ -1,5 +1,8 @@
 #include "matrix.h"
 
+#include <clib/utils.h>
+#include <stdlib.h>
+
 #define flagcheck(flag) if(flag!=CLIB_SUCCESS)return flag
 clib_flag mtrx_init(mtrx * out, uint64_t m, uint64_t n, uint64_t size, mtrx_field * field)
 {

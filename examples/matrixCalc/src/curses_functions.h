@@ -4,6 +4,8 @@
 #include <curses.h>
 #include <clib/array.h>
 #include <clib/string.h>
+#include <clib/utils.h>
+
 #include "field_int.h"
 #include "field_double.h"
 

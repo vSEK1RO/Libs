@@ -14,12 +14,10 @@
 #define CLIB_ARRAY_H
 
 #include <inttypes.h>
-#include <stdlib.h>
 
 #include <clib/types.h>
-#include <clib/utils.h>
 
-/********************************* GENERAL 16 *********************************/
+/********************************* GENERAL 17 *********************************/
 
 clib_flag clib_arr_init(clib_arr * out, uint64_t len, uint64_t size);
 clib_flag clib_arr_eInit(clib_arr * out, uint64_t len, uint64_t size, uint64_t eLen);
