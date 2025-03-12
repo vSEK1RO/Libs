@@ -17,7 +17,6 @@ clib_flag clib_arr_eInit(clib_arr * out, uint64_t len, uint64_t size, uint64_t e
     clib_flag flag=CLIB_UNNAMED;
     uint64_t offset=CLIB_ARR_OFFSET+eLen;
     if(CLIB_ARR_OFFSET>(uint64_t)-1-eLen)return CLIB_ARR_MEMORY;
-    if(size>(uint64_t)-1/len)return CLIB_ARR_MEMORY;
     if(size*len>(uint64_t)-1-offset)return CLIB_ARR_MEMORY;
     *out=(clib_arr)((char*)malloc(size*len+offset)+offset);
     if(*out==NULL){

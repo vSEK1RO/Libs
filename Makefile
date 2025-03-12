@@ -1,12 +1,19 @@
 # make
 # make tests
 # make clean
+DEBUG ?= false
 
 AR = ar
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -O0 -g
+CFLAGS = -Werror
 OBJS = array.o numsys.o string.o utils.o
 TESTS = array.exe
+
+ifneq (${DEBUG}, false)
+CFLAGS += -fsanitize=address,undefined -g -O0
+else
+CFLAGS += -O3
+endif
 
 LIB = clib
 
