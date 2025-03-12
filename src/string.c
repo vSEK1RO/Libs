@@ -2,7 +2,7 @@
 
 char * str_init(uint64_t len)
 {
-    char * a=(char *)calloc(sizeof(char),len+1);
+    char * a=(char *)calloc(len+1, sizeof(char));
     a[len]='\0';
     for(uint64_t i=0;i<len;i++){
         a[i]=' ';
