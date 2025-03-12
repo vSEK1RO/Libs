@@ -2,6 +2,7 @@
 # make tests
 # make clean
 
+AR = ar
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -O0 -g
 OBJS = array.o numsys.o string.o utils.o
@@ -25,7 +26,7 @@ ${OBJDIR}/%.o: ${SRCDIR}/%.c ${INCDIR}/${LIB}/%.h
 	${CC} -o $@ -c $< -I${INCDIR} ${CFLAGS}
 
 ${LIBDIR}/lib${LIB}.a: ${patsubst %.o, ${OBJDIR}/%.o, ${OBJS}}
-	ar rcs $@ $^
+	${AR} rcs $@ $^
 
 ${TESTSDIR}: build ${patsubst %.exe, ${TESTSDIR}/%.exe, ${TESTS}}
 	${patsubst %.exe, ./${TESTSDIR}/%.exe, ${TESTS}}
